@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #outro-fade {
+          position: absolute;
+          inset: 0;
+          background: #f4f7f2;
+          color: #10231a;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+        #outro-logo-card {
+          padding: 36px 48px;
+          border-radius: 32px;
+          background: #ffffff;
+          border: 3px solid #dbe7dd;
+        }
+        #outro-logo {
+          display: block;
+          width: 480px;
+          height: auto;
+        }
+        #outro-message {
+          margin-top: 64px;
+          font-size: 76px;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+        }
+        #outro-accent {
+          color: #1f8a4c;
+        }
+        #outro-contact {
+          margin-top: 28px;
+          font-size: 42px;
+          font-weight: 500;
+          color: #4b5d52;
+        }
+      </style>
+      <div id="root" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div id="outro-fade">
+          <div id="outro-logo-card"><img id="outro-logo" src="assets/icheon-logo.jpg" alt="이천시 로고" /></div>
+          <div id="outro-message">기한 안에 신청하고 <span id="outro-accent">10% 감면</span> 받으세요</div>
+          <div id="outro-contact">문의 · 이천시청 환경보호과 031-644-2344</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#outro-fade", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "none" }, 0);
+        tl.fromTo("#outro-logo-card", { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.7, ease: "power3.out" }, 0.3);
+        tl.fromTo("#outro-message", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.6);
+        tl.fromTo("#outro-contact", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 1.0);
+        window.__timelines["outro"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #notes-fade {
+          position: absolute;
+          inset: 0;
+          background: #f4f7f2;
+          color: #10231a;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+        #notes-heading {
+          font-size: 80px;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          margin-bottom: 56px;
+        }
+        #notes-list {
+          display: flex;
+          flex-direction: column;
+          gap: 32px;
+        }
+        .notes-row {
+          display: flex;
+          align-items: center;
+          gap: 32px;
+          width: 1400px;
+          padding: 32px 44px;
+          border-radius: 28px;
+          background: #ffffff;
+          border: 3px solid #dbe7dd;
+        }
+        .notes-num {
+          flex: none;
+          width: 72px;
+          height: 72px;
+          border-radius: 50%;
+          background: #1f8a4c;
+          color: #ffffff;
+          font-size: 40px;
+          font-weight: 800;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .notes-text {
+          font-size: 46px;
+          font-weight: 500;
+        }
+        .notes-text b {
+          font-weight: 800;
+        }
+      </style>
+      <div id="root" data-composition-id="notes" data-width="1920" data-height="1080">
+        <div id="notes-fade">
+          <div id="notes-heading">꼭 알아두세요</div>
+          <div id="notes-list">
+            <div class="notes-row">
+              <div class="notes-num">1</div>
+              <div class="notes-text"><b>기한 안에 납부</b>하지 않으면 연납이 자동 취소돼요</div>
+            </div>
+            <div class="notes-row">
+              <div class="notes-num">2</div>
+              <div class="notes-text">차량 이전 · 주소 변경 시 <b>새 관할 시 · 군 · 구에 다시 신청</b></div>
+            </div>
+            <div class="notes-row">
+              <div class="notes-num">3</div>
+              <div class="notes-text">폐차 · 양도 시 <b>차액 환급</b> (감면 혜택은 그대로)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#notes-fade", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "none" }, 0);
+        tl.fromTo("#notes-heading", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.3);
+        tl.fromTo(".notes-row", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.25 }, 0.6);
+        window.__timelines["notes"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

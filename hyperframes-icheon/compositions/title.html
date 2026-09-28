@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #title-fade {
+          position: absolute;
+          inset: 0;
+          background: #f4f7f2;
+          color: #10231a;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+        #title-kicker {
+          font-size: 36px;
+          font-weight: 500;
+          color: #4b5d52;
+          letter-spacing: 0.05em;
+        }
+        #title-bar {
+          width: 160px;
+          height: 8px;
+          margin: 36px 0;
+          border-radius: 4px;
+          background: #1f8a4c;
+        }
+        .title-line {
+          font-size: 104px;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          line-height: 1.2;
+          text-align: center;
+        }
+        #title-line2 {
+          color: #1f8a4c;
+        }
+        #title-sub {
+          margin-top: 40px;
+          font-size: 48px;
+          font-weight: 500;
+        }
+      </style>
+      <div id="root" data-composition-id="title" data-width="1920" data-height="1080">
+        <div id="title-fade">
+          <div id="title-kicker">이천시 보도자료 · 2025. 12. 31.</div>
+          <div id="title-bar"></div>
+          <div id="title-line1" class="title-line">2026년 환경개선부담금</div>
+          <div id="title-line2" class="title-line">연납 신청 접수</div>
+          <div id="title-sub">미리 한 번에 내면 부담금 10% 감면</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#title-kicker", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.1);
+        tl.fromTo("#title-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power3.out" }, 0.3);
+        tl.fromTo(".title-line", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.15 }, 0.45);
+        tl.fromTo("#title-sub", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 1.2);
+        window.__timelines["title"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

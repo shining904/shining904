@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #howto-fade {
+          position: absolute;
+          inset: 0;
+          background: #f4f7f2;
+          color: #10231a;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+        #howto-heading {
+          font-size: 80px;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          margin-bottom: 64px;
+        }
+        #howto-cards {
+          display: flex;
+          gap: 56px;
+        }
+        .howto-card {
+          width: 680px;
+          padding: 52px 56px;
+          border-radius: 32px;
+          background: #ffffff;
+          border: 3px solid #dbe7dd;
+        }
+        .howto-tag {
+          display: inline-block;
+          padding: 8px 24px;
+          border-radius: 999px;
+          background: #1f8a4c;
+          color: #ffffff;
+          font-size: 32px;
+          font-weight: 800;
+        }
+        .howto-name {
+          margin-top: 28px;
+          font-size: 60px;
+          font-weight: 800;
+          letter-spacing: -0.02em;
+        }
+        .howto-detail {
+          margin-top: 12px;
+          font-size: 44px;
+          font-weight: 500;
+          color: #4b5d52;
+        }
+        #howto-note {
+          margin-top: 64px;
+          font-size: 40px;
+          font-weight: 500;
+          color: #4b5d52;
+        }
+      </style>
+      <div id="root" data-composition-id="howto" data-width="1920" data-height="1080">
+        <div id="howto-fade">
+          <div id="howto-heading">신청 방법</div>
+          <div id="howto-cards">
+            <div id="howto-office" class="howto-card">
+              <div class="howto-tag">방문 · 전화</div>
+              <div class="howto-name">이천시청 환경보호과</div>
+              <div class="howto-detail">031-644-2344</div>
+            </div>
+            <div id="howto-online" class="howto-card">
+              <div class="howto-tag">온라인</div>
+              <div class="howto-name">위택스</div>
+              <div class="howto-detail">인터넷으로 신청</div>
+            </div>
+          </div>
+          <div id="howto-note">기존 연납 신청자는 따로 신청하지 않아도 감면된 고지서가 발송돼요</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#howto-fade", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "none" }, 0);
+        tl.fromTo("#howto-heading", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.3);
+        tl.fromTo("#howto-office", { opacity: 0, x: -100 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 0.6);
+        tl.fromTo("#howto-online", { opacity: 0, x: 100 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 0.75);
+        tl.fromTo("#howto-note", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 1.6);
+        window.__timelines["howto"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
