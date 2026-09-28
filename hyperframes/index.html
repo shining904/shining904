@@ -1,10 +1,35 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1920, height=1080" />
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <title>설치 완료 인트로</title>
+    <script src="gsap.min.js"></script>
     <style>
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-weight: 500;
+        src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+2190-21FF;
+      }
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-weight: 500;
+        src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+        unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+      }
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-weight: 800;
+        src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+2190-21FF;
+      }
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-weight: 800;
+        src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+        unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+      }
       * {
         margin: 0;
         padding: 0;
@@ -12,25 +37,22 @@
       }
       html,
       body {
-        margin: 0;
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        background: #0a0a0a;
+        background: #0b0d12;
       }
       #root {
+        position: relative;
         width: 100%;
         height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-      }
-      #title {
+        overflow: hidden;
         color: #f4f4f5;
-        font-size: 72px;
-        font-weight: 600;
-        letter-spacing: -0.03em;
+        font-family: "Noto Sans KR", sans-serif;
+        background:
+          radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.35), transparent 55%),
+          radial-gradient(circle at 80% 75%, rgba(236, 72, 153, 0.28), transparent 55%),
+          #0b0d12;
       }
     </style>
   </head>
@@ -39,17 +61,20 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="3"
+      data-duration="8"
       data-width="1920"
       data-height="1080"
     >
-      <h1 id="title" class="clip" data-start="0" data-duration="3" data-track-index="0">안녕하세요, HyperFrames!</h1>
+      <div id="intro" data-composition-id="intro" data-composition-src="compositions/intro.html"
+        data-start="0" data-duration="2.8" data-track-index="0" data-width="1920" data-height="1080"></div>
+      <div id="tools" data-composition-id="tools" data-composition-src="compositions/tools.html"
+        data-start="2.8" data-duration="2.8" data-track-index="0" data-width="1920" data-height="1080"></div>
+      <div id="outro" data-composition-id="outro" data-composition-src="compositions/outro.html"
+        data-start="5.6" data-duration="2.4" data-track-index="0" data-width="1920" data-height="1080"></div>
     </div>
     <script>
       const tl = gsap.timeline({ paused: true });
-      tl.fromTo("#title", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6 }, 0);
       window.__timelines["main"] = tl;
-      tl.seek(0);
     </script>
   </body>
 </html>

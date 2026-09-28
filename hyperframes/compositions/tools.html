@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        #tools-cards {
+          display: flex;
+          gap: 64px;
+        }
+        .tools-card {
+          width: 640px;
+          padding: 56px 60px;
+          border-radius: 32px;
+          background: rgba(255, 255, 255, 0.06);
+          border: 2px solid rgba(255, 255, 255, 0.12);
+        }
+        .tools-name {
+          font-size: 72px;
+          font-weight: 800;
+          letter-spacing: -0.02em;
+        }
+        .tools-flow {
+          margin-top: 20px;
+          font-size: 44px;
+          font-weight: 500;
+          color: #c7d2fe;
+        }
+      </style>
+      <div id="root" data-composition-id="tools" data-width="1920" data-height="1080">
+        <div id="tools-cards">
+          <div id="tools-hf" class="tools-card">
+            <div class="tools-name">HyperFrames</div>
+            <div class="tools-flow">HTML → MP4</div>
+          </div>
+          <div id="tools-rm" class="tools-card">
+            <div class="tools-name">Remotion</div>
+            <div class="tools-flow">React → MP4</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#tools-hf", { opacity: 0, x: -120 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 0.1);
+        tl.fromTo("#tools-rm", { opacity: 0, x: 120 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 0.25);
+        tl.to("#tools-cards", { opacity: 0, scale: 0.96, duration: 0.4, ease: "power2.in" }, 2.4);
+        window.__timelines["tools"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

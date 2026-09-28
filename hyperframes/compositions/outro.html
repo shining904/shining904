@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+        #outro-check {
+          width: 180px;
+          height: 180px;
+          margin-bottom: 48px;
+        }
+        #outro-done {
+          font-size: 120px;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+        }
+        #outro-sub {
+          margin-top: 24px;
+          font-size: 44px;
+          font-weight: 500;
+          color: #a1a1aa;
+        }
+      </style>
+      <div id="root" data-composition-id="outro" data-width="1920" data-height="1080">
+        <svg id="outro-check" viewBox="0 0 100 100">
+          <circle id="outro-ring" cx="50" cy="50" r="44" fill="none" stroke="#818cf8" stroke-width="6" />
+          <path id="outro-mark" d="M30 52 L45 66 L71 38" fill="none" stroke="#f472b6" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <div id="outro-done">설치 완료</div>
+        <div id="outro-sub">이제 영상을 만들어 볼까요?</div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#outro-ring", { strokeDasharray: 277, strokeDashoffset: 277 }, { strokeDashoffset: 0, duration: 0.6, ease: "power2.out" }, 0.1);
+        tl.fromTo("#outro-mark", { strokeDasharray: 60, strokeDashoffset: 60 }, { strokeDashoffset: 0, duration: 0.4, ease: "power2.out" }, 0.55);
+        tl.fromTo("#outro-done", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.6);
+        tl.fromTo("#outro-sub", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 1.0);
+        window.__timelines["outro"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

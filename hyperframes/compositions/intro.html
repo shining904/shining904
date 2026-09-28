@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        #intro-inner {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        #intro-kicker {
+          font-size: 36px;
+          font-weight: 500;
+          letter-spacing: 0.3em;
+          color: #a5b4fc;
+          margin-bottom: 28px;
+        }
+        #intro-headline {
+          display: flex;
+          gap: 28px;
+          font-size: 128px;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+        }
+        .intro-word {
+          display: block;
+        }
+        .intro-accent {
+          background: linear-gradient(90deg, #818cf8, #f472b6);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+        }
+      </style>
+      <div id="root" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div id="intro-inner">
+          <div id="intro-kicker">HYPERFRAMES × REMOTION</div>
+          <div id="intro-headline">
+            <span class="intro-word">코드로</span>
+            <span class="intro-word">만드는</span>
+            <span class="intro-word intro-accent">영상</span>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#intro-kicker", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.1);
+        tl.fromTo(".intro-word", { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.15 }, 0.3);
+        tl.to("#intro-inner", { opacity: 0, y: -40, duration: 0.4, ease: "power2.in" }, 2.4);
+        window.__timelines["intro"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
