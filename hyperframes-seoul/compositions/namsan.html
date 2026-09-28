@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #namsan-fade {
+          position: absolute;
+          inset: 0;
+        }
+        #namsan-photo {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        #namsan-shade {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(0deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0) 45%);
+        }
+        #namsan-caption {
+          position: absolute;
+          left: 120px;
+          bottom: 110px;
+        }
+        #namsan-kicker {
+          font-size: 30px;
+          font-weight: 500;
+          letter-spacing: 0.3em;
+          color: #fcd34d;
+        }
+        #namsan-title {
+          margin-top: 12px;
+          font-size: 96px;
+          font-weight: 800;
+          letter-spacing: -0.03em;
+          color: #ffffff;
+        }
+      </style>
+      <div id="root" data-composition-id="namsan" data-width="1920" data-height="1080">
+        <div id="namsan-fade">
+          <img id="namsan-photo" src="assets/namsan.jpg" alt="남산서울타워" />
+          <div id="namsan-shade"></div>
+          <div id="namsan-caption">
+            <div id="namsan-kicker">SCENE 03</div>
+            <div id="namsan-title">남산서울타워</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#namsan-fade", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "none" }, 0);
+        tl.fromTo("#namsan-photo", { scale: 1 }, { scale: 1.12, duration: 3.5, ease: "none" }, 0);
+        tl.fromTo("#namsan-kicker", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }, 0.5);
+        tl.fromTo("#namsan-title", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.65);
+        window.__timelines["namsan"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
