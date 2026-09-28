@@ -21,5 +21,11 @@ npm run dev              # 브라우저에서 미리보기 (Remotion Studio)
 npx remotion render      # out/ 폴더에 MP4 생성
 ```
 
-`.claude/skills/`에는 Claude Code가 HyperFrames 영상을 잘 만들도록 돕는 스킬이 들어 있습니다.
+`.claude/skills/`에는 Claude Code가 HyperFrames·Remotion 영상을 잘 만들도록 돕는 스킬이 들어 있습니다.
+`.claude/hooks/session-start.sh`는 Claude Code 웹 세션이 시작될 때 FFmpeg, npm 패키지, 렌더링용 Chrome, 음성 합성(Kokoro TTS)을 자동으로 설치합니다.
+
+선택 기능 (내 PC에서 쓸 때):
+- 음성 합성: `pip install kokoro-onnx soundfile` → `npx hyperframes tts "문장"` (한국어 음성은 아직 없음)
+- 자막용 받아쓰기: `npx hyperframes models install parakeet` → `npx hyperframes transcribe 파일.mp3`
+- 배경음악 생성: `pip install transformers torch soundfile numpy`
 Remotion은 개인·3인 이하 팀은 무료이고, 그 이상 회사는 유료 라이선스가 필요합니다.
