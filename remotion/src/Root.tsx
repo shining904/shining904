@@ -1,13 +1,45 @@
 import "./index.css";
-import { Composition } from "remotion";
+import { Composition, Folder } from "remotion";
 import { HelloWorld } from "./HelloWorld";
 import { Logo } from "./HelloWorld/Logo";
+import { KoreanIntro } from "./KoreanIntro";
+import { Background } from "./KoreanIntro/Background";
+import { IntroScene } from "./KoreanIntro/IntroScene";
+import { OutroScene } from "./KoreanIntro/OutroScene";
+import { ToolsScene } from "./KoreanIntro/ToolsScene";
+import "./KoreanIntro/fonts";
+
+const withBackground = (Scene: React.FC) => {
+  const WithBackground: React.FC = () => (
+    <Background>
+      <Scene />
+    </Background>
+  );
+  return WithBackground;
+};
+const IntroStill = withBackground(IntroScene);
+const ToolsStill = withBackground(ToolsScene);
+const OutroStill = withBackground(OutroScene);
 
 // Each <Composition> is an entry in the sidebar!
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      <Composition
+        id="KoreanIntro"
+        component={KoreanIntro}
+        durationInFrames={240}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Folder name="KoreanIntro-Scenes">
+        <Composition id="Intro" component={IntroStill} durationInFrames={84} fps={30} width={1920} height={1080} />
+        <Composition id="Tools" component={ToolsStill} durationInFrames={84} fps={30} width={1920} height={1080} />
+        <Composition id="Outro" component={OutroStill} durationInFrames={72} fps={30} width={1920} height={1080} />
+      </Folder>
+
       <Composition
         // You can take the "id" to render a video:
         // npx remotion render HelloWorld
