@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #question-fade {
+          position: absolute;
+          inset: 0;
+        }
+        #question-q {
+          position: absolute;
+          left: 90px;
+          right: 90px;
+          top: 250px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        #question-chip {
+          padding: 12px 40px;
+          border-radius: 999px;
+          background: #b8524a;
+          color: #ffffff;
+          font-size: 40px;
+          font-weight: 800;
+        }
+        .question-qline {
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 76px;
+          line-height: 1.3;
+          color: #2b1d1a;
+        }
+        #question-qline1 {
+          margin-top: 28px;
+        }
+        #question-opts {
+          position: absolute;
+          left: 140px;
+          top: 640px;
+          width: 800px;
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+        .question-opt {
+          display: flex;
+          align-items: center;
+          gap: 32px;
+          padding: 26px 36px;
+          border-radius: 28px;
+          background: rgba(255, 255, 255, 0.94);
+          border: 4px solid #e2d4bf;
+        }
+        .question-num {
+          flex: none;
+          width: 76px;
+          height: 76px;
+          border-radius: 50%;
+          background: #5b2d6e;
+          color: #ffffff;
+          font-size: 44px;
+          font-weight: 800;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .question-label {
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 64px;
+          color: #2b1d1a;
+        }
+        #question-medallion {
+          position: absolute;
+          left: 110px;
+          bottom: 330px;
+          width: 320px;
+          height: 320px;
+          border-radius: 50%;
+          overflow: hidden;
+          border: 10px solid #b8912f;
+          background: #e8dccb;
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+        }
+        #question-face {
+          display: block;
+          width: 300px;
+          height: auto;
+        }
+        #question-bubble {
+          position: absolute;
+          left: 90px;
+          top: 1110px;
+          padding: 22px 34px;
+          border-radius: 36px;
+          background: #ffffff;
+          border: 4px solid #5b2d6e;
+          color: #5b2d6e;
+          font-size: 44px;
+          font-weight: 800;
+          white-space: nowrap;
+        }
+        #question-timer {
+          position: absolute;
+          right: 110px;
+          bottom: 350px;
+          width: 280px;
+          height: 280px;
+          border-radius: 50%;
+          background: #b8524a;
+          border: 10px solid #ffffff;
+        }
+        .question-count {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff;
+          font-size: 150px;
+          font-weight: 800;
+        }
+      </style>
+      <div id="root" data-composition-id="question" data-width="1080" data-height="1920">
+        <div id="question-fade">
+          <div id="question-q">
+            <div id="question-chip">Q. 서희 골든벨 맛보기</div>
+            <div id="question-qline1" class="question-qline">서희가 거란과의 담판으로</div>
+            <div id="question-qline2" class="question-qline">얻어낸 땅은?</div>
+          </div>
+          <div id="question-opts">
+            <div id="question-opt1" class="question-opt">
+              <div class="question-num">1</div>
+              <div class="question-label">강동 6주</div>
+            </div>
+            <div id="question-opt2" class="question-opt">
+              <div class="question-num">2</div>
+              <div class="question-label">탐라</div>
+            </div>
+            <div id="question-opt3" class="question-opt">
+              <div class="question-num">3</div>
+              <div class="question-label">요동</div>
+            </div>
+          </div>
+          <div id="question-medallion"><img id="question-face" src="assets/elder-think.png" alt="고민하는 장년기 서희" /></div>
+          <div id="question-bubble">음... 몇 번일까?</div>
+          <div id="question-timer">
+            <div id="question-count3" class="question-count">3</div>
+            <div id="question-count2" class="question-count">2</div>
+            <div id="question-count1" class="question-count">1</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#question-fade", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0);
+        tl.fromTo("#question-chip", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.1);
+        tl.fromTo(".question-qline", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.15 }, 0.25);
+        tl.fromTo(".question-opt", { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 0.45, ease: "power3.out", stagger: 0.2 }, 0.9);
+        tl.fromTo("#question-medallion", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.8)" }, 1.4);
+        tl.fromTo("#question-bubble", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)", transformOrigin: "0% 100%" }, 1.8);
+        tl.fromTo("#question-timer", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, 3.3);
+        tl.fromTo("#question-count3", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }, 3.4);
+        tl.to("#question-count3", { opacity: 0, duration: 0.15 }, 4.4);
+        tl.fromTo("#question-count2", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }, 4.45);
+        tl.to("#question-count2", { opacity: 0, duration: 0.15 }, 5.45);
+        tl.fromTo("#question-count1", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }, 5.5);
+        window.__timelines["question"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

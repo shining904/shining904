@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #answer-fade {
+          position: absolute;
+          inset: 0;
+        }
+        #answer-q {
+          position: absolute;
+          left: 90px;
+          right: 90px;
+          top: 250px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        #answer-chip {
+          padding: 12px 40px;
+          border-radius: 999px;
+          background: #b8524a;
+          color: #ffffff;
+          font-size: 40px;
+          font-weight: 800;
+        }
+        .answer-qline {
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 76px;
+          line-height: 1.3;
+          color: #2b1d1a;
+        }
+        #answer-qline1 {
+          margin-top: 28px;
+        }
+        #answer-opts {
+          position: absolute;
+          left: 140px;
+          top: 640px;
+          width: 800px;
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+        .answer-opt {
+          display: flex;
+          align-items: center;
+          gap: 32px;
+          padding: 26px 36px;
+          border-radius: 28px;
+          background: rgba(255, 255, 255, 0.94);
+          border: 4px solid #e2d4bf;
+        }
+        .answer-num {
+          flex: none;
+          width: 76px;
+          height: 76px;
+          border-radius: 50%;
+          background: #5b2d6e;
+          color: #ffffff;
+          font-size: 44px;
+          font-weight: 800;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .answer-label {
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 64px;
+          color: #2b1d1a;
+        }
+        #answer-medallion {
+          position: absolute;
+          left: 110px;
+          bottom: 330px;
+          width: 320px;
+          height: 320px;
+          border-radius: 50%;
+          overflow: hidden;
+          border: 10px solid #b8912f;
+          background: #e8dccb;
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+        }
+        #answer-face {
+          display: block;
+          width: 300px;
+          height: auto;
+        }
+        #answer-bubble {
+          position: absolute;
+          left: 90px;
+          top: 1110px;
+          padding: 22px 34px;
+          border-radius: 36px;
+          background: #ffffff;
+          border: 4px solid #5b2d6e;
+          color: #5b2d6e;
+          font-size: 44px;
+          font-weight: 800;
+          white-space: nowrap;
+        }
+        #answer-opt1 {
+          border-color: #b8912f;
+          background: #fff6dc;
+        }
+        #answer-stamp {
+          margin-left: auto;
+          padding: 8px 26px;
+          border-radius: 16px;
+          background: #b8524a;
+          color: #ffffff;
+          font-size: 40px;
+          font-weight: 800;
+        }
+        #answer-explain {
+          position: absolute;
+          left: 480px;
+          right: 90px;
+          top: 1250px;
+          font-size: 40px;
+          white-space: nowrap;
+          font-weight: 500;
+          line-height: 1.45;
+          color: #2b1d1a;
+        }
+        #answer-explain b {
+          font-weight: 800;
+          color: #b8524a;
+        }
+      </style>
+      <div id="root" data-composition-id="answer" data-width="1080" data-height="1920">
+        <div id="answer-fade">
+          <div id="answer-q">
+            <div id="answer-chip">Q. 서희 골든벨 맛보기</div>
+            <div id="answer-qline1" class="answer-qline">서희가 거란과의 담판으로</div>
+            <div id="answer-qline2" class="answer-qline">얻어낸 땅은?</div>
+          </div>
+          <div id="answer-opts">
+            <div id="answer-opt1" class="answer-opt">
+              <div class="answer-num">1</div>
+              <div class="answer-label">강동 6주</div>
+              <div id="answer-stamp">정답!</div>
+            </div>
+            <div id="answer-opt2" class="answer-opt">
+              <div class="answer-num">2</div>
+              <div class="answer-label">탐라</div>
+            </div>
+            <div id="answer-opt3" class="answer-opt">
+              <div class="answer-num">3</div>
+              <div class="answer-label">요동</div>
+            </div>
+          </div>
+          <div id="answer-medallion"><img id="answer-face" src="assets/elder-smile.png" alt="웃는 장년기 서희" /></div>
+          <div id="answer-bubble">정답은 1번!</div>
+          <div id="answer-explain">
+            <div>싸우지 않고 담판만으로</div>
+            <div><b>압록강 동쪽 강동 6주</b>를</div>
+            <div>얻어냈어요 (993년)</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#answer-fade", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0);
+        tl.fromTo("#answer-opt2", { opacity: 1 }, { opacity: 0.35, duration: 0.3 }, 0.2);
+        tl.fromTo("#answer-opt3", { opacity: 1 }, { opacity: 0.35, duration: 0.3 }, 0.2);
+        tl.fromTo("#answer-opt1", { scale: 1 }, { scale: 1.06, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 1 }, 0.3);
+        tl.fromTo("#answer-stamp", { opacity: 0, scale: 2 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)" }, 0.4);
+        tl.fromTo("#answer-bubble", { scale: 0.6 }, { scale: 1, duration: 0.4, ease: "back.out(2)", transformOrigin: "0% 100%" }, 0.5);
+        tl.fromTo("#answer-explain", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 1.0);
+        window.__timelines["answer"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

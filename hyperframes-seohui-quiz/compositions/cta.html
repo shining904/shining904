@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #cta-fade {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding-top: 270px;
+        }
+        .cta-line {
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 96px;
+          line-height: 1.25;
+          color: #2b1d1a;
+          text-align: center;
+        }
+        #cta-line2 {
+          color: #b8524a;
+        }
+        #cta-card {
+          margin-top: 48px;
+          width: 900px;
+          padding: 48px;
+          border-radius: 32px;
+          background: #5b2d6e;
+          color: #ffffff;
+          text-align: center;
+        }
+        #cta-event {
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 80px;
+        }
+        #cta-when {
+          margin-top: 16px;
+          font-size: 52px;
+          font-weight: 800;
+        }
+        #cta-what {
+          margin-top: 8px;
+          font-size: 40px;
+          font-weight: 500;
+        }
+        #cta-fest {
+          margin-top: 36px;
+          font-size: 38px;
+          font-weight: 800;
+          color: #b8524a;
+          text-align: center;
+          line-height: 1.5;
+        }
+        #cta-row {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 320px;
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          gap: 36px;
+        }
+        .cta-figure {
+          display: block;
+          width: auto;
+        }
+        #cta-child {
+          height: 300px;
+        }
+        #cta-youth {
+          height: 360px;
+        }
+        #cta-elder {
+          height: 375px;
+        }
+      </style>
+      <div id="root" data-composition-id="cta" data-width="1080" data-height="1920">
+        <div id="cta-fade">
+          <div id="cta-line1" class="cta-line">진짜 골든벨은</div>
+          <div id="cta-line2" class="cta-line">축제에서!</div>
+          <div id="cta-card">
+            <div id="cta-event">서희 골든벨</div>
+            <div id="cta-when">10.4(일) 15:00</div>
+            <div id="cta-what">어린이 참여 역사 퀴즈대회</div>
+          </div>
+          <div id="cta-fest">
+            <div>2026 장위공 서희 외교문화제</div>
+            <div>이천 서희테마파크 일원</div>
+          </div>
+          <div id="cta-row">
+            <img id="cta-child" class="cta-figure" src="assets/child.png" alt="유년기 서희" />
+            <img id="cta-youth" class="cta-figure" src="assets/youth.png" alt="청년기 서희" />
+            <img id="cta-elder" class="cta-figure" src="assets/elder.png" alt="장년기 서희" />
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#cta-fade", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0);
+        tl.fromTo(".cta-line", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.15 }, 0.15);
+        tl.fromTo("#cta-card", { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.6);
+        tl.fromTo("#cta-fest", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 1.0);
+        tl.fromTo(".cta-figure", { opacity: 0, y: 100 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.12 }, 1.1);
+        window.__timelines["cta"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

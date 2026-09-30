@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #backdrop-paper {
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(circle at 50% 35%, #f8f2e8 0%, #f1e9dc 60%, #e6dac6 100%);
+        }
+        #backdrop-sun {
+          position: absolute;
+          right: 110px;
+          top: 150px;
+          width: 170px;
+          height: 170px;
+          border-radius: 50%;
+          background: radial-gradient(circle at 40% 40%, #f3a58d, #e0735c);
+          opacity: 0.85;
+        }
+        #backdrop-hills {
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 1080px;
+          height: 760px;
+        }
+        .backdrop-cloud {
+          position: absolute;
+          height: 56px;
+          border-radius: 999px;
+          background: #ffffff;
+          opacity: 0.8;
+        }
+        #backdrop-cloud1 {
+          left: 60px;
+          top: 190px;
+          width: 260px;
+        }
+        #backdrop-cloud2 {
+          left: 640px;
+          top: 360px;
+          width: 200px;
+        }
+        #backdrop-cloud3 {
+          left: 120px;
+          top: 1060px;
+          width: 220px;
+        }
+      </style>
+      <div id="root" data-composition-id="backdrop" data-width="1080" data-height="1920">
+        <div id="backdrop-paper"></div>
+        <div id="backdrop-sun"></div>
+        <div id="backdrop-cloud1" class="backdrop-cloud"></div>
+        <div id="backdrop-cloud2" class="backdrop-cloud"></div>
+        <div id="backdrop-cloud3" class="backdrop-cloud"></div>
+        <svg id="backdrop-hills" viewBox="0 0 1080 760" preserveAspectRatio="none">
+          <path d="M0 330 L170 200 L330 300 L520 150 L720 290 L880 190 L1080 300 L1080 760 L0 760 Z" fill="#b9a6c9" opacity="0.55" />
+          <path d="M0 430 L220 320 L420 410 L640 300 L860 400 L1080 330 L1080 760 L0 760 Z" fill="#e7c98f" opacity="0.6" />
+          <path d="M0 560 Q540 380 1080 560 L1080 760 L0 760 Z" fill="#7fae7a" opacity="0.75" />
+          <path d="M0 640 Q540 520 1080 640 L1080 760 L0 760 Z" fill="#5f9460" />
+        </svg>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#backdrop-cloud1", { x: 0 }, { x: 120, duration: 18, ease: "none" }, 0);
+        tl.fromTo("#backdrop-cloud2", { x: 0 }, { x: -140, duration: 18, ease: "none" }, 0);
+        tl.fromTo("#backdrop-cloud3", { x: 0 }, { x: 100, duration: 18, ease: "none" }, 0);
+        tl.fromTo("#backdrop-sun", { y: 20 }, { y: 0, duration: 18, ease: "none" }, 0);
+        window.__timelines["backdrop"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
