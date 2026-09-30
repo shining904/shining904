@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #market-fade {
+          position: absolute;
+          inset: 0;
+        }
+        #market-head {
+          position: absolute;
+          left: 90px;
+          right: 90px;
+          top: 250px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        #market-chip {
+          padding: 12px 40px;
+          border-radius: 999px;
+          background: #b8524a;
+          color: #ffffff;
+          font-size: 40px;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+        }
+        #market-title {
+          margin-top: 24px;
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 96px;
+          color: #2b1d1a;
+        }
+        #market-guide {
+          position: absolute;
+          right: 70px;
+          bottom: 300px;
+        }
+        #market-guide-img {
+          display: block;
+          height: 540px;
+          width: auto;
+        }
+        #market-bubble {
+          position: absolute;
+          right: 380px;
+          bottom: 640px;
+          padding: 24px 36px;
+          border-radius: 36px;
+          background: #ffffff;
+          border: 4px solid #5b2d6e;
+          color: #5b2d6e;
+          font-size: 44px;
+          font-weight: 800;
+          white-space: nowrap;
+        }
+        #market-time {
+          margin-top: 16px;
+          font-size: 44px;
+          font-weight: 800;
+          color: #5b2d6e;
+        }
+        #market-grid {
+          position: absolute;
+          left: 90px;
+          top: 620px;
+          width: 900px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+        }
+        .market-tag {
+          padding: 34px 0;
+          border-radius: 28px;
+          background: rgba(255, 255, 255, 0.92);
+          border: 3px solid #e2d4bf;
+          text-align: center;
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 60px;
+          color: #2b1d1a;
+        }
+      </style>
+      <div id="root" data-composition-id="market" data-width="1080" data-height="1920">
+        <div id="market-fade">
+          <div id="market-head">
+            <div id="market-chip">이틀 내내</div>
+            <div id="market-title">고려 저잣거리</div>
+            <div id="market-time">10:00 ~ 17:00</div>
+          </div>
+          <div id="market-grid">
+            <div class="market-tag">약방</div>
+            <div class="market-tag">대장간</div>
+            <div class="market-tag">전통 먹거리</div>
+            <div class="market-tag">민속놀이</div>
+          </div>
+          <div id="market-guide"><img id="market-guide-img" src="assets/youth.png" alt="청년기 서희" /></div>
+          <div id="market-bubble">장터 구경 가요!</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#market-fade", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0);
+        tl.fromTo("#market-chip", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.1);
+        tl.fromTo("#market-title", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.25);
+        tl.fromTo("#market-time", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.45);
+        tl.fromTo(".market-tag", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)", stagger: 0.15 }, 0.6);
+        tl.fromTo("#market-guide", { opacity: 0, x: 120 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.15);
+        tl.fromTo("#market-bubble", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)", transformOrigin: "100% 100%" }, 1.5);
+        window.__timelines["market"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

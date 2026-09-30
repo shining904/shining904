@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #day1-fade {
+          position: absolute;
+          inset: 0;
+        }
+        #day1-head {
+          position: absolute;
+          left: 90px;
+          right: 90px;
+          top: 250px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        #day1-chip {
+          padding: 12px 40px;
+          border-radius: 999px;
+          background: #b8524a;
+          color: #ffffff;
+          font-size: 40px;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+        }
+        #day1-title {
+          margin-top: 24px;
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 96px;
+          color: #2b1d1a;
+        }
+        .day1-card {
+          display: flex;
+          align-items: center;
+          gap: 32px;
+          width: 900px;
+          padding: 30px 36px;
+          border-radius: 28px;
+          background: rgba(255, 255, 255, 0.92);
+          border: 3px solid #e2d4bf;
+        }
+        .day1-time {
+          flex: none;
+          width: 190px;
+          padding: 14px 0;
+          border-radius: 18px;
+          background: #5b2d6e;
+          color: #ffffff;
+          font-size: 46px;
+          font-weight: 800;
+          text-align: center;
+        }
+        .day1-name {
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 60px;
+          color: #2b1d1a;
+        }
+        .day1-desc {
+          margin-top: 4px;
+          font-size: 34px;
+          font-weight: 500;
+          color: #6b5a50;
+        }
+        #day1-list {
+          position: absolute;
+          left: 90px;
+          top: 520px;
+          display: flex;
+          flex-direction: column;
+          gap: 28px;
+        }
+        #day1-guide {
+          position: absolute;
+          right: 70px;
+          bottom: 300px;
+        }
+        #day1-guide-img {
+          display: block;
+          height: 460px;
+          width: auto;
+        }
+        #day1-bubble {
+          position: absolute;
+          right: 380px;
+          bottom: 560px;
+          padding: 24px 36px;
+          border-radius: 36px;
+          background: #ffffff;
+          border: 4px solid #5b2d6e;
+          color: #5b2d6e;
+          font-size: 44px;
+          font-weight: 800;
+          white-space: nowrap;
+        }
+      </style>
+      <div id="root" data-composition-id="day1" data-width="1080" data-height="1920">
+        <div id="day1-fade">
+          <div id="day1-head">
+            <div id="day1-chip">DAY 1</div>
+            <div id="day1-title">10월 3일 토요일</div>
+          </div>
+          <div id="day1-list">
+            <div class="day1-card">
+              <div class="day1-time">11:00</div>
+              <div>
+                <div class="day1-name">추모제</div>
+                <div class="day1-desc">서희 선생의 업적과 외교 정신을 기려요</div>
+              </div>
+            </div>
+            <div class="day1-card">
+              <div class="day1-time">13:00</div>
+              <div>
+                <div class="day1-name">개막식</div>
+                <div class="day1-desc">공식 행사와 축하 공연</div>
+              </div>
+            </div>
+            <div class="day1-card">
+              <div class="day1-time">15:00</div>
+              <div>
+                <div class="day1-name">역사 콘서트</div>
+                <div class="day1-desc">방송인 서경석과 함께하는 역사 토크</div>
+              </div>
+            </div>
+          </div>
+          <div id="day1-guide"><img id="day1-guide-img" src="assets/elder.png" alt="장년기 서희" /></div>
+          <div id="day1-bubble">첫날은 이렇게!</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#day1-fade", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0);
+        tl.fromTo("#day1-chip", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.1);
+        tl.fromTo("#day1-title", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.25);
+        tl.fromTo(".day1-card", { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 0.5, ease: "power3.out", stagger: 0.35 }, 0.5);
+        tl.fromTo("#day1-guide", { opacity: 0, x: 120 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.15);
+        tl.fromTo("#day1-bubble", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)", transformOrigin: "100% 100%" }, 1.8);
+        window.__timelines["day1"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

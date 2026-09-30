@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>서희 외교문화제 동선</title>
+    <script src="gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-weight: 500;
+        src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+2190-21FF;
+      }
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-weight: 500;
+        src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+        unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+      }
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-weight: 800;
+        src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+2190-21FF;
+      }
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-weight: 800;
+        src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+        unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #f1e9dc;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #f1e9dc;
+        font-family: "Noto Sans KR", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="25"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="backdrop" data-composition-id="backdrop" data-composition-src="compositions/backdrop.html"
+        data-start="0" data-duration="25" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="hook" data-composition-id="hook" data-composition-src="compositions/hook.html"
+        data-start="0" data-duration="3.3" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="day1" data-composition-id="day1" data-composition-src="compositions/day1.html"
+        data-start="3.0" data-duration="7.3" data-track-index="2" data-width="1080" data-height="1920"></div>
+      <div id="day2" data-composition-id="day2" data-composition-src="compositions/day2.html"
+        data-start="10.0" data-duration="4.8" data-track-index="3" data-width="1080" data-height="1920"></div>
+      <div id="market" data-composition-id="market" data-composition-src="compositions/market.html"
+        data-start="14.5" data-duration="5.8" data-track-index="4" data-width="1080" data-height="1920"></div>
+      <div id="cta" data-composition-id="cta" data-composition-src="compositions/cta.html"
+        data-start="20.0" data-duration="5.0" data-track-index="5" data-width="1080" data-height="1920"></div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
