@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #hook-text {
+          position: absolute;
+          left: 80px;
+          right: 80px;
+          top: 300px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        #hook-kicker {
+          padding: 12px 36px;
+          border-radius: 999px;
+          background: #b8524a;
+          color: #ffffff;
+          font-size: 38px;
+          font-weight: 800;
+        }
+        .hook-line {
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 124px;
+          line-height: 1.2;
+          color: #2b1d1a;
+        }
+        #hook-line1 {
+          margin-top: 48px;
+        }
+        #hook-line3 {
+          color: #b8524a;
+        }
+        #hook-row {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 360px;
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+          gap: 40px;
+        }
+        .hook-figure {
+          display: block;
+          width: auto;
+        }
+        #hook-child {
+          height: 430px;
+        }
+        #hook-youth {
+          height: 520px;
+        }
+        #hook-elder {
+          height: 540px;
+        }
+      </style>
+      <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
+        <div id="hook-text">
+          <div id="hook-kicker">2026 장위공 서희 외교문화제</div>
+          <div id="hook-line1" class="hook-line">천 년 전</div>
+          <div id="hook-line2" class="hook-line">레전드 외교관의</div>
+          <div id="hook-line3" class="hook-line">성장기</div>
+        </div>
+        <div id="hook-row">
+          <img id="hook-child" class="hook-figure" src="assets/child.png" alt="유년기 서희" />
+          <img id="hook-youth" class="hook-figure" src="assets/youth.png" alt="청년기 서희" />
+          <img id="hook-elder" class="hook-figure" src="assets/elder.png" alt="장년기 서희" />
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#hook-kicker", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.05);
+        tl.fromTo(".hook-line", { opacity: 0, scale: 1.25 }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)", stagger: 0.2 }, 0.2);
+        tl.fromTo(".hook-figure", { opacity: 0, y: 120 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.15 }, 0.9);
+        window.__timelines["hook"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

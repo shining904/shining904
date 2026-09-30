@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #child-fade {
+          position: absolute;
+          inset: 0;
+        }
+        #child-text {
+          position: absolute;
+          left: 90px;
+          right: 90px;
+          top: 270px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        #child-chip {
+          padding: 12px 40px;
+          border-radius: 999px;
+          background: #5b2d6e;
+          color: #ffffff;
+          font-size: 40px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+        }
+        .child-line {
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 92px;
+          line-height: 1.25;
+          color: #2b1d1a;
+        }
+        #child-line1 {
+          margin-top: 36px;
+        }
+        #child-sub {
+          margin-top: 24px;
+          font-size: 44px;
+          font-weight: 500;
+          color: #6b5a50;
+        }
+        #child-figure {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 300px;
+          display: flex;
+          justify-content: center;
+        }
+        #child-img {
+          display: block;
+          height: 840px;
+          width: auto;
+        }
+      </style>
+      <div id="root" data-composition-id="child" data-width="1080" data-height="1920">
+        <div id="child-fade">
+          <div id="child-figure"><img id="child-img" src="assets/child.png" alt="유년기 서희" /></div>
+          <div id="child-text">
+            <div id="child-chip">유년기</div>
+            <div id="child-line1" class="child-line">이천 서씨 가문의</div>
+            <div id="child-line2" class="child-line">총명한 아이</div>
+            <div id="child-sub">배움을 좋아하던 어린 서희</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#child-fade", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0);
+        tl.fromTo("#child-figure", { opacity: 0, y: 160 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 0.1);
+        tl.fromTo("#child-img", { scale: 1 }, { scale: 1.04, duration: 4.3, ease: "none", transformOrigin: "50% 100%" }, 0);
+        tl.fromTo("#child-chip", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.25);
+        tl.fromTo(".child-line", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.18 }, 0.4);
+        tl.fromTo("#child-sub", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 1.0);
+        window.__timelines["child"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

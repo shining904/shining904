@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Song Myung";
+          font-weight: 400;
+          src: url("fonts/song-myung-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #youth-fade {
+          position: absolute;
+          inset: 0;
+        }
+        #youth-text {
+          position: absolute;
+          left: 90px;
+          right: 90px;
+          top: 270px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        #youth-chip {
+          padding: 12px 40px;
+          border-radius: 999px;
+          background: #5b2d6e;
+          color: #ffffff;
+          font-size: 40px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+        }
+        .youth-line {
+          font-family: "Song Myung", serif;
+          font-weight: 400;
+          font-size: 92px;
+          line-height: 1.25;
+          color: #2b1d1a;
+        }
+        #youth-line1 {
+          margin-top: 36px;
+        }
+        #youth-sub {
+          margin-top: 24px;
+          font-size: 44px;
+          font-weight: 500;
+          color: #6b5a50;
+        }
+        #youth-figure {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 300px;
+          display: flex;
+          justify-content: center;
+        }
+        #youth-img {
+          display: block;
+          height: 840px;
+          width: auto;
+        }
+      </style>
+      <div id="root" data-composition-id="youth" data-width="1080" data-height="1920">
+        <div id="youth-fade">
+          <div id="youth-figure"><img id="youth-img" src="assets/youth.png" alt="청년기 서희" /></div>
+          <div id="youth-text">
+            <div id="youth-chip">청년기</div>
+            <div id="youth-line1" class="youth-line">열여덟,</div>
+            <div id="youth-line2" class="youth-line">과거 급제</div>
+            <div id="youth-sub">고려 광종 때 관리의 길로</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#youth-fade", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0);
+        tl.fromTo("#youth-figure", { opacity: 0, y: 160 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 0.1);
+        tl.fromTo("#youth-img", { scale: 1 }, { scale: 1.04, duration: 4.3, ease: "none", transformOrigin: "50% 100%" }, 0);
+        tl.fromTo("#youth-chip", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }, 0.25);
+        tl.fromTo(".youth-line", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.18 }, 0.4);
+        tl.fromTo("#youth-sub", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 1.0);
+        window.__timelines["youth"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
