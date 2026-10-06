@@ -35,8 +35,8 @@ add_fx() {
     idx=$((idx + 1))
   done
 }
-add_fx whoosh.mp3 0.55 "${WHOOSH[@]}"
-add_fx impact.mp3 0.6 "${IMPACT[@]}"
+add_fx whoosh.mp3 0.15 "${WHOOSH[@]}"
+add_fx impact.mp3 0.07 "${IMPACT[@]}"
 
 count=$((2 + ${#WHOOSH[@]} + ${#IMPACT[@]}))
 filters+="[bed][narr]${fx_labels}amix=inputs=$count:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,apad=whole_dur=30,atrim=0:30[out]"
