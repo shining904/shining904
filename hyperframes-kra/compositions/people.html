@@ -116,13 +116,13 @@
       <script>
         const tl = gsap.timeline({ paused: true });
         tl.fromTo("#people-stripes", { x: 0 }, { x: -300, duration: 4.2, ease: "none" }, 0);
-        tl.fromTo("#people-title", { opacity: 0, y: -60 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.05);
-        tl.fromTo("#people-place", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 0.3);
-        tl.fromTo("#people-count", { opacity: 0, scale: 2.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power4.out" }, 0.5);
-        tl.to("#people-count", { keyframes: [{ x: -12, duration: 0.04 }, { x: 10, duration: 0.04 }, { x: -6, duration: 0.04 }, { x: 0, duration: 0.04 }] }, 0.85);
-        tl.fromTo("#people-sub", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.95);
-        tl.fromTo(".people-chip", { opacity: 0, y: 120 }, { opacity: 1, y: 0, duration: 0.35, ease: "back.out(2)", stagger: 0.18 }, 1.5);
-        tl.fromTo("#people-agree", { opacity: 0, scale: 2 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power4.out" }, 2.4);
+        tl.fromTo("#people-place", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 0.1);
+        tl.fromTo("#people-count", { opacity: 0, scale: 2.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power4.out" }, 0.55);
+        tl.to("#people-count", { keyframes: [{ x: -12, duration: 0.04 }, { x: 10, duration: 0.04 }, { x: -6, duration: 0.04 }, { x: 0, duration: 0.04 }] }, 0.9);
+        tl.fromTo("#people-sub", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 1.2);
+        tl.fromTo("#people-title", { opacity: 0, y: -60 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 2.25);
+        tl.fromTo(".people-chip", { opacity: 0, y: 120 }, { opacity: 1, y: 0, duration: 0.35, ease: "back.out(2)", stagger: 0.15 }, 2.7);
+        tl.fromTo("#people-agree", { opacity: 0, scale: 2 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power4.out" }, 3.4);
         window.__timelines["people"] = tl;
       </script>
     </template>

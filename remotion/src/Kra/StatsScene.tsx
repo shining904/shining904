@@ -25,7 +25,9 @@ for (const subset of [
 
 const EASE_OUT = Easing.bezier(0.16, 1, 0.3, 1);
 const LIME = "#d9ec7c";
-const STAT_FRAMES = 65;
+// Each number starts on its narration cue (0s, 2.3s, 4.15s of the scene).
+const STAT_STARTS = [0, 69, 125];
+const SCENE_FRAMES = 195;
 
 type Stat = {
   label: string;
@@ -61,7 +63,7 @@ const STATS: Stat[] = [
   },
 ];
 
-const StatCard: React.FC<{ stat: Stat }> = ({ stat }) => {
+const StatCard: React.FC<{ stat: Stat; frames: number }> = ({ stat, frames }) => {
   const frame = useCurrentFrame();
   const count = interpolate(frame, [6, 30], [0, stat.value], {
     extrapolateLeft: "clamp",
@@ -77,7 +79,7 @@ const StatCard: React.FC<{ stat: Stat }> = ({ stat }) => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          translate: interpolate(frame, [0, 8, STAT_FRAMES - 7, STAT_FRAMES], ["900px 0px", "0px 0px", "0px 0px", "-900px 0px"], {
+          translate: interpolate(frame, [0, 8, frames - 7, frames], ["900px 0px", "0px 0px", "0px 0px", "-900px 0px"], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
             easing: EASE_OUT,
@@ -143,7 +145,7 @@ export const KraStatsScene: React.FC = () => {
         style={{
           background:
             "repeating-linear-gradient(115deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 40px, transparent 40px, transparent 120px)",
-          translate: `${interpolate(frame, [0, 195], [0, -360])}px 0px`,
+          translate: `${interpolate(frame, [0, SCENE_FRAMES], [0, -360])}px 0px`,
           width: 1800,
         }}
       />
@@ -164,8 +166,13 @@ export const KraStatsScene: React.FC = () => {
         경마공원이 오면
       </Interactive.Div>
       {STATS.map((stat, i) => (
-        <Sequence key={stat.label} name={stat.label} from={i * STAT_FRAMES} durationInFrames={STAT_FRAMES}>
-          <StatCard stat={stat} />
+        <Sequence
+          key={stat.label}
+          name={stat.label}
+          from={STAT_STARTS[i]}
+          durationInFrames={(STAT_STARTS[i + 1] ?? SCENE_FRAMES) - STAT_STARTS[i]}
+        >
+          <StatCard stat={stat} frames={(STAT_STARTS[i + 1] ?? SCENE_FRAMES) - STAT_STARTS[i]} />
         </Sequence>
       ))}
       <div
