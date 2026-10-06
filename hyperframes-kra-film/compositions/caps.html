@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #caps-fade {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        #caps-fade {
+          background: transparent;
+        }
+        .caps-bar {
+          position: absolute;
+          left: 0;
+          right: 0;
+          height: 132px;
+          background: #000;
+        }
+        #caps-top {
+          top: 0;
+        }
+        #caps-bottom {
+          bottom: 0;
+        }
+        .caps-line {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 38px;
+          text-align: center;
+          font-size: 44px;
+          font-weight: 500;
+          color: #ffffff;
+          opacity: 0;
+        }
+      </style>
+      <div id="root" data-composition-id="caps" data-width="1920" data-height="1080">
+        <div id="caps-fade">
+          <div id="caps-top" class="caps-bar"></div>
+          <div id="caps-bottom" class="caps-bar"></div>
+          <div id="caps-c1" class="caps-line">새벽을 깨우는 힘찬 발굽 소리.</div>
+          <div id="caps-c2" class="caps-line">이천이, 새로운 백 년을 향해 달립니다.</div>
+          <div id="caps-c3" class="caps-line">한국마사회 경마공원. 이제, 이천이 유치에 나섭니다.</div>
+          <div id="caps-c4" class="caps-line">연간 약 490억 원의 세입.</div>
+          <div id="caps-c5" class="caps-line">3천 명 규모의 근무 기반.</div>
+          <div id="caps-c6" class="caps-line">그리고 한 해 200만 명이 넘는 방문객.</div>
+          <div id="caps-c7" class="caps-line">온 가족이 함께 즐기는, 365일 말문화 복합공원.</div>
+          <div id="caps-c8" class="caps-line">말산업특구 지정, 470여 두의 말과 말 전문 동물병원까지.</div>
+          <div id="caps-c9" class="caps-line">이천은, 이미 준비된 도시입니다.</div>
+          <div id="caps-c10" class="caps-line">장호원읍 4천여 명의 서명을 시작으로, 시민이 먼저 움직였습니다.</div>
+          <div id="caps-c11" class="caps-line">이천의 새로운 기회, 시민의 뜻으로 시작됩니다.</div>
+          <div id="caps-c12" class="caps-line">한국마사회 이천 유치. 여러분의 서명으로, 힘을 모아주세요.</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#caps-c1", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 0.8);
+        tl.to("#caps-c1", { opacity: 0, duration: 0.15, ease: "none" }, 2.75);
+        tl.fromTo("#caps-c2", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 3.3);
+        tl.to("#caps-c2", { opacity: 0, duration: 0.15, ease: "none" }, 5.75);
+        tl.fromTo("#caps-c3", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 8.5);
+        tl.to("#caps-c3", { opacity: 0, duration: 0.15, ease: "none" }, 13.35);
+        tl.fromTo("#caps-c4", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 14.8);
+        tl.to("#caps-c4", { opacity: 0, duration: 0.15, ease: "none" }, 16.6);
+        tl.fromTo("#caps-c5", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 17.2);
+        tl.to("#caps-c5", { opacity: 0, duration: 0.15, ease: "none" }, 18.8);
+        tl.fromTo("#caps-c6", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 19.5);
+        tl.to("#caps-c6", { opacity: 0, duration: 0.15, ease: "none" }, 21.7);
+        tl.fromTo("#caps-c7", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 23.2);
+        tl.to("#caps-c7", { opacity: 0, duration: 0.15, ease: "none" }, 27.05);
+        tl.fromTo("#caps-c8", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 30.4);
+        tl.to("#caps-c8", { opacity: 0, duration: 0.15, ease: "none" }, 34.75);
+        tl.fromTo("#caps-c9", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 35.1);
+        tl.to("#caps-c9", { opacity: 0, duration: 0.15, ease: "none" }, 37.55);
+        tl.fromTo("#caps-c10", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 38.3);
+        tl.to("#caps-c10", { opacity: 0, duration: 0.15, ease: "none" }, 42.55);
+        tl.fromTo("#caps-c11", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 46.0);
+        tl.to("#caps-c11", { opacity: 0, duration: 0.15, ease: "none" }, 49.55);
+        tl.fromTo("#caps-c12", { opacity: 0 }, { opacity: 1, duration: 0.15, ease: "none" }, 53.0);
+        tl.to("#caps-c12", { opacity: 0, duration: 0.15, ease: "none" }, 57.65);
+        window.__timelines["caps"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

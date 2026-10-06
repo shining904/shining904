@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #farm-fade {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #farm-frame {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #farm-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        #farm-vignette {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%);
+        }
+        .farm-kicker {
+          font-size: 40px;
+          font-weight: 800;
+          letter-spacing: 0.35em;
+          color: #d9ec7c;
+          text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6);
+        }
+        .farm-big {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 150px;
+          line-height: 1.1;
+          color: #ffffff;
+          text-shadow: 0 6px 40px rgba(0, 0, 0, 0.55);
+        }
+        #farm-shade {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(90deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.15) 60%);
+        }
+        #farm-list {
+          position: absolute;
+          left: 140px;
+          top: 220px;
+          display: flex;
+          flex-direction: column;
+          gap: 22px;
+        }
+        .farm-card {
+          width: 640px;
+          padding: 24px 32px;
+          border-radius: 20px;
+          background: rgba(15, 58, 36, 0.72);
+          border-left: 10px solid #d9ec7c;
+        }
+        .farm-card-big {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 58px;
+          color: #d9ec7c;
+        }
+        .farm-card-small {
+          margin-top: 4px;
+          font-size: 34px;
+          font-weight: 800;
+          color: #ffffff;
+        }
+        #farm-title {
+          position: absolute;
+          right: 140px;
+          bottom: 250px;
+          text-align: right;
+        }
+        #farm-big {
+          font-size: 120px;
+        }
+      </style>
+      <div id="root" data-composition-id="farm" data-width="1920" data-height="1080">
+        <div id="farm-fade">
+          <div id="farm-frame">
+            <video id="farm-video" src="assets/clips/farm.mp4" data-start="0" data-duration="8" muted playsinline></video>
+          </div>
+          <div id="farm-vignette"></div>
+          <div id="farm-shade"></div>
+          <div id="farm-list">
+            <div id="farm-card1" class="farm-card">
+              <div class="farm-card-big">말산업특구</div>
+              <div class="farm-card-small">이미 지정 완료</div>
+            </div>
+            <div id="farm-card2" class="farm-card">
+              <div class="farm-card-big">470여 두</div>
+              <div class="farm-card-small">26개 농가에서 사육</div>
+            </div>
+            <div id="farm-card3" class="farm-card">
+              <div class="farm-card-big">말 전문 동물병원</div>
+              <div class="farm-card-small">연 5,600여 마리 진료</div>
+            </div>
+          </div>
+          <div id="farm-title">
+            <div id="farm-kicker" class="farm-kicker">이천은</div>
+            <div id="farm-big" class="farm-big">이미 준비된 도시</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#farm-fade", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "none" }, 0);
+        tl.fromTo("#farm-frame", { scale: 1 }, { scale: 1.06, duration: 8, ease: "none" }, 0);
+        tl.fromTo("#farm-card1", { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.4);
+        tl.fromTo("#farm-card2", { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 1.6);
+        tl.fromTo("#farm-card3", { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 2.8);
+        tl.fromTo("#farm-kicker", { opacity: 0, scale: 1.08, filter: "blur(18px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.6, ease: "power3.out" }, 4.7);
+        tl.fromTo("#farm-big", { opacity: 0, scale: 1.08, filter: "blur(18px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.8, ease: "power3.out" }, 4.9);
+        window.__timelines["farm"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

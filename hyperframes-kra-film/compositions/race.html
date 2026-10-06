@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #race-fade {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #race-frame {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #race-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        #race-vignette {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%);
+        }
+        .race-kicker {
+          font-size: 40px;
+          font-weight: 800;
+          letter-spacing: 0.35em;
+          color: #d9ec7c;
+          text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6);
+        }
+        .race-big {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 150px;
+          line-height: 1.1;
+          color: #ffffff;
+          text-shadow: 0 6px 40px rgba(0, 0, 0, 0.55);
+        }
+        #race-title {
+          position: absolute;
+          left: 140px;
+          top: 300px;
+        }
+        #race-big {
+          margin-top: 12px;
+        }
+        #race-line {
+          margin-top: 18px;
+          width: 520px;
+          height: 10px;
+          background: #d9ec7c;
+          transform-origin: 0% 50%;
+        }
+      </style>
+      <div id="root" data-composition-id="race" data-width="1920" data-height="1080">
+        <div id="race-fade">
+          <div id="race-frame">
+            <video id="race-video" src="assets/clips/race.mp4" data-start="0" data-duration="6.8" muted playsinline></video>
+          </div>
+          <div id="race-vignette"></div>
+          <div id="race-title">
+            <div id="race-kicker" class="race-kicker">한국마사회(경마공원)</div>
+            <div id="race-big" class="race-big">이천 유치</div>
+            <div id="race-line"></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#race-fade", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "none" }, 0);
+        tl.fromTo("#race-frame", { scale: 1 }, { scale: 1.05, duration: 6.8, ease: "none" }, 0);
+        tl.fromTo("#race-kicker", { opacity: 0, scale: 1.08, filter: "blur(18px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.6, ease: "power3.out" }, 1.1);
+        tl.fromTo("#race-big", { opacity: 0, scale: 1.08, filter: "blur(18px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.7, ease: "power3.out" }, 1.3);
+        tl.fromTo("#race-line", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power3.out" }, 1.7);
+        window.__timelines["race"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

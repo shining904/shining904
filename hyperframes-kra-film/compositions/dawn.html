@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #dawn-fade {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #dawn-frame {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #dawn-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        #dawn-vignette {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.55) 100%);
+        }
+        .dawn-kicker {
+          font-size: 40px;
+          font-weight: 800;
+          letter-spacing: 0.35em;
+          color: #d9ec7c;
+          text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6);
+        }
+        .dawn-big {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 150px;
+          line-height: 1.1;
+          color: #ffffff;
+          text-shadow: 0 6px 40px rgba(0, 0, 0, 0.55);
+        }
+        #dawn-title {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 360px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        #dawn-big {
+          margin-top: 16px;
+        }
+      </style>
+      <div id="root" data-composition-id="dawn" data-width="1920" data-height="1080">
+        <div id="dawn-fade">
+          <div id="dawn-frame">
+            <video id="dawn-video" src="assets/clips/dawn.mp4" data-start="0" data-duration="8" muted playsinline></video>
+          </div>
+          <div id="dawn-vignette"></div>
+          <div id="dawn-title">
+            <div id="dawn-kicker" class="dawn-kicker">새로운 백 년을 향해</div>
+            <div id="dawn-big" class="dawn-big">이천이 달린다</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#dawn-frame", { scale: 1 }, { scale: 1.08, duration: 8, ease: "none" }, 0);
+        tl.fromTo("#dawn-kicker", { opacity: 0, scale: 1.08, filter: "blur(18px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.7, ease: "power3.out" }, 5.6);
+        tl.fromTo("#dawn-big", { opacity: 0, scale: 1.08, filter: "blur(18px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.9, ease: "power3.out" }, 5.9);
+        window.__timelines["dawn"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

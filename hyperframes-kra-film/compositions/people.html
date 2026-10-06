@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #people-fade {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #people-bgclip {
+          position: absolute;
+          inset: -40px;
+          width: calc(100% + 80px);
+          height: calc(100% + 80px);
+          object-fit: cover;
+          filter: blur(14px) brightness(0.45) saturate(0.8);
+        }
+        #people-tint {
+          position: absolute;
+          inset: 0;
+          background: rgba(15, 58, 36, 0.55);
+        }
+        #people-wrap {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 190px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          color: #ffffff;
+        }
+        #people-place {
+          padding: 10px 36px;
+          border-radius: 999px;
+          background: #d9ec7c;
+          color: #0f3a24;
+          font-size: 40px;
+          font-weight: 800;
+        }
+        #people-count {
+          margin-top: 10px;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 230px;
+          line-height: 1.05;
+        }
+        #people-unit {
+          color: #d9ec7c;
+          font-size: 120px;
+        }
+        #people-title {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 92px;
+        }
+        #people-chips {
+          margin-top: 34px;
+          display: flex;
+          gap: 18px;
+        }
+        .people-chip {
+          padding: 14px 30px;
+          border-radius: 20px;
+          background: rgba(255, 255, 255, 0.92);
+          color: #0f3a24;
+          font-size: 42px;
+          font-weight: 800;
+        }
+      </style>
+      <div id="root" data-composition-id="people" data-width="1920" data-height="1080">
+        <div id="people-fade">
+          <video id="people-bgclip" src="assets/clips/dawn.mp4" data-start="0" data-duration="6.5" muted playsinline></video>
+          <div id="people-tint"></div>
+          <div id="people-wrap">
+            <div id="people-place">장호원읍 1차 주민 서명</div>
+            <div id="people-count">4,000<span id="people-unit">여 명</span></div>
+            <div id="people-title">시민이 먼저 움직였다</div>
+            <div id="people-chips">
+            <div class="people-chip">부발읍</div>
+            <div class="people-chip">신둔면</div>
+            <div class="people-chip">호법면</div>
+            <div class="people-chip">율면</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#people-fade", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "none" }, 0);
+        tl.fromTo("#people-place", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.3);
+        tl.fromTo("#people-count", { opacity: 0, scale: 1.6, filter: "blur(16px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.7, ease: "power3.out" }, 0.5);
+        tl.fromTo("#people-title", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 2.6);
+        tl.fromTo(".people-chip", { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.45, ease: "back.out(1.8)", stagger: 0.15 }, 3.2);
+        window.__timelines["people"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

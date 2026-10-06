@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #cta-fade {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #cta-bg {
+          position: absolute;
+          inset: -40px;
+          width: calc(100% + 80px);
+          height: calc(100% + 80px);
+          object-fit: cover;
+          filter: blur(16px) brightness(0.4);
+        }
+        #cta-wrap {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 170px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        #cta-logo {
+          display: block;
+          width: 200px;
+          height: auto;
+          padding: 8px 20px;
+          border-radius: 22px;
+          background: #ffffff;
+          box-sizing: content-box;
+        }
+        .cta-big {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 104px;
+          line-height: 1.15;
+          color: #ffffff;
+        }
+        #cta-big1 {
+          margin-top: 22px;
+        }
+        #cta-big2 {
+          color: #d9ec7c;
+        }
+        #cta-row {
+          margin-top: 30px;
+          display: flex;
+          align-items: center;
+          gap: 30px;
+          padding: 20px 34px;
+          border-radius: 26px;
+          background: rgba(255, 255, 255, 0.95);
+        }
+        #cta-qr {
+          display: block;
+          width: 170px;
+          height: 170px;
+          image-rendering: pixelated;
+        }
+        #cta-qrtext {
+          text-align: left;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 54px;
+          color: #0f3a24;
+        }
+        #cta-qrsub {
+          margin-top: 6px;
+          text-align: left;
+          font-size: 30px;
+          font-weight: 500;
+          color: #4b5d52;
+        }
+        #cta-notes {
+          position: absolute;
+          right: 60px;
+          bottom: 150px;
+          text-align: right;
+          font-size: 22px;
+          font-weight: 500;
+          line-height: 1.6;
+          color: rgba(255, 255, 255, 0.7);
+        }
+        #cta-black {
+          position: absolute;
+          inset: 0;
+          background: #000;
+          opacity: 0;
+        }
+      </style>
+      <div id="root" data-composition-id="cta" data-width="1920" data-height="1080">
+        <div id="cta-fade">
+          <img id="cta-bg" src="assets/aerial-end.jpg" alt="" />
+          <div id="cta-wrap">
+            <img id="cta-logo" src="assets/icheon-logo.png" alt="이천시" />
+            <div id="cta-big1" class="cta-big">한국마사회 이천 유치에</div>
+            <div id="cta-big2" class="cta-big">힘을 모아주세요!</div>
+            <div id="cta-row">
+              <img id="cta-qr" src="assets/qr.png" alt="지지서명 QR 코드" />
+              <div>
+                <div id="cta-qrtext">QR로 지지서명 참여</div>
+                <div id="cta-qrsub">화면을 캡처해 스캔하세요</div>
+              </div>
+            </div>
+          </div>
+          <div id="cta-notes">
+            <div>※ 수치는 사업 규모·운영 방식·협약 조건 등에 따라 달라질 수 있습니다</div>
+            <div>※ 영상 속 일부 장면은 이해를 돕기 위해 AI로 생성한 이미지입니다</div>
+          </div>
+          <div id="cta-black"></div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#cta-fade", { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "none" }, 0);
+        tl.fromTo("#cta-bg", { scale: 1.1 }, { scale: 1, duration: 10, ease: "none" }, 0);
+        tl.fromTo("#cta-logo", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.3);
+        tl.fromTo(".cta-big", { opacity: 0, scale: 1.08, filter: "blur(14px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.8, ease: "power3.out", stagger: 0.35 }, 0.6);
+        tl.fromTo("#cta-row", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 1.8);
+        tl.fromTo("#cta-notes", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 2.2);
+        tl.to("#cta-black", { opacity: 1, duration: 1.0, ease: "none" }, 8.8);
+        window.__timelines["cta"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
