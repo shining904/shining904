@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>한국마사회 이천 유치</title>
+    <script src="gsap.min.js"></script>
+    <style>
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-weight: 500;
+        src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+2190-21FF;
+      }
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-weight: 500;
+        src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+        unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+      }
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-weight: 800;
+        src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+2190-21FF;
+      }
+      @font-face {
+        font-family: "Noto Sans KR";
+        font-weight: 800;
+        src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+        unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #14472d;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #14472d;
+        font-family: "Noto Sans KR", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Scene "stats" is a Remotion render: remotion/src/Kra/StatsScene.tsx -->
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="30"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="hook" data-composition-id="hook" data-composition-src="compositions/hook.html"
+        data-start="0" data-duration="3.0" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="hero" data-composition-id="hero" data-composition-src="compositions/hero.html"
+        data-start="3.0" data-duration="3.3" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="stats" data-composition-id="stats" data-composition-src="compositions/stats.html"
+        data-start="6.3" data-duration="6.5" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="ready" data-composition-id="ready" data-composition-src="compositions/ready.html"
+        data-start="12.8" data-duration="4.8" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="people" data-composition-id="people" data-composition-src="compositions/people.html"
+        data-start="17.6" data-duration="4.2" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="flash" data-composition-id="flash" data-composition-src="compositions/flash.html"
+        data-start="21.8" data-duration="2.2" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="cta" data-composition-id="cta" data-composition-src="compositions/cta.html"
+        data-start="24.0" data-duration="6.0" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="wipe1" data-composition-id="wipe1" data-composition-src="compositions/wipe1.html"
+        data-start="2.67" data-duration="0.7" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="wipe2" data-composition-id="wipe2" data-composition-src="compositions/wipe2.html"
+        data-start="5.97" data-duration="0.7" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="wipe3" data-composition-id="wipe3" data-composition-src="compositions/wipe3.html"
+        data-start="12.47" data-duration="0.7" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="wipe4" data-composition-id="wipe4" data-composition-src="compositions/wipe4.html"
+        data-start="17.27" data-duration="0.7" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="wipe5" data-composition-id="wipe5" data-composition-src="compositions/wipe5.html"
+        data-start="23.67" data-duration="0.7" data-track-index="1" data-width="1080" data-height="1920"></div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

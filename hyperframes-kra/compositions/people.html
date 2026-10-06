@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #people-bg {
+          position: absolute;
+          inset: 0;
+          background: #14472d;
+        }
+        #people-stripes {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 1800px;
+          height: 1920px;
+          background: repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 40px, transparent 40px, transparent 120px);
+        }
+        #people-wrap {
+          position: absolute;
+          left: 60px;
+          right: 60px;
+          top: 300px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          color: #ffffff;
+        }
+        #people-title {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 110px;
+        }
+        #people-place {
+          margin-top: 60px;
+          padding: 12px 40px;
+          border-radius: 999px;
+          background: #d9ec7c;
+          color: #14472d;
+          font-size: 46px;
+          font-weight: 800;
+        }
+        #people-count {
+          margin-top: 20px;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 230px;
+          line-height: 1.05;
+          color: #ffffff;
+        }
+        #people-unit {
+          color: #d9ec7c;
+          font-size: 130px;
+        }
+        #people-sub {
+          font-size: 44px;
+          font-weight: 500;
+          color: #e6efe3;
+        }
+        #people-chips {
+          margin-top: 80px;
+          display: flex;
+          gap: 20px;
+        }
+        .people-chip {
+          padding: 18px 34px;
+          border-radius: 24px;
+          background: #ffffff;
+          color: #14472d;
+          font-size: 48px;
+          font-weight: 800;
+        }
+        #people-agree {
+          margin-top: 32px;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 84px;
+          color: #d9ec7c;
+        }
+      </style>
+      <div id="root" data-composition-id="people" data-width="1080" data-height="1920">
+        <div id="people-bg"></div>
+        <div id="people-stripes"></div>
+        <div id="people-wrap">
+          <div id="people-title">시민이 먼저 움직였다</div>
+          <div id="people-place">장호원읍 1차 주민 서명</div>
+          <div id="people-count">4,000<span id="people-unit">여 명</span></div>
+          <div id="people-sub">주민 추진위원회까지 구성</div>
+          <div id="people-chips">
+            <div class="people-chip">부발읍</div>
+            <div class="people-chip">신둔면</div>
+            <div class="people-chip">호법면</div>
+            <div class="people-chip">율면</div>
+          </div>
+          <div id="people-agree">유치 찬성 확인!</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#people-stripes", { x: 0 }, { x: -300, duration: 4.2, ease: "none" }, 0);
+        tl.fromTo("#people-title", { opacity: 0, y: -60 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.05);
+        tl.fromTo("#people-place", { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(2)" }, 0.3);
+        tl.fromTo("#people-count", { opacity: 0, scale: 2.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power4.out" }, 0.5);
+        tl.to("#people-count", { keyframes: [{ x: -12, duration: 0.04 }, { x: 10, duration: 0.04 }, { x: -6, duration: 0.04 }, { x: 0, duration: 0.04 }] }, 0.85);
+        tl.fromTo("#people-sub", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.95);
+        tl.fromTo(".people-chip", { opacity: 0, y: 120 }, { opacity: 1, y: 0, duration: 0.35, ease: "back.out(2)", stagger: 0.18 }, 1.5);
+        tl.fromTo("#people-agree", { opacity: 0, scale: 2 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power4.out" }, 2.4);
+        window.__timelines["people"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

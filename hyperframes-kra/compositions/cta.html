@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #cta-bg {
+          position: absolute;
+          inset: 0;
+          background: #f5f3e6;
+        }
+        #cta-wrap {
+          position: absolute;
+          left: 60px;
+          right: 60px;
+          top: 240px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        #cta-logo {
+          display: block;
+          width: 260px;
+          height: auto;
+          padding: 10px 24px;
+          border-radius: 28px;
+          background: #ffffff;
+          box-sizing: content-box;
+        }
+        #cta-lead {
+          margin-top: 24px;
+          font-size: 42px;
+          font-weight: 800;
+          color: #6b3a2a;
+        }
+        .cta-line {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 128px;
+          line-height: 1.12;
+          color: #1f5a36;
+        }
+        #cta-line1 {
+          margin-top: 20px;
+        }
+        #cta-line3 {
+          color: #6b3a2a;
+        }
+        #cta-qrcard {
+          margin-top: 44px;
+          display: flex;
+          align-items: center;
+          gap: 36px;
+          padding: 28px 40px;
+          border-radius: 32px;
+          background: #ffffff;
+          border: 6px solid #1f5a36;
+        }
+        #cta-qr {
+          display: block;
+          width: 230px;
+          height: 230px;
+          image-rendering: pixelated;
+        }
+        #cta-qrtext {
+          text-align: left;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 64px;
+          line-height: 1.2;
+          color: #1d2a20;
+        }
+        #cta-qrsub {
+          margin-top: 10px;
+          font-size: 34px;
+          font-weight: 500;
+          color: #6b6b5c;
+        }
+        #cta-slogan {
+          margin-top: 48px;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 64px;
+          color: #1f5a36;
+        }
+      </style>
+      <div id="root" data-composition-id="cta" data-width="1080" data-height="1920">
+        <div id="cta-bg"></div>
+        <div id="cta-wrap">
+          <img id="cta-logo" src="assets/icheon-logo.png" alt="이천시" />
+          <div id="cta-lead">이천의 새로운 기회, 시민의 뜻으로 시작합니다</div>
+          <div id="cta-line1" class="cta-line">한국마사회</div>
+          <div id="cta-line2" class="cta-line">이천 유치에</div>
+          <div id="cta-line3" class="cta-line">힘을 모아주세요!</div>
+          <div id="cta-qrcard">
+            <img id="cta-qr" src="assets/qr.png" alt="지지서명 QR 코드" />
+            <div>
+              <div id="cta-qrtext">QR로 지지서명</div>
+              <div id="cta-qrsub">화면을 캡처해 스캔하세요</div>
+            </div>
+          </div>
+          <div id="cta-slogan">미래가 모이는 도시 이천</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#cta-logo", { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.05);
+        tl.fromTo("#cta-lead", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.3);
+        tl.fromTo(".cta-line", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power4.out", stagger: 0.25 }, 0.5);
+        tl.fromTo("#cta-qrcard", { opacity: 0, y: 160 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.6)" }, 1.4);
+        tl.fromTo("#cta-slogan", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 1.8);
+        tl.to("#cta-qrcard", { scale: 1.04, duration: 0.5, ease: "sine.inOut", yoyo: true, repeat: 5 }, 2.2);
+        window.__timelines["cta"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

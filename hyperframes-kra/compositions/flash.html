@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        .flash-panel {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+        }
+        .flash-arrow {
+          width: 0;
+          height: 0;
+          border-left: 70px solid transparent;
+          border-right: 70px solid transparent;
+          border-bottom: 90px solid #ffffff;
+        }
+        .flash-word {
+          margin-top: 30px;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 210px;
+        }
+        .flash-up {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 90px;
+          letter-spacing: 0.2em;
+        }
+      </style>
+      <div id="root" data-composition-id="flash" data-width="1080" data-height="1920">
+        <div id="flash-p1" class="flash-panel" style="background: #1f5a36; color: #ffffff;">
+          <div class="flash-arrow" style="border-bottom-color: #ffffff;"></div>
+          <div class="flash-word">지역경제</div>
+          <div class="flash-up">UP</div>
+        </div>
+        <div id="flash-p2" class="flash-panel" style="background: #d9ec7c; color: #14472d;">
+          <div class="flash-arrow" style="border-bottom-color: #14472d;"></div>
+          <div class="flash-word">일자리</div>
+          <div class="flash-up">UP</div>
+        </div>
+        <div id="flash-p3" class="flash-panel" style="background: #6b3a2a; color: #ffffff;">
+          <div class="flash-arrow" style="border-bottom-color: #ffffff;"></div>
+          <div class="flash-word">생활환경</div>
+          <div class="flash-up">UP</div>
+        </div>
+        <div id="flash-p4" class="flash-panel" style="background: #f5f3e6; color: #1f5a36;">
+          <div class="flash-arrow" style="border-bottom-color: #1f5a36;"></div>
+          <div class="flash-word">문화관광</div>
+          <div class="flash-up">UP</div>
+        </div>
+        <div id="flash-p5" class="flash-panel" style="background: #14472d; color: #d9ec7c;">
+          <div class="flash-arrow" style="border-bottom-color: #d9ec7c;"></div>
+          <div class="flash-word">지역상생</div>
+          <div class="flash-up">UP</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.set("#flash-p1", { opacity: 1 }, 0.00);
+        tl.fromTo("#flash-p1 .flash-word", { scale: 1.6 }, { scale: 1, duration: 0.2, ease: "power4.out" }, 0.00);
+        tl.set("#flash-p1", { opacity: 0 }, 0.44);
+        tl.set("#flash-p2", { opacity: 1 }, 0.44);
+        tl.fromTo("#flash-p2 .flash-word", { scale: 1.6 }, { scale: 1, duration: 0.2, ease: "power4.out" }, 0.44);
+        tl.set("#flash-p2", { opacity: 0 }, 0.88);
+        tl.set("#flash-p3", { opacity: 1 }, 0.88);
+        tl.fromTo("#flash-p3 .flash-word", { scale: 1.6 }, { scale: 1, duration: 0.2, ease: "power4.out" }, 0.88);
+        tl.set("#flash-p3", { opacity: 0 }, 1.32);
+        tl.set("#flash-p4", { opacity: 1 }, 1.32);
+        tl.fromTo("#flash-p4 .flash-word", { scale: 1.6 }, { scale: 1, duration: 0.2, ease: "power4.out" }, 1.32);
+        tl.set("#flash-p4", { opacity: 0 }, 1.76);
+        tl.set("#flash-p5", { opacity: 1 }, 1.76);
+        tl.fromTo("#flash-p5 .flash-word", { scale: 1.6 }, { scale: 1, duration: 0.2, ease: "power4.out" }, 1.76);
+        window.__timelines["flash"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

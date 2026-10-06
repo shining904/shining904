@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #hero-bg {
+          position: absolute;
+          inset: 0;
+          background: #f5f3e6;
+        }
+        #hero-head {
+          position: absolute;
+          left: 60px;
+          right: 60px;
+          top: 260px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        #hero-chip {
+          padding: 12px 40px;
+          border-radius: 999px;
+          background: #1f5a36;
+          color: #ffffff;
+          font-size: 40px;
+          font-weight: 800;
+        }
+        .hero-line {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 104px;
+          white-space: nowrap;
+          line-height: 1.15;
+          color: #1d2a20;
+        }
+        #hero-line1 {
+          margin-top: 28px;
+        }
+        #hero-line2 {
+          color: #6b3a2a;
+        }
+        #hero-card {
+          position: absolute;
+          left: 40px;
+          top: 700px;
+          width: 1000px;
+          height: 497px;
+          border-radius: 36px;
+          overflow: hidden;
+          border: 8px solid #ffffff;
+          box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+        }
+        #hero-img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        #hero-caption {
+          position: absolute;
+          left: 60px;
+          right: 60px;
+          top: 1250px;
+          text-align: center;
+          font-size: 48px;
+          font-weight: 800;
+          color: #1f5a36;
+        }
+        #hero-note {
+          position: absolute;
+          left: 60px;
+          right: 60px;
+          top: 1330px;
+          text-align: center;
+          font-size: 30px;
+          font-weight: 500;
+          color: #6b6b5c;
+        }
+      </style>
+      <div id="root" data-composition-id="hero" data-width="1080" data-height="1920">
+        <div id="hero-bg"></div>
+        <div id="hero-head">
+          <div id="hero-chip">미래가 모이는 도시 이천</div>
+          <div id="hero-line1" class="hero-line">한국마사회(경마공원)</div>
+          <div id="hero-line2" class="hero-line">이천 이전 유치!</div>
+        </div>
+        <div id="hero-card"><img id="hero-img" src="assets/hero.jpg" alt="말문화공원 구상도" /></div>
+        <div id="hero-caption">온 가족이 즐기는 미래형 복합 말문화공원</div>
+        <div id="hero-note">※ 이미지는 이해를 돕기 위한 구상도입니다</div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#hero-chip", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.05);
+        tl.fromTo("#hero-line1", { opacity: 0, x: -500 }, { opacity: 1, x: 0, duration: 0.4, ease: "power4.out" }, 0.15);
+        tl.fromTo("#hero-line2", { opacity: 0, x: 500 }, { opacity: 1, x: 0, duration: 0.4, ease: "power4.out" }, 0.3);
+        tl.fromTo("#hero-card", { opacity: 0, y: 300, rotation: -4 }, { opacity: 1, y: 0, rotation: 0, duration: 0.55, ease: "back.out(1.4)" }, 0.45);
+        tl.fromTo("#hero-img", { scale: 1.25 }, { scale: 1, duration: 3.3, ease: "power1.out" }, 0.45);
+        tl.fromTo("#hero-caption", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" }, 1.0);
+        tl.fromTo("#hero-note", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 1.2);
+        window.__timelines["hero"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

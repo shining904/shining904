@@ -3,6 +3,7 @@ import { Composition, Folder } from "remotion";
 import { HelloWorld } from "./HelloWorld";
 import { Logo } from "./HelloWorld/Logo";
 import { DiscountScene } from "./Icheon/DiscountScene";
+import { KraStatsScene } from "./Kra/StatsScene";
 import { KoreanIntro } from "./KoreanIntro";
 import { Background } from "./KoreanIntro/Background";
 import { IntroScene } from "./KoreanIntro/IntroScene";
@@ -42,6 +43,14 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1920}
         height={1080}
+      />
+      <Composition
+        id="KraStats"
+        component={KraStatsScene}
+        durationInFrames={195}
+        fps={30}
+        width={1080}
+        height={1920}
       />
       <Folder name="KoreanIntro-Scenes">
         <Composition id="Intro" component={IntroStill} durationInFrames={84} fps={30} width={1920} height={1080} />

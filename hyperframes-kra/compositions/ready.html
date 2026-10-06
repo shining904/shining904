@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #ready-bg {
+          position: absolute;
+          inset: 0;
+          background: #f5f3e6;
+        }
+        #ready-head {
+          position: absolute;
+          left: 60px;
+          right: 60px;
+          top: 290px;
+          text-align: center;
+          font-family: "Black Han Sans", sans-serif;
+          color: #1d2a20;
+        }
+        #ready-kicker {
+          font-size: 64px;
+        }
+        #ready-title {
+          font-size: 150px;
+          line-height: 1.1;
+          color: #6b3a2a;
+        }
+        #ready-grid {
+          position: absolute;
+          left: 60px;
+          top: 650px;
+          width: 960px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 28px;
+        }
+        .ready-card {
+          height: 320px;
+          border-radius: 32px;
+          background: #1f5a36;
+          color: #ffffff;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+        .ready-big {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 76px;
+          white-space: nowrap;
+          color: #d9ec7c;
+        }
+        .ready-small {
+          margin-top: 14px;
+          font-size: 38px;
+          font-weight: 800;
+        }
+      </style>
+      <div id="root" data-composition-id="ready" data-width="1080" data-height="1920">
+        <div id="ready-bg"></div>
+        <div id="ready-head">
+          <div id="ready-kicker">이천은</div>
+          <div id="ready-title">이미 준비됐다</div>
+        </div>
+        <div id="ready-grid">
+          <div id="ready-card1" class="ready-card">
+            <div class="ready-big">말산업특구</div>
+            <div class="ready-small">이미 지정 완료</div>
+          </div>
+          <div id="ready-card2" class="ready-card">
+            <div class="ready-big">470여 두</div>
+            <div class="ready-small">26개 농가에서 사육</div>
+          </div>
+          <div id="ready-card3" class="ready-card">
+            <div class="ready-big">5,600여 마리</div>
+            <div class="ready-small">말 전문 동물병원 연간 진료</div>
+          </div>
+          <div id="ready-card4" class="ready-card">
+            <div class="ready-big">광역교통망</div>
+            <div class="ready-small">뛰어난 접근성</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#ready-kicker", { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.05);
+        tl.fromTo("#ready-title", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power4.out" }, 0.2);
+        tl.fromTo(".ready-card", { opacity: 0, scale: 0.4, rotation: -8 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.4, ease: "back.out(1.8)", stagger: 0.32 }, 0.6);
+        tl.fromTo("#ready-grid", { y: 0 }, { y: -20, duration: 4.8, ease: "none" }, 0);
+        window.__timelines["ready"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

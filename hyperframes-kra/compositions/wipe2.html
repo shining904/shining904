@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .wipe2-bar {
+          position: absolute;
+          top: -400px;
+          height: 2720px;
+          transform-origin: 50% 50%;
+        }
+        #wipe2-a {
+          left: 0;
+          width: 900px;
+          background: #d9ec7c;
+        }
+        #wipe2-b {
+          left: 0;
+          width: 900px;
+          background: #1f5a36;
+        }
+      </style>
+      <div id="root" data-composition-id="wipe2" data-width="1080" data-height="1920">
+        <div id="wipe2-a" class="wipe2-bar"></div>
+        <div id="wipe2-b" class="wipe2-bar"></div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#wipe2-a", { x: 1500, rotation: 20 }, { x: -1500, rotation: 20, duration: 0.6, ease: "power2.inOut" }, 0);
+        tl.fromTo("#wipe2-b", { x: 1700, rotation: 20 }, { x: -1300, rotation: 20, duration: 0.6, ease: "power2.inOut" }, 0.05);
+        window.__timelines["wipe2"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

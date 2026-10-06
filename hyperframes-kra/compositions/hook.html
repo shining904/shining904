@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #hook-bg {
+          position: absolute;
+          inset: 0;
+          background: #14472d;
+        }
+        #hook-stripes {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 1800px;
+          height: 1920px;
+          background: repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 40px, transparent 40px, transparent 120px);
+        }
+        .hook-streak {
+          position: absolute;
+          left: 0;
+          height: 10px;
+          border-radius: 5px;
+          background: #d9ec7c;
+          opacity: 0.7;
+        }
+        #hook-streak1 { top: 420px; width: 520px; }
+        #hook-streak2 { top: 1280px; width: 700px; }
+        #hook-streak3 { top: 1460px; width: 420px; }
+        #hook-text {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 560px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-family: "Black Han Sans", sans-serif;
+          color: #ffffff;
+          text-align: center;
+        }
+        .hook-line {
+          font-size: 190px;
+          line-height: 1.15;
+        }
+        #hook-line2 {
+          color: #d9ec7c;
+        }
+      </style>
+      <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
+        <div id="hook-bg"></div>
+        <div id="hook-stripes"></div>
+        <div id="hook-streak1" class="hook-streak"></div>
+        <div id="hook-streak2" class="hook-streak"></div>
+        <div id="hook-streak3" class="hook-streak"></div>
+        <div id="hook-text">
+          <div id="hook-line1" class="hook-line">이천에</div>
+          <div id="hook-line2" class="hook-line">경마공원이</div>
+          <div id="hook-line3" class="hook-line">온다면?</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#hook-stripes", { x: 0 }, { x: -360, duration: 3, ease: "none" }, 0);
+        tl.fromTo("#hook-streak1", { x: 1200 }, { x: -700, duration: 0.7, ease: "power1.in" }, 0.1);
+        tl.fromTo("#hook-streak2", { x: 1200 }, { x: -900, duration: 0.6, ease: "power1.in" }, 0.5);
+        tl.fromTo("#hook-streak3", { x: 1200 }, { x: -600, duration: 0.8, ease: "power1.in" }, 1.1);
+        tl.fromTo("#hook-line1", { opacity: 0, scale: 2.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power4.out" }, 0.15);
+        tl.fromTo("#hook-line2", { opacity: 0, scale: 2.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power4.out" }, 0.6);
+        tl.fromTo("#hook-line3", { opacity: 0, scale: 2.6 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power4.out" }, 1.05);
+        tl.to("#hook-text", { keyframes: [{ x: -14, y: 8, duration: 0.04 }, { x: 12, y: -6, duration: 0.04 }, { x: -8, y: 4, duration: 0.04 }, { x: 0, y: 0, duration: 0.04 }] }, 1.33);
+        tl.to("#hook-text", { scale: 1.06, duration: 1.4, ease: "none" }, 1.5);
+        window.__timelines["hook"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
