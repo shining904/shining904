@@ -3,6 +3,9 @@
 # their cues, natural sound from each live-action clip, the orchestral
 # score in two sections (build, then climax) ducked under the voice,
 # and soft impacts on the big title reveals.
+# The score is ducked with an explicit envelope: it dips to DUCK of its level
+# while each narration line plays, with RAMP-second fades either side.
+# STEM=1 writes the ducked music bed alone to bed.wav (for checking levels).
 set -euo pipefail
 cd "$(dirname "$0")"
 LEN=62
@@ -14,6 +17,8 @@ NARR=("raw1.mp3 0.8 4.95" "raw2.mp3 8.5 4.85" "raw3.mp3 14.8 6.9" "raw4.mp3 23.2
 CLIPS=("../clips/dawn.mp4 0 8.0 0.5" "../clips/race.mp4 7.7 6.8 0.45" "../clips/family.mp4 22.3 7.8 0.3"
        "../clips/farm.mp4 29.9 8.0 0.3" "../clips/aerial.mp4 44.2 8.0 0.3")
 IMPACT=(5.9 9.0 49.6 52.6)
+DUCK=0.4
+RAMP=0.25
 
 ms() { python3 -c "print(int($1*1000))"; }
 inputs=(-i music.mp3 -i music.mp3)
@@ -30,8 +35,15 @@ for n in "${NARR[@]}"; do
   labels+="[v$idx]"
   idx=$((idx + 1))
 done
-filters+="${labels}amix=inputs=${#NARR[@]}:normalize=0,apad,asplit[narr][key];"
-filters+="[mus][key]sidechaincompress=threshold=0.03:ratio=5:attack=20:release=500:makeup=1[bed];"
+filters+="${labels}amix=inputs=${#NARR[@]}:normalize=0[narr];"
+# duck envelope: 1 - (1-DUCK) * sum of trapezoid windows around each line
+windows=""
+for n in "${NARR[@]}"; do
+  read -r _ start len <<<"$n"
+  a=$(python3 -c "print(round($start-0.15-$RAMP,3))"); b=$(python3 -c "print(round($start+$len+0.2+$RAMP,3))")
+  windows+="+clip((t-$a)/$RAMP\\,0\\,1)*clip(($b-t)/$RAMP\\,0\\,1)"
+done
+filters+="[mus]volume=eval=frame:volume='1-(1-$DUCK)*clip(0${windows}\\,0\\,1)'[bed];"
 
 fx=""
 for c in "${CLIPS[@]}"; do
@@ -52,4 +64,8 @@ done
 
 count=$((2 + ${#CLIPS[@]} + ${#IMPACT[@]}))
 filters+="[bed][narr]${fx}amix=inputs=$count:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,atrim=0:$LEN[out]"
+if [ "${STEM:-0}" = 1 ]; then
+  ffmpeg -v error -y "${inputs[@]}" -filter_complex "${filters%%\[bed\]\[narr\]*}[narr]${fx}amix=inputs=$((count - 1)):normalize=0,anullsink;[bed]atrim=0:$LEN[stem]" -map "[stem]" bed.wav
+  exit 0
+fi
 ffmpeg -v error -y "${inputs[@]}" -filter_complex "$filters" -map "[out]" -ar 48000 -b:a 192k mix.mp3
