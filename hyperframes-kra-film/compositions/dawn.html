@@ -59,6 +59,9 @@
           color: #ffffff;
           text-shadow: 0 6px 40px rgba(0, 0, 0, 0.55);
         }
+        #dawn-vignette {
+          background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 65%, rgba(0, 0, 0, 0.3) 100%);
+        }
         #dawn-title {
           position: absolute;
           left: 0;
@@ -76,7 +79,7 @@
       <div id="root" data-composition-id="dawn" data-width="1920" data-height="1080">
         <div id="dawn-fade">
           <div id="dawn-frame">
-            <video id="dawn-video" src="assets/clips/dawn.mp4" data-start="0" data-duration="8" muted playsinline></video>
+            <video id="dawn-video" src="assets/clips/dawn-graded.mp4" data-start="0" data-duration="8" muted playsinline></video>
           </div>
           <div id="dawn-vignette"></div>
           <div id="dawn-title">
