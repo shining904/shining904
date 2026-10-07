@@ -1,18 +1,21 @@
 #!/bin/bash
-# Builds mix.mp3 for the ginseng reel: the original music track with the
-# leader ginseng's deadpan lines (v1-v7) on the caption bars. The music
+# Builds mix.mp3 for the ginseng reel: the gugak-phonk track (music2.wav) with the
+# narrator and leader ginseng lines on the caption bars. The music
 # dips to DUCK of its level under each line (0.25 s ramps), then the
 # whole mix is normalised for Instagram.
 set -euo pipefail
 cd "$(dirname "$0")"
-LEN=29.33
+LEN=29.472
 DUCK=0.7
 RAMP=0.25
-# voice: file start(s) speech-length(s) — starts sit just after each caption bar
-VOICE=("v1.mp3 0.25 3.45" "v2.mp3 4.07 2.4" "v3.mp3 7.97 1.9" "v4.mp3 11.87 2.3"
-       "v5.mp3 15.78 2.25" "v6.mp3 19.68 1.95" "v7.mp3 23.75 5.3")
+# voice: file start(s) speech-length(s). n1/n7 are the off-screen narrator (Ha-Rin);
+# v2-v6 are the leader ginseng. v2 and v5/v6 are lip-synced inside the leader and
+# close-up clips (clip starts 0 and 15.152), so their times are fixed.
+# n1-tight.wav is n1.mp3 with its middle pause shortened and 10% faster.
+VOICE=("n1-tight.wav 0.15 3.62" "v2.mp3 4.07 2.4" "v3.mp3 8.11 1.9" "v4.mp3 11.67 2.3"
+       "v5.mp3 15.257 2.25" "v6.mp3 19.157 1.95" "n7.mp3 22.45 6.25")
 
-inputs=(-i music.wav)
+inputs=(-i music2.wav)
 labels=""
 windows=""
 idx=1
