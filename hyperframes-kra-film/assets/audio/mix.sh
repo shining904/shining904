@@ -19,7 +19,7 @@ ms() { python3 -c "print(int($1*1000))"; }
 inputs=(-i music.mp3 -i music.mp3)
 filters="[0:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=28:60,asetpts=PTS-STARTPTS,afade=t=in:d=1.5,afade=t=out:st=30:d=2[mA];"
 filters+="[1:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=102:134,asetpts=PTS-STARTPTS,afade=t=in:d=2,afade=t=out:st=29.5:d=2.5,adelay=30000|30000[mB];"
-filters+="[mA][mB]amix=inputs=2:normalize=0,volume=0.9[mus];"
+filters+="[mA][mB]amix=inputs=2:normalize=0,volume=0.63[mus];"
 idx=2
 labels=""
 for n in "${NARR[@]}"; do
