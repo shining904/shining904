@@ -21,7 +21,7 @@ for n in "${NARR[@]}"; do
   narr_labels+="[v$idx]"
   idx=$((idx + 1))
 done
-filters+="${narr_labels}amix=inputs=${#NARR[@]}:normalize=0,asplit[narr][key];"
+filters+="${narr_labels}amix=inputs=${#NARR[@]}:normalize=0,apad,asplit[narr][key];"
 filters+="[mus][key]sidechaincompress=threshold=0.02:ratio=10:attack=15:release=400:makeup=1[bed];"
 
 fx_labels=""
@@ -39,6 +39,6 @@ add_fx whoosh.mp3 0.15 "${WHOOSH[@]}"
 add_fx impact.mp3 0.07 "${IMPACT[@]}"
 
 count=$((2 + ${#WHOOSH[@]} + ${#IMPACT[@]}))
-filters+="[bed][narr]${fx_labels}amix=inputs=$count:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,apad=whole_dur=30,atrim=0:30[out]"
+filters+="[bed][narr]${fx_labels}amix=inputs=$count:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,atrim=0:30[out]"
 
 ffmpeg -v error -y "${inputs[@]}" -filter_complex "$filters" -map "[out]" -ar 48000 -b:a 192k mix.mp3
