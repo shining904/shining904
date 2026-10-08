@@ -7,9 +7,10 @@ set -euo pipefail
 cd "$(dirname "$0")"
 LEN=30.0
 NARR_START=0.5
-# music.mp3 is mastered at about -13 LUFS; 0.24 keeps it under the voice.
-GAIN=0.24
-DUCK=0.5
+# music.mp3 is mastered at about -13 LUFS; with GAIN 0.6 and DUCK 0.7 the bed sits
+# about 9 dB under the voice during speech (narration runs almost the whole reel).
+GAIN=0.6
+DUCK=0.7
 ATTACK=0.3
 RELEASE=0.5
 # Spoken phrases inside narr.mp3 (start end, file time), from silencedetect.
