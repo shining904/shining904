@@ -9,6 +9,10 @@ cd "$(dirname "$0")"
 # B also has its own leader clip, whose mouth opens at 4.08 s.
 V2="v2.wav 4.14 1.39"; V4="v4.wav 11.35 2.68"; OUT=mix.mp3
 if [ "${1:-a}" = b ]; then V2="v2.wav 4.08 1.39"; V4="v4b.wav 11.35 2.2"; OUT=mix-b.mp3; fi
+# `./mix.sh c` is B with a cuter Babari: the same lines pitched up 4 semitones (v*c.wav,
+# duration unchanged so the lip sync still lines up).
+C=""
+if [ "${1:-a}" = c ]; then C=c; V2="v2c.wav 4.08 1.39"; V4="v4bc.wav 11.35 2.2"; OUT=mix-c.mp3; fi
 LEN=30.0
 # music3.mp3 is mastered at about -14 LUFS; 0.26 keeps it well under the voices.
 GAIN=0.26
@@ -21,8 +25,8 @@ RELEASE=0.6
 # so their clip-local offsets are fixed.
 # n1-tight/n7-tight are n1/n7.mp3 with their pauses shortened (n7 also 5% faster);
 # v*.wav are the v*.mp3 lines with the trailing silence cut.
-VOICE=("n1-tight.wav 0.15 3.75" "$V2" "v3.wav 7.62 1.4" "$V4"
-       "v5.wav 16.65 1.41" "v6.wav 19.85 1.07" "n7-tight.wav 22.64 6.75")
+VOICE=("n1-tight.wav 0.15 3.75" "$V2" "v3$C.wav 7.62 1.4" "$V4"
+       "v5$C.wav 16.65 1.41" "v6$C.wav 19.85 1.07" "n7-tight.wav 22.64 6.75")
 
 inputs=(-i music3.mp3)
 labels=""

@@ -1,6 +1,7 @@
 # Build the Icheon rice festival dance reel (1080x1920). Cuts and captions land on the music's bars.
 # `python3 build.py b` builds variant B: a plain-rice crowd (only Babari in costume) and the
 # "1년 준비" line; the default (A) has the costumed crowd and the "88번 손길" line.
+# `python3 build.py c` is B with the cuter, pitched-up Babari voice (mix-c.mp3).
 import os
 import sys
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -16,7 +17,8 @@ DISPLAY_FACES = "".join(f'''        @font-face {{
 ''' for sub, rng in RANGES)
 D = '"Black Han Sans", sans-serif'
 VARIANT = sys.argv[1] if len(sys.argv) > 1 else "a"
-SUFFIX = "-b" if VARIANT == "b" else ""
+SUFFIX = "-b" if VARIANT in ("b", "c") else ""
+MIX = {"a": "mix", "b": "mix-b", "c": "mix-c"}[VARIANT]
 W, H = 1080, 1920
 BEAT = 0.46875  # 128 BPM (music3.mp3)
 FIRST = 0.0  # kick on the first sample; the drop lands on bar 8 (15.0s)
@@ -88,7 +90,7 @@ CAPS = [
     (0.0, 4.0, "인삼 군무 보셨죠?", "이번엔|이천 쌀 차례"),
     (4.0, b(4), "", "햅쌀 정예부대 집합!"),
     (b(4), b(6), "", "한 톨도 안 틀리는|칼군무"),
-    (b(6), b(8), "연습이요?", "꼬박 1년 준비했습니다" if VARIANT == "b" else "88번 손이 갔습니다"),
+    (b(6), b(8), "연습이요?", "꼬박 1년 준비했습니다" if VARIANT in ("b", "c") else "88번 손이 갔습니다"),
     (b(8), round(b(8) + 3.9, 3), "", "이천 햅쌀 가마솥밥"),
     (round(b(8) + 3.9, 3), b(12), "", "이천 원에 드실래요?"),
 ]
@@ -289,7 +291,7 @@ open("index.html", "w").write(f'''<!doctype html>
       data-width="{W}"
       data-height="{H}"
     >
-{hosts}      <audio id="soundtrack" src="assets/audio/mix{SUFFIX}.mp3" data-start="0" data-duration="{round(LEN - 0.1, 2)}" data-track-index="3"></audio>
+{hosts}      <audio id="soundtrack" src="assets/audio/{MIX}.mp3" data-start="0" data-duration="{round(LEN - 0.1, 2)}" data-track-index="3"></audio>
     </div>
     <script>
       const tl = gsap.timeline({{ paused: true }});
