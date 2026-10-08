@@ -11,6 +11,9 @@ V2="v2.wav 4.14 1.39"; V4="v4.wav 11.35 2.68"; OUT=mix.mp3
 if [ "${1:-a}" = b ]; then V2="v2.wav 4.08 1.39"; V4="v4b.wav 11.35 2.2"; OUT=mix-b.mp3; fi
 # `./mix.sh c` is B with a cuter Babari: the same lines pitched up 4 semitones (v*c.wav,
 # duration unchanged so the lip sync still lines up).
+# B and C use the brighter narrator Jiwoo (n1j/n7j); A keeps Ha-Rin.
+N1="n1-tight.wav 0.15 3.75"; N7="n7-tight.wav 22.64 6.75"
+case "${1:-a}" in b | c) N1="n1j-tight.wav 0.12 3.84"; N7="n7j-tight.wav 22.55 7.1" ;; esac
 C=""
 if [ "${1:-a}" = c ]; then C=c; V2="v2c.wav 4.08 1.39"; V4="v4bc.wav 11.35 2.2"; OUT=mix-c.mp3; fi
 LEN=30.0
@@ -24,9 +27,10 @@ RELEASE=0.6
 # close-up clips (clip starts 0 and 15.0) where the mouths open (4.14; 1.65 and 4.85),
 # so their clip-local offsets are fixed.
 # n1-tight/n7-tight are n1/n7.mp3 with their pauses shortened (n7 also 5% faster);
+# n1j-tight/n7j-tight do the same for Jiwoo's takes (8% / 5% faster);
 # v*.wav are the v*.mp3 lines with the trailing silence cut.
-VOICE=("n1-tight.wav 0.15 3.75" "$V2" "v3$C.wav 7.62 1.4" "$V4"
-       "v5$C.wav 16.65 1.41" "v6$C.wav 19.85 1.07" "n7-tight.wav 22.64 6.75")
+VOICE=("$N1" "$V2" "v3$C.wav 7.62 1.4" "$V4"
+       "v5$C.wav 16.65 1.41" "v6$C.wav 19.85 1.07" "$N7")
 
 inputs=(-i music3.mp3)
 labels=""
