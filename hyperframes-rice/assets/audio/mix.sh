@@ -5,6 +5,10 @@
 # then the whole mix is normalised for Instagram.
 set -euo pipefail
 cd "$(dirname "$0")"
+# `./mix.sh b` builds mix-b.mp3 for variant B, which swaps in the "1년 준비" line (v4b).
+# B also has its own leader clip, whose mouth opens at 4.08 s.
+V2="v2.wav 4.14 1.39"; V4="v4.wav 11.35 2.68"; OUT=mix.mp3
+if [ "${1:-a}" = b ]; then V2="v2.wav 4.08 1.39"; V4="v4b.wav 11.35 2.2"; OUT=mix-b.mp3; fi
 LEN=30.0
 # music3.mp3 is mastered at about -14 LUFS; 0.26 keeps it well under the voices.
 GAIN=0.26
@@ -17,7 +21,7 @@ RELEASE=0.6
 # so their clip-local offsets are fixed.
 # n1-tight/n7-tight are n1/n7.mp3 with their pauses shortened (n7 also 5% faster);
 # v*.wav are the v*.mp3 lines with the trailing silence cut.
-VOICE=("n1-tight.wav 0.15 3.75" "v2.wav 4.14 1.39" "v3.wav 7.62 1.4" "v4.wav 11.35 2.68"
+VOICE=("n1-tight.wav 0.15 3.75" "$V2" "v3.wav 7.62 1.4" "$V4"
        "v5.wav 16.65 1.41" "v6.wav 19.85 1.07" "n7-tight.wav 22.64 6.75")
 
 inputs=(-i music3.mp3)
@@ -39,4 +43,4 @@ s="clip(0${windows}\\,0\\,1)"
 filters="[0:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:$LEN,volume=$GAIN,afade=t=out:st=$(python3 -c "print($LEN-1.5)"):d=1.5,volume=eval=frame:volume='1-(1-$DUCK)*$s*$s*(3-2*$s)'[bed];"
 filters+="${labels}${vl}amix=inputs=${#VOICE[@]}:normalize=0[voice];"
 filters+="[bed][voice]amix=inputs=2:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,atrim=0:$LEN[out]"
-ffmpeg -v error -y "${inputs[@]}" -filter_complex "$filters" -map "[out]" -ar 48000 -b:a 192k mix.mp3
+ffmpeg -v error -y "${inputs[@]}" -filter_complex "$filters" -map "[out]" -ar 48000 -b:a 192k $OUT
