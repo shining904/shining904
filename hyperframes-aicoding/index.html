@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>이천시 청년 AI바이브 코딩</title>
+    <script src="gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #000;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #0a1838;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Images: Magnific (hero photo, robot mascot). QR code regenerated from the poster's form link.
+         Music: Magnific ElevenLabs music, original track. Narration: ElevenLabs Jiwoo via Magnific.
+         Scene cuts sit on beats of the 127 BPM bed and follow the narration phrases. -->
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="30"
+      data-width="1080"
+      data-height="1920"
+    >
+      <div id="intro" data-composition-id="intro" data-composition-src="compositions/intro.html"
+        data-start="0" data-duration="2.447" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="chat" data-composition-id="chat" data-composition-src="compositions/chat.html"
+        data-start="2.447" data-duration="4.25" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="title" data-composition-id="title" data-composition-src="compositions/title.html"
+        data-start="6.697" data-duration="5.195" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <div id="course" data-composition-id="course" data-composition-src="compositions/course.html"
+        data-start="11.892" data-duration="7.558" data-track-index="1" data-width="1080" data-height="1920"></div>
+      <div id="apply" data-composition-id="apply" data-composition-src="compositions/apply.html"
+        data-start="19.45" data-duration="10.55" data-track-index="0" data-width="1080" data-height="1920"></div>
+      <audio id="soundtrack" src="assets/audio/mix.mp3" data-start="0" data-duration="29.9" data-track-index="2"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

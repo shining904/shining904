@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Code Mono";
+          src: url("fonts/DejaVuSansMono.ttf") format("truetype");
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: linear-gradient(170deg, #e6f8f2 0%, #d3eefb 100%);
+          font-family: "Noto Sans KR", sans-serif;
+        }
+        .chat-blob {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(60px);
+        }
+        #chat-h1,
+        #chat-h2 {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Black Han Sans", sans-serif;
+        }
+        #chat-h1 {
+          top: 190px;
+          font-size: 104px;
+          color: #12357d;
+        }
+        #chat-h2 {
+          top: 320px;
+          font-size: 124px;
+          color: #e6157e;
+        }
+        #chat-win {
+          position: absolute;
+          left: 70px;
+          right: 70px;
+          top: 500px;
+          height: 1100px;
+          border-radius: 40px;
+          background: #ffffff;
+          box-shadow: 0 30px 80px rgba(18, 53, 125, 0.25);
+          overflow: hidden;
+        }
+        #chat-bar {
+          height: 84px;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding: 0 34px;
+          background: #f1f4fa;
+          font-size: 32px;
+          font-weight: 800;
+          color: #5a6a8a;
+        }
+        .chat-dot {
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+        }
+        #chat-user {
+          position: absolute;
+          right: 40px;
+          top: 130px;
+          max-width: 700px;
+          padding: 26px 34px;
+          border-radius: 36px 36px 8px 36px;
+          background: #1660c4;
+          color: #ffffff;
+          font-size: 42px;
+          font-weight: 800;
+        }
+        #chat-ai {
+          position: absolute;
+          left: 40px;
+          top: 290px;
+          display: flex;
+          align-items: flex-end;
+          gap: 16px;
+        }
+        #chat-ai img {
+          width: 110px;
+          height: 110px;
+          object-fit: contain;
+        }
+        #chat-ai-bubble {
+          padding: 24px 32px;
+          border-radius: 36px 36px 36px 8px;
+          background: #ece8fb;
+          color: #2a2357;
+          font-size: 40px;
+          font-weight: 800;
+        }
+        #chat-code {
+          position: absolute;
+          left: 40px;
+          right: 40px;
+          top: 460px;
+          height: 560px;
+          padding: 34px 36px;
+          border-radius: 28px;
+          background: #0f1b3d;
+          font-family: "Code Mono", monospace;
+          font-size: 31px;
+          line-height: 1.75;
+          color: #d6e2ff;
+        }
+        .tk-tag { color: #ff7ab6; }
+        .tk-attr { color: #ffd166; }
+        .tk-str { color: #5fe3c8; }
+        #chat-site {
+          position: absolute;
+          left: 110px;
+          right: 110px;
+          top: 830px;
+          height: 640px;
+          border-radius: 30px;
+          background: #fffaf3;
+          box-shadow: 0 30px 90px rgba(15, 27, 61, 0.45);
+          overflow: hidden;
+        }
+        #site-nav {
+          height: 76px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 32px;
+          background: #3b2a20;
+          color: #ffe7c7;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 36px;
+        }
+        #site-nav span {
+          font-family: "Noto Sans KR", sans-serif;
+          font-size: 24px;
+          font-weight: 800;
+          opacity: 0.8;
+        }
+        #site-hero {
+          height: 300px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 40px;
+          background: linear-gradient(120deg, #f6a65a 0%, #d9653b 60%, #8f3d2a 100%);
+          color: #ffffff;
+        }
+        #site-hero b {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 64px;
+          font-weight: 400;
+        }
+        #site-btn {
+          align-self: flex-start;
+          margin-top: 18px;
+          padding: 12px 30px;
+          border-radius: 999px;
+          background: #ffffff;
+          color: #8f3d2a;
+          font-size: 28px;
+          font-weight: 800;
+        }
+        #site-cards {
+          display: flex;
+          gap: 22px;
+          padding: 30px 32px;
+        }
+        .site-card {
+          flex: 1;
+          height: 160px;
+          border-radius: 20px;
+          background: #f3e3cf;
+          display: flex;
+          align-items: flex-end;
+          padding: 16px;
+          font-size: 26px;
+          font-weight: 800;
+          color: #5a3a26;
+        }
+        #chat-stamp {
+          position: absolute;
+          right: 40px;
+          top: 1410px;
+          width: 230px;
+          height: 230px;
+          border-radius: 50%;
+          background: #e6157e;
+          border: 8px solid #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 70px;
+          color: #ffffff;
+          box-shadow: 0 16px 40px rgba(230, 21, 126, 0.45);
+        }
+        #chat-robot {
+          position: absolute;
+          left: -30px;
+          top: 1460px;
+          width: 420px;
+        }
+      </style>
+      <div id="root" data-composition-id="chat" data-width="1080" data-height="1920">
+        <div class="chat-blob" style="left: -120px; top: 1300px; width: 520px; height: 520px; background: rgba(95, 227, 200, 0.55)"></div>
+        <div class="chat-blob" style="left: 640px; top: 80px; width: 520px; height: 520px; background: rgba(110, 160, 255, 0.45)"></div>
+        <div id="chat-h1">AI와 대화만 하면</div>
+        <div id="chat-h2">웹페이지가 뚝딱!</div>
+        <div id="chat-win">
+          <div id="chat-bar">
+            <div class="chat-dot" style="background: #ff6b6b"></div>
+            <div class="chat-dot" style="background: #ffd166"></div>
+            <div class="chat-dot" style="background: #5fe3c8"></div>
+            <span style="margin-left: 14px">AI 바이브 코딩</span>
+          </div>
+          <div id="chat-user"><span class="chat-ch">우</span><span class="chat-ch">리</span><span class="chat-ch"> </span><span class="chat-ch">카</span><span class="chat-ch">페</span><span class="chat-ch"> </span><span class="chat-ch">소</span><span class="chat-ch">개</span><span class="chat-ch"> </span><span class="chat-ch">웹</span><span class="chat-ch">페</span><span class="chat-ch">이</span><span class="chat-ch">지</span><span class="chat-ch"> </span><span class="chat-ch">만</span><span class="chat-ch">들</span><span class="chat-ch">어</span><span class="chat-ch">줘</span></div>
+          <div id="chat-ai">
+            <img src="assets/robot.png" alt="" />
+            <div id="chat-ai-bubble">좋아요! 바로 만들어 볼게요</div>
+          </div>
+          <div id="chat-code">
+            <div class="chat-line"><span class="tk-tag">&lt;header&gt;</span></div>
+            <div class="chat-line">&nbsp;&nbsp;<span class="tk-tag">&lt;h1</span> <span class="tk-attr">class</span>=<span class="tk-str">"logo"</span><span class="tk-tag">&gt;</span>Café Haru<span class="tk-tag">&lt;/h1&gt;</span></div>
+            <div class="chat-line"><span class="tk-tag">&lt;/header&gt;</span></div>
+            <div class="chat-line"><span class="tk-tag">&lt;section</span> <span class="tk-attr">class</span>=<span class="tk-str">"hero"</span><span class="tk-tag">&gt;</span></div>
+            <div class="chat-line">&nbsp;&nbsp;<span class="tk-tag">&lt;button&gt;</span>메뉴 보기<span class="tk-tag">&lt;/button&gt;</span></div>
+            <div class="chat-line"><span class="tk-tag">&lt;/section&gt;</span></div>
+          </div>
+        </div>
+        <div id="chat-site">
+          <div id="site-nav">Café Haru<span>메뉴 · 위치 · 예약</span></div>
+          <div id="site-hero">
+            <b>따뜻한 하루,<br />카페 하루</b>
+            <div id="site-btn">메뉴 보기</div>
+          </div>
+          <div id="site-cards">
+            <div class="site-card">라떼</div>
+            <div class="site-card">쌀빵</div>
+            <div class="site-card">디저트</div>
+          </div>
+        </div>
+        <div id="chat-stamp">완성!</div>
+        <img id="chat-robot" src="assets/robot.png" alt="" />
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(".chat-blob", { scale: 0.8 }, { scale: 1.15, duration: 4.25, ease: "none" }, 0);
+        tl.fromTo("#chat-h1", { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.05);
+        tl.fromTo("#chat-win", { opacity: 0, y: 120, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" }, 0.05);
+        tl.fromTo("#chat-user", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.18, ease: "back.out(2)", transformOrigin: "right bottom" }, 0.3);
+        tl.fromTo(".chat-ch", { opacity: 0 }, { opacity: 1, duration: 0.01, stagger: 0.03 }, 0.32);
+        tl.fromTo("#chat-ai", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.25, ease: "power3.out" }, 1.0);
+        tl.fromTo(".chat-line", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.15, stagger: 0.14 }, 1.35);
+        tl.to("#chat-ai, #chat-code", { opacity: 0, duration: 0.15 }, 2.2);
+        tl.fromTo("#chat-h2", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.25, ease: "power4.out" }, 2.25);
+        tl.fromTo("#chat-site", { opacity: 0, scale: 0.4, rotation: -6 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.4, ease: "back.out(1.6)" }, 2.25);
+        tl.fromTo("#chat-stamp", { opacity: 0, scale: 2.4, rotation: -30 }, { opacity: 1, scale: 1, rotation: -12, duration: 0.25, ease: "power4.out" }, 2.85);
+        tl.fromTo("#chat-robot", { opacity: 0, y: 200 }, { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.6)" }, 0.6);
+        tl.to("#chat-robot", { y: -30, rotation: 6, duration: 0.6, yoyo: true, repeat: 4, ease: "sine.inOut" }, 1.0);
+        window.__timelines["chat"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

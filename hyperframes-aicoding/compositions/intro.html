@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Code Mono";
+          src: url("fonts/DejaVuSansMono.ttf") format("truetype");
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: radial-gradient(circle at 50% 40%, #16357a 0%, #0a1838 60%, #060e24 100%);
+        }
+        #intro-grid {
+          position: absolute;
+          inset: -200px;
+          background-image:
+            linear-gradient(rgba(90, 200, 255, 0.12) 2px, transparent 2px),
+            linear-gradient(90deg, rgba(90, 200, 255, 0.12) 2px, transparent 2px);
+          background-size: 90px 90px;
+        }
+        .intro-glyph {
+          position: absolute;
+          font-family: "Code Mono", monospace;
+          color: rgba(120, 220, 255, 0.6);
+        }
+        #intro-term {
+          position: absolute;
+          left: 110px;
+          top: 520px;
+          font-family: "Code Mono", monospace;
+          font-size: 44px;
+          color: #5fe3c8;
+        }
+        #intro-cursor {
+          display: inline-block;
+          width: 24px;
+          height: 46px;
+          margin-left: 6px;
+          vertical-align: -6px;
+          background: #5fe3c8;
+        }
+        #intro-l1 {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 700px;
+          text-align: center;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 230px;
+          color: #ffffff;
+        }
+        #intro-l2 {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 990px;
+          text-align: center;
+        }
+        #intro-l2-text {
+          position: relative;
+          display: inline-block;
+          padding: 0 30px;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 136px;
+          color: #0a1838;
+        }
+        #intro-l2-bar {
+          position: absolute;
+          inset: 8px 0 0 0;
+          background: #5fe3c8;
+          transform-origin: left center;
+        }
+        #intro-l2-word {
+          position: relative;
+        }
+        #intro-flash {
+          position: absolute;
+          inset: 0;
+          background: #ffffff;
+          opacity: 0;
+        }
+      </style>
+      <div id="root" data-composition-id="intro" data-width="1080" data-height="1920">
+        <div id="intro-grid"></div>
+        <div class="intro-glyph" style="left: 90px; top: 220px; font-size: 90px">&lt;/&gt;</div>
+        <div class="intro-glyph" style="left: 760px; top: 300px; font-size: 80px">{ }</div>
+        <div class="intro-glyph" style="left: 400px; top: 1420px; font-size: 64px">const ai = true;</div>
+        <div class="intro-glyph" style="left: 110px; top: 1560px; font-size: 70px">&lt;div&gt;</div>
+        <div class="intro-glyph" style="left: 820px; top: 1720px; font-size: 76px">( )</div>
+        <div id="intro-term">&gt; learn_coding<span id="intro-cursor"></span></div>
+        <div id="intro-l1">코딩,</div>
+        <div id="intro-l2"><span id="intro-l2-text"><span id="intro-l2-bar"></span><span id="intro-l2-word">몰라도 됩니다</span></span></div>
+        <div id="intro-flash"></div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#intro-grid", { y: 0 }, { y: 90, duration: 2.45, ease: "none" }, 0);
+        tl.fromTo(".intro-glyph", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.06 }, 0);
+        tl.to(".intro-glyph", { y: -40, duration: 2, ease: "none" }, 0.4);
+        tl.fromTo("#intro-term", { opacity: 0 }, { opacity: 1, duration: 0.1 }, 0.05);
+        tl.to("#intro-cursor", { opacity: 0, duration: 0.24, ease: "steps(1)", repeat: 9, yoyo: true }, 0);
+        tl.fromTo("#intro-l1", { opacity: 0, scale: 2.2 }, { opacity: 1, scale: 1, duration: 0.25, ease: "power4.out" }, 0.45);
+        tl.fromTo("#intro-l2-text", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.2, ease: "power3.out" }, 1.05);
+        tl.fromTo("#intro-l2-bar", { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: "power3.inOut" }, 1.15);
+        tl.to("#intro-l1", { x: 8, duration: 0.05, yoyo: true, repeat: 3 }, 1.9);
+        tl.fromTo("#intro-flash", { opacity: 0 }, { keyframes: [{ opacity: 0.85, duration: 0.06 }, { opacity: 0, duration: 0.18 }] }, 2.2);
+        window.__timelines["intro"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

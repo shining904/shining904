@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: radial-gradient(circle at 50% 30%, #1d4fa8 0%, #12357d 55%, #0a1f4f 100%);
+          font-family: "Noto Sans KR", sans-serif;
+          color: #ffffff;
+        }
+        .apply-ring {
+          position: absolute;
+          left: 50%;
+          top: 1060px;
+          border-radius: 50%;
+          border: 3px solid rgba(95, 227, 200, 0.35);
+        }
+        #apply-head {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 150px;
+          text-align: center;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 74px;
+          color: #5fe3c8;
+        }
+        #apply-who {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 250px;
+          text-align: center;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 104px;
+          line-height: 1.15;
+        }
+        #apply-info {
+          position: absolute;
+          left: 80px;
+          right: 80px;
+          top: 520px;
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        }
+        .apply-row {
+          display: flex;
+          align-items: center;
+          gap: 22px;
+          font-size: 38px;
+          font-weight: 500;
+        }
+        .apply-tag {
+          flex: none;
+          width: 150px;
+          padding: 8px 0;
+          border-radius: 999px;
+          background: #5fe3c8;
+          color: #0a1f4f;
+          text-align: center;
+          font-size: 32px;
+          font-weight: 800;
+        }
+        #apply-qr-card {
+          position: absolute;
+          left: 50%;
+          top: 900px;
+          width: 440px;
+          margin-left: -220px;
+          padding: 28px 28px 22px;
+          border-radius: 36px;
+          background: #ffffff;
+          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+          text-align: center;
+        }
+        #apply-qr {
+          display: block;
+          width: 384px;
+          height: 384px;
+          image-rendering: pixelated;
+        }
+        #apply-qr-cap {
+          margin-top: 14px;
+          padding: 12px 0;
+          border-radius: 18px;
+          background: #3d8b12;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 46px;
+          color: #ffffff;
+        }
+        #apply-scan {
+          position: absolute;
+          left: 28px;
+          right: 28px;
+          top: 28px;
+          height: 8px;
+          border-radius: 4px;
+          background: #12b3a6;
+          box-shadow: 0 0 24px #12b3a6;
+          opacity: 0;
+        }
+        #apply-robot {
+          position: absolute;
+          left: 740px;
+          top: 1150px;
+          width: 330px;
+        }
+        #apply-contact {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 1460px;
+          text-align: center;
+          font-size: 36px;
+          font-weight: 500;
+          line-height: 1.6;
+        }
+        #apply-contact b {
+          font-weight: 800;
+          color: #5fe3c8;
+        }
+        #apply-note {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 1600px;
+          text-align: center;
+          font-size: 26px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.65);
+        }
+        #apply-logo-chip {
+          position: absolute;
+          left: 50%;
+          top: 1670px;
+          width: 240px;
+          margin-left: -120px;
+          padding: 10px 0;
+          border-radius: 24px;
+          background: #e8f7f1;
+          text-align: center;
+        }
+        #apply-logo-chip img {
+          width: 200px;
+        }
+      </style>
+      <div id="root" data-composition-id="apply" data-width="1080" data-height="1920">
+        <div class="apply-ring" style="width: 700px; height: 700px; margin: -350px 0 0 -350px"></div>
+        <div class="apply-ring" style="width: 1000px; height: 1000px; margin: -500px 0 0 -500px"></div>
+        <div id="apply-head">19세 ~ 39세</div>
+        <div id="apply-who">이천시 청년이라면<br />지금 신청하세요!</div>
+        <div id="apply-info">
+          <div class="apply-row"><span class="apply-tag">신청기간</span>2026. 10. 2.(금) ~ 마감 시까지</div>
+          <div class="apply-row"><span class="apply-tag">교육장소</span>이천시 청년창업지원센터 세미나실</div>
+          <div class="apply-row"><span class="apply-tag">교육비</span>무료 (총 8회)</div>
+        </div>
+        <div id="apply-qr-card">
+          <img id="apply-qr" src="assets/qr.png" alt="신청 QR코드" />
+          <div id="apply-qr-cap">QR로 신청 바로가기</div>
+          <div id="apply-scan"></div>
+        </div>
+        <img id="apply-robot" src="assets/robot.png" alt="" />
+        <div id="apply-contact">문의 운영사무국 <b>010-4234-6406</b><br />이천시청 <b>031-645-3687</b></div>
+        <div id="apply-note">※ 교육일정은 상황에 따라 변동될 수 있습니다</div>
+        <div id="apply-logo-chip"><img src="assets/icheon-logo.png" alt="이천시" /></div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(".apply-ring", { scale: 0.6, opacity: 0 }, { scale: 1.15, opacity: 1, duration: 10.5, ease: "none", stagger: 0.4 }, 0);
+        tl.fromTo("#apply-head", { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.05);
+        tl.fromTo("#apply-who", { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power4.out" }, 0.4);
+        tl.fromTo(".apply-row", { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out", stagger: 0.35 }, 1.4);
+        tl.fromTo("#apply-qr-card", { opacity: 0, scale: 0.3, rotation: 8 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.45, ease: "back.out(1.7)" }, 3.0);
+        tl.fromTo("#apply-robot", { opacity: 0, x: 200 }, { opacity: 1, x: 0, duration: 0.4, ease: "back.out(1.6)" }, 3.6);
+        tl.to("#apply-robot", { y: -24, rotation: -5, duration: 0.7, yoyo: true, repeat: 7, ease: "sine.inOut" }, 4.0);
+        tl.fromTo("#apply-scan", { opacity: 0, y: 0 }, { opacity: 0.9, y: 384, duration: 0.8, ease: "sine.inOut" }, 3.6);
+        tl.to("#apply-scan", { opacity: 0, duration: 0.15 }, 4.4);
+        tl.fromTo("#apply-contact", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 4.3);
+        tl.fromTo("#apply-note", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 4.6);
+        tl.fromTo("#apply-logo-chip", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4 }, 4.9);
+        tl.to("#apply-qr-card", { scale: 1.06, duration: 0.3, yoyo: true, repeat: 3, ease: "sine.inOut" }, 6.8);
+        window.__timelines["apply"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

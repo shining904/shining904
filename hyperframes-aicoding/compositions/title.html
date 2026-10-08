@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          background: #e6f8f2;
+          font-family: "Noto Sans KR", sans-serif;
+        }
+        #title-bg {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        #title-shade {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(240, 251, 247, 0.97) 0%, rgba(240, 251, 247, 0.92) 42%, rgba(240, 251, 247, 0) 62%);
+        }
+        #title-logo {
+          position: absolute;
+          left: 60px;
+          top: 70px;
+          width: 220px;
+        }
+        #title-wrap {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 250px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          font-family: "Black Han Sans", sans-serif;
+        }
+        #title-year {
+          font-size: 76px;
+          color: #111827;
+        }
+        #title-a {
+          margin-top: 6px;
+          font-size: 118px;
+          line-height: 1.1;
+          color: #12357d;
+        }
+        #title-b {
+          font-size: 138px;
+          line-height: 1.1;
+          color: #1660c4;
+        }
+        #title-c {
+          margin-top: 6px;
+          display: flex;
+          align-items: center;
+          gap: 26px;
+          font-size: 118px;
+          line-height: 1.1;
+          color: #12357d;
+        }
+        #title-pill {
+          padding: 10px 40px 16px;
+          border-radius: 999px;
+          background: #12b3a6;
+          color: #ffffff;
+          font-size: 76px;
+          box-shadow: 0 12px 30px rgba(18, 179, 166, 0.4);
+        }
+        #title-sub {
+          margin-top: 34px;
+          font-family: "Noto Sans KR", sans-serif;
+          font-weight: 800;
+          font-size: 50px;
+          color: #e6157e;
+        }
+        .title-chip {
+          position: absolute;
+          padding: 22px 34px;
+          border-radius: 28px;
+          background: rgba(255, 255, 255, 0.82);
+          border: 3px solid rgba(255, 255, 255, 0.95);
+          box-shadow: 0 18px 40px rgba(18, 53, 125, 0.25);
+          font-size: 40px;
+          font-weight: 800;
+          color: #12357d;
+        }
+      </style>
+      <div id="root" data-composition-id="title" data-width="1080" data-height="1920">
+        <img id="title-bg" src="assets/hero.jpg" alt="" />
+        <div id="title-shade"></div>
+        <img id="title-logo" src="assets/icheon-logo.png" alt="이천시" />
+        <div id="title-wrap">
+          <div id="title-year" class="title-line">2026년</div>
+          <div id="title-a" class="title-line">이천시 청년</div>
+          <div id="title-b" class="title-line">AI바이브 코딩</div>
+          <div id="title-c" class="title-line">교육 과정<span id="title-pill">참여자 모집</span></div>
+          <div id="title-sub" class="title-line">AI와 대화하며 나만의 웹페이지 만들기</div>
+        </div>
+        <div class="title-chip" id="title-chip1" style="left: 70px; top: 1420px">&lt;/&gt; 코드 몰라도 OK</div>
+        <div class="title-chip" id="title-chip2" style="right: 70px; top: 1600px">AI와 함께 완성</div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#title-bg", { scale: 1.18 }, { scale: 1.02, duration: 5.2, ease: "power1.out" }, 0);
+        tl.fromTo("#title-logo", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.3 }, 0.1);
+        tl.fromTo(".title-line", { opacity: 0, y: 70 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out", stagger: 0.18 }, 0.15);
+        tl.fromTo("#title-pill", { opacity: 0, scale: 0.2, rotation: -10 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.35, ease: "back.out(2.4)" }, 2.9);
+        tl.to("#title-pill", { scale: 1.08, duration: 0.24, yoyo: true, repeat: 3, ease: "sine.inOut" }, 3.3);
+        tl.fromTo("#title-chip1", { opacity: 0, x: -80 }, { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" }, 1.3);
+        tl.fromTo("#title-chip2", { opacity: 0, x: 80 }, { opacity: 1, x: 0, duration: 0.35, ease: "power3.out" }, 1.7);
+        tl.to(".title-chip", { y: -20, duration: 1.4, yoyo: true, repeat: 2, ease: "sine.inOut" }, 2.0);
+        window.__timelines["title"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
