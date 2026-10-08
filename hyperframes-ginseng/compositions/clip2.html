@@ -26,15 +26,15 @@
       </style>
       <div id="root" data-composition-id="clip2" data-width="1080" data-height="1920">
         <div id="clip2-frame">
-          <video id="clip2-video" src="assets/clips/crowd.mp4" data-start="0" data-duration="7.274" muted playsinline></video>
+          <video id="clip2-video" src="assets/clips/crowd.mp4" data-start="0" data-duration="7.5" muted playsinline></video>
         </div>
       </div>
       <script>
         const tl = gsap.timeline({ paused: true });
         tl.to("#clip2-frame", { keyframes: [{ scale: 1.06, duration: 0.08, ease: "power2.out" }, { scale: 1, duration: 0.12 }] }, 0.0);
-        tl.to("#clip2-frame", { keyframes: [{ scale: 1.06, duration: 0.08, ease: "power2.out" }, { scale: 1, duration: 0.12 }] }, 1.818);
-        tl.to("#clip2-frame", { keyframes: [{ scale: 1.06, duration: 0.08, ease: "power2.out" }, { scale: 1, duration: 0.12 }] }, 3.637);
-        tl.to("#clip2-frame", { keyframes: [{ scale: 1.06, duration: 0.08, ease: "power2.out" }, { scale: 1, duration: 0.12 }] }, 5.455);
+        tl.to("#clip2-frame", { keyframes: [{ scale: 1.06, duration: 0.08, ease: "power2.out" }, { scale: 1, duration: 0.12 }] }, 1.875);
+        tl.to("#clip2-frame", { keyframes: [{ scale: 1.06, duration: 0.08, ease: "power2.out" }, { scale: 1, duration: 0.12 }] }, 3.75);
+        tl.to("#clip2-frame", { keyframes: [{ scale: 1.06, duration: 0.08, ease: "power2.out" }, { scale: 1, duration: 0.12 }] }, 5.625);
         window.__timelines["clip2"] = tl;
       </script>
     </template>
