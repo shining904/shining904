@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        .caps-group {
+          position: absolute;
+          left: 60px;
+          right: 60px;
+          top: 300px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          opacity: 0;
+        }
+        .caps-small {
+          font-size: 54px;
+          font-weight: 800;
+          color: #ffffff;
+          -webkit-text-stroke: 8px #000;
+          paint-order: stroke fill;
+        }
+        .caps-big {
+          margin-top: 6px;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 104px;
+          line-height: 1.15;
+          color: #f2c46b;
+          -webkit-text-stroke: 14px #000;
+          paint-order: stroke fill;
+        }
+      </style>
+      <div id="root" data-composition-id="caps" data-width="1080" data-height="1920">
+          <div id="caps-c1" class="caps-group">
+            <div class="caps-small">인삼 군무 보셨죠?</div>
+            <div class="caps-big">이번엔</div>
+            <div class="caps-big">이천 쌀 차례</div>
+
+          </div>
+          <div id="caps-c2" class="caps-group">
+            <div class="caps-big">햅쌀 정예부대 집합!</div>
+
+          </div>
+          <div id="caps-c3" class="caps-group">
+            <div class="caps-big">한 톨도 안 틀리는</div>
+            <div class="caps-big">칼군무</div>
+
+          </div>
+          <div id="caps-c4" class="caps-group">
+            <div class="caps-small">연습이요?</div>
+            <div class="caps-big">88번 손이 갔습니다</div>
+
+          </div>
+          <div id="caps-c5" class="caps-group">
+            <div class="caps-big">이천 햅쌀 가마솥밥</div>
+
+          </div>
+          <div id="caps-c6" class="caps-group">
+            <div class="caps-big">이천 원에 드실래요?</div>
+
+          </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#caps-c1", { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power4.out" }, 0.0);
+        tl.to("#caps-c1", { opacity: 0, duration: 0.08, ease: "none" }, 3.92);
+        tl.fromTo("#caps-c2", { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power4.out" }, 4.0);
+        tl.to("#caps-c2", { opacity: 0, duration: 0.08, ease: "none" }, 7.42);
+        tl.fromTo("#caps-c3", { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power4.out" }, 7.5);
+        tl.to("#caps-c3", { opacity: 0, duration: 0.08, ease: "none" }, 11.17);
+        tl.fromTo("#caps-c4", { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power4.out" }, 11.25);
+        tl.to("#caps-c4", { opacity: 0, duration: 0.08, ease: "none" }, 14.92);
+        tl.fromTo("#caps-c5", { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power4.out" }, 15.0);
+        tl.to("#caps-c5", { opacity: 0, duration: 0.08, ease: "none" }, 18.82);
+        tl.fromTo("#caps-c6", { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power4.out" }, 18.9);
+        tl.to("#caps-c6", { opacity: 0, duration: 0.08, ease: "none" }, 22.42);
+        window.__timelines["caps"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
