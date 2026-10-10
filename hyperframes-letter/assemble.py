@@ -41,12 +41,28 @@ for i in range(1, len(parts)):
     vlast, alast = f"v{i}", f"a{i}"
 total = off + parts[-1][2]
 speech_a, speech_b = starts[1], starts[-1] + X  # letters run from the first clip to the end card
-# piano bed: loop the 150 s track with crossfades until it covers the whole film
-bed = "[%d:a]aresample=48000,aformat=channel_layouts=stereo,asplit=3[b0][b1][b2];[b0][b1]acrossfade=d=4[b01];[b01][b2]acrossfade=d=4,atrim=0:%.3f," % (len(parts), total)
-bed += ("volume=eval=frame:volume='0.09+(0.37-0.09)*(clip((%.3f-t)/1.5\\,0\\,1)+clip((t-%.3f)/1.5\\,0\\,1))'," % (speech_a + 0.3, speech_b - 0.3))
-bed += "afade=t=in:d=1.5,afade=t=out:st=%.3f:d=3[bed];" % (total - 3)
+# piano bed: three copies of the 150 s track crossfaded end to end (the first starts 4.5 s in,
+# past its near-silent intro) so it covers the whole film
+NB = len(parts)
+bed = ("[%d:a]atrim=start=4.5,asetpts=PTS-STARTPTS,aresample=48000,aformat=channel_layouts=stereo[b0];"
+       "[%d:a]aresample=48000,aformat=channel_layouts=stereo[b1];[%d:a]aresample=48000,aformat=channel_layouts=stereo[b2];"
+       "[b0][b1]acrossfade=d=4[b01];[b01][b2]acrossfade=d=4,atrim=0:%.3f," % (NB, NB + 1, NB + 2, total))
+# 0.09 under the letters, 0.9 on the title and end cards (where the bed plays alone)
+bed += ("volume=eval=frame:volume='0.09+(0.9-0.09)*(clip((%.3f-t)/1.5\\,0\\,1)+clip((t-%.3f)/1.5\\,0\\,1))'," % (speech_a + 0.3, speech_b - 0.3))
+bed += "afade=t=in:d=0.8,afade=t=out:st=%.3f:d=2.5[bed];" % (total - 2.5)
 mix = f"[{alast}][bed]amix=inputs=2:normalize=0,alimiter=limit=0.89[aout]"
-cmd = ["ffmpeg", "-v", "error", "-y"] + inputs + ["-i", "assets/audio/bgm.mp3", "-filter_complex", vf + af + bed + mix,
+import sys
+if len(sys.argv) > 1 and sys.argv[1] == "audio":
+    ains = []
+    for _, f, _ in parts:
+        ains += ["-i", f]
+    run(["ffmpeg", "-v", "error", "-y"] + ains + ["-i", "assets/audio/bgm.mp3"] * 3 + ["-filter_complex", af + bed + mix,
+         "-map", "[aout]", "-c:a", "aac", "-b:a", "192k", "work/soundtrack.m4a"])
+    run(["ffmpeg", "-v", "error", "-y", "-i", "out/letter.mp4", "-i", "work/soundtrack.m4a", "-map", "0:v", "-map", "1:a",
+         "-c", "copy", "-movflags", "+faststart", "work/letter-remux.mp4"])
+    os.replace("work/letter-remux.mp4", "out/letter.mp4")
+    print("audio remixed"); sys.exit()
+cmd = ["ffmpeg", "-v", "error", "-y"] + inputs + ["-i", "assets/audio/bgm.mp3"] * 3 + ["-filter_complex", vf + af + bed + mix,
        "-map", f"[{vlast}]", "-map", "[aout]", "-c:v", "libx264", "-crf", "20", "-preset", "medium", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", "out/letter.mp4"]
 run(cmd)
 json.dump({"starts": starts, "total": total}, open("work/timeline.json", "w"))
