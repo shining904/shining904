@@ -1,10 +1,12 @@
 # Title page for "기도후원자 영상편지": warm light, drifting glow particles, serif title.
-# `python3 build.py 16x9` (default, 1920x1080) or `python3 build.py 9x16` (1080x1920).
+# `python3 build.py 16x9` (default, 1920x1080) or `python3 build.py 9x16` (1080x1920);
+# add `end` as a second argument for the closing thank-you card instead of the title.
 import os, sys
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 FMT = sys.argv[1] if len(sys.argv) > 1 else "16x9"
 W, H = (1920, 1080) if FMT == "16x9" else (1080, 1920)
 V = W < H
+END = len(sys.argv) > 2 and sys.argv[2] == "end"
 TITLE_SIZE = 96 if V else 120
 faces = ""
 for fam, w, f, rng in [("Nanum Myeongjo", 800, "nanum-myeongjo-latin-800-normal", "U+0000-00FF"),
@@ -89,10 +91,10 @@ comp = f'''<!doctype html>
       <div id="root" data-composition-id="title" data-width="{W}" data-height="{H}">
         <div id="lt-glow"></div>
 {dots}        <div id="lt-wrap">
-          <div id="lt-kicker">A LETTER OF THANKS</div>
+          <div id="lt-kicker">{"THANK YOU" if END else "A LETTER OF THANKS"}</div>
           <div id="lt-line"></div>
-          <div id="lt-title">{"기도후원자<br />영상편지" if V else "기도후원자 영상편지"}</div>
-          <div id="lt-sub">기도로 함께해 주신 분들께</div>
+          <div id="lt-title">{"기도로 함께해 주셔서<br />감사합니다" if END else ("기도후원자<br />영상편지" if V else "기도후원자 영상편지")}</div>
+          <div id="lt-sub">{"늘 기도로 동행해 주시는 모든 분들께" if END else "기도로 함께해 주신 분들께"}</div>
         </div>
       </div>
       <script>
@@ -103,7 +105,7 @@ comp = f'''<!doctype html>
         tl.fromTo("#lt-line", {{ scaleX: 0 }}, {{ scaleX: 1, duration: 0.9, ease: "power2.inOut" }}, 0.6);
         tl.fromTo("#lt-title", {{ opacity: 0, y: 24 }}, {{ opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }}, 0.9);
         tl.fromTo("#lt-sub", {{ opacity: 0 }}, {{ opacity: 1, duration: 1.0 }}, 1.8);
-        tl.to("#lt-wrap", {{ opacity: 0, duration: 0.6, ease: "power1.in" }}, 4.4);
+{"" if END else '        tl.to("#lt-wrap", { opacity: 0, duration: 0.6, ease: "power1.in" }, 4.4);'}
         window.__timelines["title"] = tl;
       </script>
     </template>
