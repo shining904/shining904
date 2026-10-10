@@ -12,7 +12,9 @@ CLIPS = ["0cb828eb-2026_10_07_21_45", "1c694908-2026_10_07_22_02", "244042fe-202
 X = 0.6  # dissolve length
 os.makedirs("work", exist_ok=True)
 def run(cmd): subprocess.run(cmd, check=True)
-def dur(f): return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", f], capture_output=True, text=True).stdout)
+def dur(f):
+    # the VIDEO stream length: offsets must follow the picture, or audio drifts ahead clip by clip
+    return float(subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=duration", "-of", "csv=p=0", f], capture_output=True, text=True).stdout)
 FIT = ("[0:v]split=2[a][b];[a]scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,boxblur=40:4,eq=brightness=-0.06[bg];"
        "[b]scale=1920:1080:force_original_aspect_ratio=decrease[fg];[bg][fg]overlay=(W-w)/2:(H-h)/2,fps=30,format=yuv420p,setsar=1[v]")
 parts = []
@@ -25,6 +27,11 @@ for name, src in [("title", "out/title-16x9.mp4")] + [(f"c{i:02d}", f"{U}/{c}.mp
         else:
             run(["ffmpeg", "-v", "error", "-y", "-i", src, "-filter_complex", FIT + ";[0:a]loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000,aformat=channel_layouts=stereo[a]",
                  "-map", "[v]", "-map", "[a]", "-c:v", "libx264", "-crf", "18", "-preset", "fast", "-c:a", "aac", "-b:a", "192k", out])
+    fixed = f"work/{name}-sync.mp4"
+    if not os.path.exists(fixed):
+        vd = dur(out)
+        run(["ffmpeg", "-v", "error", "-y", "-i", out, "-af", f"apad,atrim=0:{vd:.4f}", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", fixed])
+    out = fixed
     parts.append((name, out, dur(out)))
     print(name, round(parts[-1][2], 2))
 # dissolve chain
@@ -53,6 +60,34 @@ bed += "afade=t=in:d=0.8,afade=t=out:st=%.3f:d=2.5[bed];" % (total - 2.5)
 mix = f"[{alast}][bed]amix=inputs=2:normalize=0,alimiter=limit=0.89[aout]"
 import sys
 if len(sys.argv) > 1 and sys.argv[1] == "audio":
+    # Rebuild the dialogue straight from the original uploads in ONE graph (no intermediate AAC
+    # files, whose priming/padding shortened each clip by 20-60 ms and let the voice run ahead of
+    # the picture), each clip padded/trimmed to exactly its video length, then remux.
+    srcs = [None] + [f"{U}/{c}.mp4" for c in CLIPS] + [None]
+    ains, chain = [], ""
+    for k, ((name, f, d), src) in enumerate(zip(parts, srcs)):
+        if src is None:
+            ains += ["-f", "lavfi", "-t", f"{d:.4f}", "-i", "anullsrc=r=48000:cl=stereo"]
+            chain += f"[{k}:a]aformat=sample_rates=48000:channel_layouts=stereo,asetpts=N/SR/TB,apad,atrim=end_sample={round(d * 48000)},asetpts=N/SR/TB[s{k}];"
+        else:
+            ains += ["-i", src]
+            # asetpts restarts the clock at sample 0 (loudnorm's output does not), so the
+            # sample-exact trim keeps the whole clip instead of losing its first ~60 ms
+            chain += (f"[{k}:a]loudnorm=I=-16:TP=-1.5:LRA=11,aresample=48000,aformat=sample_rates=48000:channel_layouts=stereo,"
+                      f"asetpts=N/SR/TB,apad,atrim=end_sample={round(d * 48000)},asetpts=N/SR/TB[s{k}];")
+    last = "s0"
+    for k in range(1, len(parts)):
+        chain += f"[{last}][s{k}]acrossfade=d={X}:c1=tri:c2=tri[x{k}];"
+        last = f"x{k}"
+    bed2 = bed.replace(f"[{NB}:a]", f"[{len(parts)}:a]").replace(f"[{NB + 1}:a]", f"[{len(parts) + 1}:a]").replace(f"[{NB + 2}:a]", f"[{len(parts) + 2}:a]")
+    run(["ffmpeg", "-v", "error", "-y"] + ains + ["-i", "assets/audio/bgm.mp3"] * 3 + ["-filter_complex",
+         chain + bed2 + f"[{last}][bed]amix=inputs=2:normalize=0,alimiter=limit=0.89[aout]",
+         "-map", "[aout]", "-c:a", "aac", "-b:a", "192k", "work/soundtrack.m4a"])
+    run(["ffmpeg", "-v", "error", "-y", "-i", "out/letter.mp4", "-i", "work/soundtrack.m4a", "-map", "0:v", "-map", "1:a",
+         "-c", "copy", "-movflags", "+faststart", "work/letter-remux.mp4"])
+    os.replace("work/letter-remux.mp4", "out/letter.mp4")
+    print("audio rebuilt from sources"); sys.exit()
+if len(sys.argv) > 1 and sys.argv[1] == "audio-old":
     ains = []
     for _, f, _ in parts:
         ains += ["-i", f]
