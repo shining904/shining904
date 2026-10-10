@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #root { background: #f6f2ea; font-family: "Noto Sans KR", sans-serif; }
+        .ds-scene { position: absolute; inset: 0; opacity: 0; }
+        .ds-kick { position: absolute; left: 90px; top: 300px; font-size: 44px; font-weight: 800; color: #a8740f; letter-spacing: 4px; }
+        .ds-num { position: absolute; left: 80px; top: 380px; font-family: "Black Han Sans", sans-serif; font-size: 250px; line-height: 1; color: #14244a; }
+        .ds-num small { font-size: 110px; margin-left: 10px; }
+        .ds-label { position: absolute; left: 90px; top: 660px; font-size: 60px; font-weight: 800; color: #2b3445; }
+        .ds-src { position: absolute; left: 90px; right: 90px; bottom: 170px; font-size: 28px; font-weight: 500; color: #8a8478; }
+        .ds-vis { position: absolute; left: 90px; right: 90px; top: 820px; height: 820px; }
+        .ds-dot { position: absolute; border-radius: 50%; }
+        .ds-tile { position: absolute; width: 58px; height: 58px; border-radius: 8px; background: #a8740f; }
+        #ds-title1 { position: absolute; left: 90px; top: 640px; font-family: "Black Han Sans", sans-serif; font-size: 170px; line-height: 1.05; color: #14244a; }
+        #ds-title1 em { font-style: normal; color: #a8740f; }
+        #ds-rule { position: absolute; left: 90px; top: 1060px; width: 900px; height: 14px; background: #14244a; transform-origin: left center; }
+        .ds-note { position: absolute; left: 90px; top: 1120px; font-size: 48px; font-weight: 800; color: #2b3445; }
+        #ds-donut { position: absolute; left: 50%; top: 40px; width: 720px; height: 720px; margin-left: -360px; }
+        #ds-donut-txt { position: absolute; left: 0; right: 0; top: 300px; text-align: center; font-family: "Black Han Sans", sans-serif; font-size: 150px; color: #3f7a66; }
+        #ds-end1 { position: absolute; left: 0; right: 0; top: 720px; text-align: center; font-family: "Black Han Sans", sans-serif; font-size: 140px; line-height: 1.15; color: #14244a; }
+        #ds-end2 { position: absolute; left: 0; right: 0; top: 1270px; text-align: center; font-size: 46px; font-weight: 800; color: #2b3445; }
+      </style>
+      <div id="root" data-composition-id="data" data-width="1080" data-height="1920">
+        <div id="ds-s0" class="ds-scene">
+          <div class="ds-kick">ICHEON IN NUMBERS</div>
+          <div id="ds-title1">숫자로<br />보는 <em>이천</em></div>
+          <div id="ds-rule"></div>
+          <div class="ds-note">2026 데이터 스토리</div>
+        </div>
+        <div id="ds-s1" class="ds-scene">
+          <div class="ds-kick">POPULATION</div>
+          <div class="ds-num"><span id="ds-n1">0</span><small>만 명</small></div>
+          <div class="ds-label">함께 사는 이천 시민</div>
+          <div class="ds-vis">
+          <div class="ds-dot ds-p" style="left:0px;top:80px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:60px;top:80px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:120px;top:80px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:180px;top:80px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:240px;top:80px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:300px;top:80px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:360px;top:80px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:420px;top:80px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:480px;top:80px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:540px;top:80px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:600px;top:80px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:660px;top:80px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:720px;top:80px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:780px;top:80px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:840px;top:80px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:0px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:60px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:120px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:180px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:240px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:300px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:360px;top:140px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:420px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:480px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:540px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:600px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:660px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:720px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:780px;top:140px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:840px;top:140px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:0px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:60px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:120px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:180px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:240px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:300px;top:200px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:360px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:420px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:480px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:540px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:600px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:660px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:720px;top:200px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:780px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:840px;top:200px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:0px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:60px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:120px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:180px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:240px;top:260px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:300px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:360px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:420px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:480px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:540px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:600px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:660px;top:260px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:720px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:780px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:840px;top:260px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:0px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:60px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:120px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:180px;top:320px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:240px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:300px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:360px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:420px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:480px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:540px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:600px;top:320px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:660px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:720px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:780px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:840px;top:320px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:0px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:60px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:120px;top:380px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:180px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:240px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:300px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:360px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:420px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:480px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:540px;top:380px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:600px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:660px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:720px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:780px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:840px;top:380px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:0px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:60px;top:440px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:120px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:180px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:240px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:300px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:360px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:420px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:480px;top:440px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:540px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:600px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:660px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:720px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:780px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:840px;top:440px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:0px;top:500px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:60px;top:500px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:120px;top:500px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:180px;top:500px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:240px;top:500px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:300px;top:500px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:360px;top:500px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:420px;top:500px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:480px;top:500px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:540px;top:500px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:600px;top:500px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:660px;top:500px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:720px;top:500px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:780px;top:500px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:840px;top:500px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:0px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:60px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:120px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:180px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:240px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:300px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:360px;top:560px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:420px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:480px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:540px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:600px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:660px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:720px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:780px;top:560px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:840px;top:560px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:0px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:60px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:120px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:180px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:240px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:300px;top:620px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:360px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:420px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:480px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:540px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:600px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:660px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:720px;top:620px;width:40px;height:40px;background:#a8740f"></div>
+          <div class="ds-dot ds-p" style="left:780px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          <div class="ds-dot ds-p" style="left:840px;top:620px;width:40px;height:40px;background:#14244a"></div>
+          </div>
+          <div class="ds-src">2026년 8월 주민등록인구 기준 (약 22만 7천 명)</div>
+        </div>
+        <div id="ds-s2" class="ds-scene">
+          <div class="ds-kick">RICE FIELDS</div>
+          <div class="ds-num"><span id="ds-n2">0</span><small>ha+</small></div>
+          <div class="ds-label">이천쌀 논 · 축구장 약 9,800개</div>
+          <div class="ds-vis">
+          <div class="ds-tile" style="left:0px;top:40px;opacity:0.55"></div>
+          <div class="ds-tile" style="left:69px;top:40px;opacity:0.86"></div>
+          <div class="ds-tile" style="left:138px;top:40px;opacity:0.73"></div>
+          <div class="ds-tile" style="left:207px;top:40px;opacity:0.60"></div>
+          <div class="ds-tile" style="left:276px;top:40px;opacity:0.91"></div>
+          <div class="ds-tile" style="left:345px;top:40px;opacity:0.78"></div>
+          <div class="ds-tile" style="left:414px;top:40px;opacity:0.64"></div>
+          <div class="ds-tile" style="left:483px;top:40px;opacity:0.96"></div>
+          <div class="ds-tile" style="left:552px;top:40px;opacity:0.82"></div>
+          <div class="ds-tile" style="left:621px;top:40px;opacity:0.69"></div>
+          <div class="ds-tile" style="left:690px;top:40px;opacity:0.55"></div>
+          <div class="ds-tile" style="left:759px;top:40px;opacity:0.86"></div>
+          <div class="ds-tile" style="left:828px;top:40px;opacity:0.73"></div>
+          <div class="ds-tile" style="left:0px;top:109px;opacity:0.60"></div>
+          <div class="ds-tile" style="left:69px;top:109px;opacity:0.91"></div>
+          <div class="ds-tile" style="left:138px;top:109px;opacity:0.78"></div>
+          <div class="ds-tile" style="left:207px;top:109px;opacity:0.64"></div>
+          <div class="ds-tile" style="left:276px;top:109px;opacity:0.96"></div>
+          <div class="ds-tile" style="left:345px;top:109px;opacity:0.82"></div>
+          <div class="ds-tile" style="left:414px;top:109px;opacity:0.69"></div>
+          <div class="ds-tile" style="left:483px;top:109px;opacity:0.55"></div>
+          <div class="ds-tile" style="left:552px;top:109px;opacity:0.86"></div>
+          <div class="ds-tile" style="left:621px;top:109px;opacity:0.73"></div>
+          <div class="ds-tile" style="left:690px;top:109px;opacity:0.60"></div>
+          <div class="ds-tile" style="left:759px;top:109px;opacity:0.91"></div>
+          <div class="ds-tile" style="left:828px;top:109px;opacity:0.78"></div>
+          <div class="ds-tile" style="left:0px;top:178px;opacity:0.64"></div>
+          <div class="ds-tile" style="left:69px;top:178px;opacity:0.96"></div>
+          <div class="ds-tile" style="left:138px;top:178px;opacity:0.82"></div>
+          <div class="ds-tile" style="left:207px;top:178px;opacity:0.69"></div>
+          <div class="ds-tile" style="left:276px;top:178px;opacity:0.55"></div>
+          <div class="ds-tile" style="left:345px;top:178px;opacity:0.86"></div>
+          <div class="ds-tile" style="left:414px;top:178px;opacity:0.73"></div>
+          <div class="ds-tile" style="left:483px;top:178px;opacity:0.60"></div>
+          <div class="ds-tile" style="left:552px;top:178px;opacity:0.91"></div>
+          <div class="ds-tile" style="left:621px;top:178px;opacity:0.78"></div>
+          <div class="ds-tile" style="left:690px;top:178px;opacity:0.64"></div>
+          <div class="ds-tile" style="left:759px;top:178px;opacity:0.96"></div>
+          <div class="ds-tile" style="left:828px;top:178px;opacity:0.82"></div>
+          <div class="ds-tile" style="left:0px;top:247px;opacity:0.69"></div>
+          <div class="ds-tile" style="left:69px;top:247px;opacity:0.55"></div>
+          <div class="ds-tile" style="left:138px;top:247px;opacity:0.86"></div>
+          <div class="ds-tile" style="left:207px;top:247px;opacity:0.73"></div>
+          <div class="ds-tile" style="left:276px;top:247px;opacity:0.60"></div>
+          <div class="ds-tile" style="left:345px;top:247px;opacity:0.91"></div>
+          <div class="ds-tile" style="left:414px;top:247px;opacity:0.78"></div>
+          <div class="ds-tile" style="left:483px;top:247px;opacity:0.64"></div>
+          <div class="ds-tile" style="left:552px;top:247px;opacity:0.96"></div>
+          <div class="ds-tile" style="left:621px;top:247px;opacity:0.82"></div>
+          <div class="ds-tile" style="left:690px;top:247px;opacity:0.69"></div>
+          <div class="ds-tile" style="left:759px;top:247px;opacity:0.55"></div>
+          <div class="ds-tile" style="left:828px;top:247px;opacity:0.86"></div>
+          <div class="ds-tile" style="left:0px;top:316px;opacity:0.73"></div>
+          <div class="ds-tile" style="left:69px;top:316px;opacity:0.60"></div>
+          <div class="ds-tile" style="left:138px;top:316px;opacity:0.91"></div>
+          <div class="ds-tile" style="left:207px;top:316px;opacity:0.78"></div>
+          <div class="ds-tile" style="left:276px;top:316px;opacity:0.64"></div>
+          <div class="ds-tile" style="left:345px;top:316px;opacity:0.96"></div>
+          <div class="ds-tile" style="left:414px;top:316px;opacity:0.82"></div>
+          <div class="ds-tile" style="left:483px;top:316px;opacity:0.69"></div>
+          <div class="ds-tile" style="left:552px;top:316px;opacity:0.55"></div>
+          <div class="ds-tile" style="left:621px;top:316px;opacity:0.86"></div>
+          <div class="ds-tile" style="left:690px;top:316px;opacity:0.73"></div>
+          <div class="ds-tile" style="left:759px;top:316px;opacity:0.60"></div>
+          <div class="ds-tile" style="left:828px;top:316px;opacity:0.91"></div>
+          <div class="ds-tile" style="left:0px;top:385px;opacity:0.78"></div>
+          <div class="ds-tile" style="left:69px;top:385px;opacity:0.64"></div>
+          <div class="ds-tile" style="left:138px;top:385px;opacity:0.96"></div>
+          <div class="ds-tile" style="left:207px;top:385px;opacity:0.82"></div>
+          <div class="ds-tile" style="left:276px;top:385px;opacity:0.69"></div>
+          <div class="ds-tile" style="left:345px;top:385px;opacity:0.55"></div>
+          <div class="ds-tile" style="left:414px;top:385px;opacity:0.86"></div>
+          <div class="ds-tile" style="left:483px;top:385px;opacity:0.73"></div>
+          <div class="ds-tile" style="left:552px;top:385px;opacity:0.60"></div>
+          <div class="ds-tile" style="left:621px;top:385px;opacity:0.91"></div>
+          <div class="ds-tile" style="left:690px;top:385px;opacity:0.78"></div>
+          <div class="ds-tile" style="left:759px;top:385px;opacity:0.64"></div>
+          <div class="ds-tile" style="left:828px;top:385px;opacity:0.96"></div>
+          <div class="ds-tile" style="left:0px;top:454px;opacity:0.82"></div>
+          <div class="ds-tile" style="left:69px;top:454px;opacity:0.69"></div>
+          <div class="ds-tile" style="left:138px;top:454px;opacity:0.55"></div>
+          <div class="ds-tile" style="left:207px;top:454px;opacity:0.86"></div>
+          <div class="ds-tile" style="left:276px;top:454px;opacity:0.73"></div>
+          <div class="ds-tile" style="left:345px;top:454px;opacity:0.60"></div>
+          <div class="ds-tile" style="left:414px;top:454px;opacity:0.91"></div>
+          <div class="ds-tile" style="left:483px;top:454px;opacity:0.78"></div>
+          <div class="ds-tile" style="left:552px;top:454px;opacity:0.64"></div>
+          <div class="ds-tile" style="left:621px;top:454px;opacity:0.96"></div>
+          <div class="ds-tile" style="left:690px;top:454px;opacity:0.82"></div>
+          <div class="ds-tile" style="left:759px;top:454px;opacity:0.69"></div>
+          <div class="ds-tile" style="left:828px;top:454px;opacity:0.55"></div>
+          <div class="ds-tile" style="left:0px;top:523px;opacity:0.86"></div>
+          <div class="ds-tile" style="left:69px;top:523px;opacity:0.73"></div>
+          <div class="ds-tile" style="left:138px;top:523px;opacity:0.60"></div>
+          <div class="ds-tile" style="left:207px;top:523px;opacity:0.91"></div>
+          <div class="ds-tile" style="left:276px;top:523px;opacity:0.78"></div>
+          <div class="ds-tile" style="left:345px;top:523px;opacity:0.64"></div>
+          <div class="ds-tile" style="left:414px;top:523px;opacity:0.96"></div>
+          <div class="ds-tile" style="left:483px;top:523px;opacity:0.82"></div>
+          <div class="ds-tile" style="left:552px;top:523px;opacity:0.69"></div>
+          <div class="ds-tile" style="left:621px;top:523px;opacity:0.55"></div>
+          <div class="ds-tile" style="left:690px;top:523px;opacity:0.86"></div>
+          <div class="ds-tile" style="left:759px;top:523px;opacity:0.73"></div>
+          <div class="ds-tile" style="left:828px;top:523px;opacity:0.60"></div>
+          <div class="ds-tile" style="left:0px;top:592px;opacity:0.91"></div>
+          <div class="ds-tile" style="left:69px;top:592px;opacity:0.78"></div>
+          <div class="ds-tile" style="left:138px;top:592px;opacity:0.64"></div>
+          <div class="ds-tile" style="left:207px;top:592px;opacity:0.96"></div>
+          <div class="ds-tile" style="left:276px;top:592px;opacity:0.82"></div>
+          <div class="ds-tile" style="left:345px;top:592px;opacity:0.69"></div>
+          <div class="ds-tile" style="left:414px;top:592px;opacity:0.55"></div>
+          <div class="ds-tile" style="left:483px;top:592px;opacity:0.86"></div>
+          <div class="ds-tile" style="left:552px;top:592px;opacity:0.73"></div>
+          <div class="ds-tile" style="left:621px;top:592px;opacity:0.60"></div>
+          <div class="ds-tile" style="left:690px;top:592px;opacity:0.91"></div>
+          <div class="ds-tile" style="left:759px;top:592px;opacity:0.78"></div>
+          <div class="ds-tile" style="left:828px;top:592px;opacity:0.64"></div>
+          </div>
+          <div class="ds-src">2022년 언론 보도 기준 (축구장 1개 ≈ 0.714ha로 환산)</div>
+        </div>
+        <div id="ds-s3" class="ds-scene">
+          <div class="ds-kick">OUR VARIETIES</div>
+          <div class="ds-vis" style="top: 380px">
+            <svg id="ds-donut" viewBox="0 0 200 200">
+              <circle cx="100" cy="100" r="80" fill="none" stroke="#e4ddd0" stroke-width="26" />
+              <circle id="ds-arc" cx="100" cy="100" r="80" fill="none" stroke="#3f7a66" stroke-width="26" stroke-linecap="round"
+                stroke-dasharray="502.65" stroke-dashoffset="502.65" transform="rotate(-90 100 100)" />
+            </svg>
+            <div id="ds-donut-txt"><span id="ds-n3">0</span>%</div>
+          </div>
+          <div class="ds-label" style="top: 1180px">우리 품종 '해들·알찬미'로 바꾼 논</div>
+          <div class="ds-src">2022년 언론 보도 기준 (관내 논 면적 대비)</div>
+        </div>
+        <div id="ds-s4" class="ds-scene">
+          <div class="ds-kick">CERAMICS</div>
+          <div class="ds-num"><span id="ds-n4">0</span><small>여 곳</small></div>
+          <div class="ds-label">도자기축제에 참여한 도예 공방</div>
+          <div class="ds-vis">
+          <div class="ds-dot ds-k" style="left:0px;top:60px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:60px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:60px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:60px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:60px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:60px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:60px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:60px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:60px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:60px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:60px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:60px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:60px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:60px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:60px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:60px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:116px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:116px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:116px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:116px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:172px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:172px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:172px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:172px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:228px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:228px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:228px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:228px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:284px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:284px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:284px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:284px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:340px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:340px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:340px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:340px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:340px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:340px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:340px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:340px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:340px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:340px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:340px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:340px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:340px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:340px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:340px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:340px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:396px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:396px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:396px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:396px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:452px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:452px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:452px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:452px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:508px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:508px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:508px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:508px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:564px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:564px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:564px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:564px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:620px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:620px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:620px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:620px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:620px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:620px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:620px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:620px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:620px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:620px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:620px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:620px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:620px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:620px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:620px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:620px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:676px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:676px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:676px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:676px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:732px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:732px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:732px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:732px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:788px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:788px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:788px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:788px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:0px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:56px;top:844px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:112px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:168px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:224px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:280px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:336px;top:844px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:392px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:448px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:504px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:560px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:616px;top:844px;width:38px;height:38px;background:#a8740f"></div>
+          <div class="ds-dot ds-k" style="left:672px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:728px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:784px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          <div class="ds-dot ds-k" style="left:840px;top:844px;width:38px;height:38px;background:#d0503a"></div>
+          </div>
+          <div class="ds-src">2026 이천도자기축제 소개 기준</div>
+        </div>
+        <div id="ds-s5" class="ds-scene">
+          <div id="ds-end1">숫자 너머,<br />사람이 사는<br />이천</div>
+          <div id="ds-end2">올해로 25번째, 이천쌀문화축제</div>
+          <div class="ds-src" style="text-align:center">자료: 주민등록인구(2026.8), 언론 보도(2022), 축제 소개(2026)</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.set("#ds-s0", { opacity: 1 }, 0);
+        tl.fromTo("#ds-s0", { y: 0 }, { y: 0, duration: 0.35, ease: "power3.out" }, 0);
+        tl.to("#ds-s0", { y: -260, opacity: 0, duration: 0.3, ease: "power2.in" }, 1.417);
+        tl.fromTo("#ds-s0 .ds-kick, #ds-s0 .ds-label, #ds-s0 .ds-src", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.12 }, 0.15);
+        tl.set("#ds-s1", { opacity: 1 }, 1.717);
+        tl.fromTo("#ds-s1", { y: 260 }, { y: 0, duration: 0.35, ease: "power3.out" }, 1.717);
+        tl.to("#ds-s1", { y: -260, opacity: 0, duration: 0.3, ease: "power2.in" }, 4.146);
+        tl.fromTo("#ds-s1 .ds-kick, #ds-s1 .ds-label, #ds-s1 .ds-src", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.12 }, 1.867);
+        tl.set("#ds-s2", { opacity: 1 }, 4.446);
+        tl.fromTo("#ds-s2", { y: 260 }, { y: 0, duration: 0.35, ease: "power3.out" }, 4.446);
+        tl.to("#ds-s2", { y: -260, opacity: 0, duration: 0.3, ease: "power2.in" }, 6.874);
+        tl.fromTo("#ds-s2 .ds-kick, #ds-s2 .ds-label, #ds-s2 .ds-src", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.12 }, 4.596);
+        tl.set("#ds-s3", { opacity: 1 }, 7.174);
+        tl.fromTo("#ds-s3", { y: 260 }, { y: 0, duration: 0.35, ease: "power3.out" }, 7.174);
+        tl.to("#ds-s3", { y: -260, opacity: 0, duration: 0.3, ease: "power2.in" }, 9.603);
+        tl.fromTo("#ds-s3 .ds-kick, #ds-s3 .ds-label, #ds-s3 .ds-src", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.12 }, 7.324);
+        tl.set("#ds-s4", { opacity: 1 }, 9.903);
+        tl.fromTo("#ds-s4", { y: 260 }, { y: 0, duration: 0.35, ease: "power3.out" }, 9.903);
+        tl.to("#ds-s4", { y: -260, opacity: 0, duration: 0.3, ease: "power2.in" }, 12.331);
+        tl.fromTo("#ds-s4 .ds-kick, #ds-s4 .ds-label, #ds-s4 .ds-src", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.12 }, 10.053);
+        tl.set("#ds-s5", { opacity: 1 }, 12.631);
+        tl.fromTo("#ds-s5", { y: 260 }, { y: 0, duration: 0.35, ease: "power3.out" }, 12.631);
+        tl.fromTo("#ds-s5 .ds-kick, #ds-s5 .ds-label, #ds-s5 .ds-src", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, stagger: 0.12 }, 12.781);
+        tl.fromTo("#ds-title1", { opacity: 0, y: 80 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.1);
+        tl.fromTo("#ds-rule", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power2.inOut" }, 0.4);
+        tl.fromTo(".ds-note", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.8);
+        { const o = { v: 0 }; tl.to(o, { v: 22.7, duration: 1.4, ease: "power2.out", onUpdate: () => { const v = o.v; document.querySelector("#ds-n1").textContent = v.toFixed(1); } }, 1.917); }
+        tl.fromTo(".ds-p", { scale: 0 }, { scale: 1, duration: 0.2, ease: "back.out(2)", stagger: 0.009 }, 2.017);
+        { const o = { v: 0 }; tl.to(o, { v: 7000, duration: 1.4, ease: "power2.out", onUpdate: () => { const v = o.v; document.querySelector("#ds-n2").textContent = Math.round(v).toLocaleString("en-US"); } }, 4.646); }
+        tl.fromTo(".ds-tile", { scale: 0, rotation: -30 }, { scale: 1, rotation: 0, duration: 0.22, ease: "back.out(1.8)", stagger: 0.011 }, 4.746);
+        { const o = { v: 0 }; tl.to(o, { v: 93, duration: 1.5, ease: "power2.out", onUpdate: () => { const v = o.v; document.querySelector("#ds-n3").textContent = Math.round(v); } }, 7.3740000000000006); }
+        tl.to("#ds-arc", { attr: { "stroke-dashoffset": 35.19 }, duration: 1.5, ease: "power2.out" }, 7.374);
+        { const o = { v: 0 }; tl.to(o, { v: 240, duration: 1.4, ease: "power2.out", onUpdate: () => { const v = o.v; document.querySelector("#ds-n4").textContent = Math.round(v); } }, 10.103); }
+        tl.fromTo(".ds-k", { scale: 0, y: -30 }, { scale: 1, y: 0, duration: 0.18, ease: "back.out(2)", stagger: 0.0055 }, 10.203);
+        tl.fromTo("#ds-end1", { opacity: 0, scale: 1.3 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, 12.731);
+        tl.fromTo("#ds-end2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4 }, 13.331);
+        window.__timelines["data"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

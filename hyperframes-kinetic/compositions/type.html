@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .kt-group {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+        }
+        .kt-word {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Black Han Sans", sans-serif;
+          line-height: 1;
+          opacity: 0;
+        }
+        #kt-flash {
+          position: absolute;
+          inset: 0;
+          background: #ffffff;
+          opacity: 0;
+        }
+        .kt-bar {
+          position: absolute;
+          left: 0;
+          height: 26px;
+          width: 100%;
+          transform-origin: left center;
+        }
+      </style>
+      <div id="root" data-composition-id="type" data-width="1080" data-height="1920">
+        <div id="kt-g0" class="kt-group" style="background:#111111;color:#ffffff">
+          <div class="kt-bar" id="kt-bar0" style="top:1500px;background:#ffffff;opacity:0.18"></div>
+          <div id="kt-g0w0" class="kt-word" style="top:640px;font-size:150px;">이천은</div>
+          <div id="kt-g0w1" class="kt-word" style="top:820px;font-size:150px;">어떤</div>
+          <div id="kt-g0w2" class="kt-word" style="top:990px;font-size:210px;color:#f2c14e">곳일까?</div>
+        </div>
+        <div id="kt-g1" class="kt-group" style="background:#f2c14e;color:#1b1408">
+          <div class="kt-bar" id="kt-bar1" style="top:420px;background:#1b1408;opacity:0.18"></div>
+          <div id="kt-g1w0" class="kt-word" style="top:560px;font-size:150px;">밥이</div>
+          <div id="kt-g1w1" class="kt-word" style="top:740px;font-size:150px;">맛있는</div>
+          <div id="kt-g1w2" class="kt-word" style="top:930px;font-size:220px;">쌀의 도시</div>
+        </div>
+        <div id="kt-g2" class="kt-group" style="background:#7fb3a0;color:#10261f">
+          <div class="kt-bar" id="kt-bar2" style="top:1500px;background:#10261f;opacity:0.18"></div>
+          <div id="kt-g2w0" class="kt-word" style="top:560px;font-size:150px;">흙이</div>
+          <div id="kt-g2w1" class="kt-word" style="top:740px;font-size:150px;">빚은</div>
+          <div id="kt-g2w2" class="kt-word" style="top:930px;font-size:180px;color:#ffffff">도자기의 도시</div>
+        </div>
+        <div id="kt-g3" class="kt-group" style="background:#0d1b3e;color:#5fe3f0">
+          <div class="kt-bar" id="kt-bar3" style="top:420px;background:#5fe3f0;opacity:0.18"></div>
+          <div id="kt-g3w0" class="kt-word" style="top:560px;font-size:150px;color:#ffffff">첨단이</div>
+          <div id="kt-g3w1" class="kt-word" style="top:740px;font-size:150px;color:#ffffff">달리는</div>
+          <div id="kt-g3w2" class="kt-word" style="top:930px;font-size:180px;text-shadow:-8px 0 #ff2e7e, 8px 0 #5fe3f0;color:#ffffff">반도체의 도시</div>
+        </div>
+        <div id="kt-g4" class="kt-group" style="background:#ffffff;color:#111111">
+          <div class="kt-bar" id="kt-bar4" style="top:1500px;background:#111111;opacity:0.18"></div>
+          <div id="kt-g4w0" class="kt-word" style="top:520px;font-size:130px;">그리고</div>
+          <div id="kt-g4w1" class="kt-word" style="top:690px;font-size:150px;">이 모든 걸</div>
+          <div id="kt-g4w2" class="kt-word" style="top:870px;font-size:150px;">만드는</div>
+          <div id="kt-g4w3" class="kt-word" style="top:1060px;font-size:250px;color:#e0483a">사람들</div>
+        </div>
+        <div id="kt-g5" class="kt-group" style="background:#111111;color:#ffffff">
+          <div class="kt-bar" id="kt-bar5" style="top:420px;background:#ffffff;opacity:0.18"></div>
+          <div id="kt-g5w0" class="kt-word" style="top:560px;font-size:460px;">이천</div>
+          <div id="kt-g5w1" class="kt-word" style="top:1100px;font-size:90px;color:#f2c14e;letter-spacing:6px">I C H E O N</div>
+          <div id="kt-g5w2" class="kt-word" style="top:1280px;font-size:96px;font-family:'Noto Sans KR';font-weight:800">오늘도, 이천에서</div>
+        </div>
+        <div id="kt-flash"></div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.set("#kt-g0", { opacity: 1 }, 0);
+        tl.set("#kt-g0", { opacity: 0 }, 2.44);
+        tl.to("#kt-flash", { keyframes: [{ opacity: 0.7, duration: 0.03 }, { opacity: 0, duration: 0.12 }] }, 2.44);
+        tl.fromTo("#kt-g0", { scale: 1 }, { scale: 1.07, duration: 2.0, ease: "none" }, 0.44);
+        tl.fromTo("#kt-bar0", { scaleX: 0 }, { scaleX: 1, duration: 2.0, ease: "none" }, 0.44);
+        tl.fromTo("#kt-g0w0", { opacity: 0, scale: 2.2, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 0.44);
+        tl.fromTo("#kt-g0w1", { opacity: 0, scale: 2.2, y: -40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 1.44);
+        tl.fromTo("#kt-g0w2", { opacity: 0, scale: 3.2, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 1.94);
+        tl.to("#kt-g0w2", { x: 14, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 2.08);
+        tl.set("#kt-g1", { opacity: 1 }, 2.44);
+        tl.set("#kt-g1", { opacity: 0 }, 4.44);
+        tl.to("#kt-flash", { keyframes: [{ opacity: 0.7, duration: 0.03 }, { opacity: 0, duration: 0.12 }] }, 4.44);
+        tl.fromTo("#kt-g1", { scale: 1 }, { scale: 1.07, duration: 2.0, ease: "none" }, 2.44);
+        tl.fromTo("#kt-bar1", { scaleX: 0 }, { scaleX: 1, duration: 2.0, ease: "none" }, 2.44);
+        tl.fromTo("#kt-g1w0", { opacity: 0, scale: 2.2, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 2.44);
+        tl.fromTo("#kt-g1w1", { opacity: 0, scale: 2.2, y: -40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 2.94);
+        tl.fromTo("#kt-g1w2", { opacity: 0, scale: 3.2, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 3.44);
+        tl.to("#kt-g1w2", { x: 14, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 3.58);
+        tl.set("#kt-g2", { opacity: 1 }, 4.44);
+        tl.set("#kt-g2", { opacity: 0 }, 6.44);
+        tl.to("#kt-flash", { keyframes: [{ opacity: 0.7, duration: 0.03 }, { opacity: 0, duration: 0.12 }] }, 6.44);
+        tl.fromTo("#kt-g2", { scale: 1 }, { scale: 1.07, duration: 2.0, ease: "none" }, 4.44);
+        tl.fromTo("#kt-bar2", { scaleX: 0 }, { scaleX: 1, duration: 2.0, ease: "none" }, 4.44);
+        tl.fromTo("#kt-g2w0", { opacity: 0, scale: 2.2, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 4.44);
+        tl.fromTo("#kt-g2w1", { opacity: 0, scale: 2.2, y: -40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 4.94);
+        tl.fromTo("#kt-g2w2", { opacity: 0, scale: 3.2, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 5.44);
+        tl.to("#kt-g2w2", { x: 14, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 5.58);
+        tl.set("#kt-g3", { opacity: 1 }, 6.44);
+        tl.set("#kt-g3", { opacity: 0 }, 8.44);
+        tl.to("#kt-flash", { keyframes: [{ opacity: 0.7, duration: 0.03 }, { opacity: 0, duration: 0.12 }] }, 8.44);
+        tl.fromTo("#kt-g3", { scale: 1 }, { scale: 1.07, duration: 2.0, ease: "none" }, 6.44);
+        tl.fromTo("#kt-bar3", { scaleX: 0 }, { scaleX: 1, duration: 2.0, ease: "none" }, 6.44);
+        tl.fromTo("#kt-g3w0", { opacity: 0, scale: 2.2, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 6.44);
+        tl.fromTo("#kt-g3w1", { opacity: 0, scale: 2.2, y: -40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 6.94);
+        tl.fromTo("#kt-g3w2", { opacity: 0, scale: 3.2, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 7.44);
+        tl.to("#kt-g3w2", { x: 14, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 7.58);
+        tl.set("#kt-g4", { opacity: 1 }, 8.44);
+        tl.set("#kt-g4", { opacity: 0 }, 11.44);
+        tl.to("#kt-flash", { keyframes: [{ opacity: 0.7, duration: 0.03 }, { opacity: 0, duration: 0.12 }] }, 11.44);
+        tl.fromTo("#kt-g4", { scale: 1 }, { scale: 1.07, duration: 3.0, ease: "none" }, 8.44);
+        tl.fromTo("#kt-bar4", { scaleX: 0 }, { scaleX: 1, duration: 3.0, ease: "none" }, 8.44);
+        tl.fromTo("#kt-g4w0", { opacity: 0, scale: 2.2, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 8.44);
+        tl.fromTo("#kt-g4w1", { opacity: 0, scale: 2.2, y: -40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 8.94);
+        tl.fromTo("#kt-g4w2", { opacity: 0, scale: 2.2, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 9.44);
+        tl.fromTo("#kt-g4w3", { opacity: 0, scale: 3.2, y: -40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 10.44);
+        tl.to("#kt-g4w3", { x: 14, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 10.58);
+        tl.set("#kt-g5", { opacity: 1 }, 11.44);
+        tl.fromTo("#kt-g5", { scale: 1 }, { scale: 1.07, duration: 4.0, ease: "none" }, 11.44);
+        tl.fromTo("#kt-bar5", { scaleX: 0 }, { scaleX: 1, duration: 4.0, ease: "none" }, 11.44);
+        tl.fromTo("#kt-g5w0", { opacity: 0, scale: 2.2, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 11.44);
+        tl.fromTo("#kt-g5w1", { opacity: 0, scale: 2.2, y: -40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 12.44);
+        tl.fromTo("#kt-g5w2", { opacity: 0, scale: 3.2, y: 40 }, { opacity: 1, scale: 1, y: 0, duration: 0.14, ease: "power4.out" }, 13.44);
+        tl.to("#kt-g5w2", { x: 14, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 13.58);
+        tl.to("#kt-g5w0", { scale: 1.12, y: -40, duration: 2.0, ease: "power2.out" }, 11.94);
+        window.__timelines["type"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
