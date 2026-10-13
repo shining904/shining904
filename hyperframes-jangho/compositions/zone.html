@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          font-family: "Noto Sans KR", sans-serif;
+        }
+        #zone-fade {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        #zone-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        #zone-shade {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(5, 12, 26, 0.15) 0%, rgba(5, 12, 26, 0.35) 55%, rgba(5, 12, 26, 0.85) 100%);
+        }
+        .head {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Black Han Sans", sans-serif;
+          color: #ffffff;
+          text-shadow: 0 6px 30px rgba(0, 0, 0, 0.55);
+        }
+        .tag {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          padding: 10px 30px;
+          border: 3px solid #f2c25c;
+          border-radius: 999px;
+          font-size: 38px;
+          font-weight: 800;
+          color: #f2c25c;
+          background: rgba(11, 26, 51, 0.7);
+          white-space: nowrap;
+        }
+        .gold {
+          color: #f2c25c;
+        }
+        #zone-shade {
+          background: linear-gradient(180deg, rgba(11, 26, 51, 0.82) 0%, rgba(11, 26, 51, 0.7) 60%, rgba(5, 12, 26, 0.92) 100%);
+        }
+        #zone-tag {
+          top: 120px;
+        }
+        #zone-h {
+          top: 200px;
+          font-size: 120px;
+        }
+        #zone-cards {
+          position: absolute;
+          top: 430px;
+          left: 0;
+          right: 0;
+          display: flex;
+          justify-content: center;
+          gap: 56px;
+        }
+        .zone-card {
+          width: 480px;
+          padding: 34px 0 30px;
+          border-radius: 28px;
+          background: rgba(255, 246, 227, 0.08);
+          border: 2px solid rgba(242, 194, 92, 0.55);
+          text-align: center;
+        }
+        .zone-num {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 118px;
+          line-height: 1.1;
+          color: #f2c25c;
+        }
+        .zone-num small {
+          font-size: 48px;
+          margin-left: 6px;
+        }
+        .zone-lab {
+          margin-top: 8px;
+          font-size: 36px;
+          font-weight: 500;
+          color: #fff6e3;
+        }
+        #zone-badge {
+          top: 760px;
+          font-size: 40px;
+          color: #0b1a33;
+          background: #f2c25c;
+        }
+      </style>
+      <div id="root" data-composition-id="zone" data-width="1920" data-height="1080">
+        <div id="zone-fade">
+          <video id="zone-video" src="assets/clips/farm.mp4" data-start="0" data-duration="10.3" muted playsinline></video>
+          <div id="zone-shade"></div>
+          <div id="zone-tag" class="tag">경기도 이천시</div>
+          <div id="zone-h" class="head">이미 <span class="gold">말산업특구</span></div>
+          <div id="zone-cards">
+          <div id="zone-c1" class="zone-card">
+            <div class="zone-num"><span id="zone-c1-n">0</span><small>여 두</small></div>
+            <div class="zone-lab">사육 중인 말</div>
+          </div>
+          <div id="zone-c2" class="zone-card">
+            <div class="zone-num"><span id="zone-c2-n">0</span><small>개</small></div>
+            <div class="zone-lab">말 사육 농가</div>
+          </div>
+          <div id="zone-c3" class="zone-card">
+            <div class="zone-num"><span id="zone-c3-n">0</span><small>여 마리</small></div>
+            <div class="zone-lab">말 전문 동물병원 연간 진료</div>
+          </div>
+          </div>
+          <div id="zone-badge" class="tag">전국 말의 약 10%가 이천에</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#zone-fade", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0);
+        tl.fromTo("#zone-video", { scale: 1.05 }, { scale: 1.12, duration: 10.3, ease: "none" }, 0);
+        tl.fromTo("#zone-tag", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.4);
+        tl.fromTo("#zone-h", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "power4.out" }, 0.9);
+        tl.fromTo("#zone-c1", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 2.6);
+        { const o = { v: 0 }; tl.to(o, { v: 470, duration: 1.4, ease: "power2.out", onUpdate: () => { const v = o.v; document.querySelector("#zone-c1-n").textContent = Math.round(v).toLocaleString("en-US"); } }, 2.6); }
+        tl.fromTo("#zone-c2", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 3.9000000000000004);
+        { const o = { v: 0 }; tl.to(o, { v: 26, duration: 1.4, ease: "power2.out", onUpdate: () => { const v = o.v; document.querySelector("#zone-c2-n").textContent = Math.round(v).toLocaleString("en-US"); } }, 3.9000000000000004); }
+        tl.fromTo("#zone-c3", { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 5.2);
+        { const o = { v: 0 }; tl.to(o, { v: 5600, duration: 1.4, ease: "power2.out", onUpdate: () => { const v = o.v; document.querySelector("#zone-c3-n").textContent = Math.round(v).toLocaleString("en-US"); } }, 5.2); }
+        tl.fromTo("#zone-badge", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "power4.out" }, 7.0);
+        window.__timelines["zone"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

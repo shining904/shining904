@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          font-family: "Noto Sans KR", sans-serif;
+        }
+        #end-fade {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        #end-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        #end-shade {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(5, 12, 26, 0.15) 0%, rgba(5, 12, 26, 0.35) 55%, rgba(5, 12, 26, 0.85) 100%);
+        }
+        .head {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Black Han Sans", sans-serif;
+          color: #ffffff;
+          text-shadow: 0 6px 30px rgba(0, 0, 0, 0.55);
+        }
+        .tag {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          padding: 10px 30px;
+          border: 3px solid #f2c25c;
+          border-radius: 999px;
+          font-size: 38px;
+          font-weight: 800;
+          color: #f2c25c;
+          background: rgba(11, 26, 51, 0.7);
+          white-space: nowrap;
+        }
+        .gold {
+          color: #f2c25c;
+        }
+        #end-shade {
+          background: radial-gradient(ellipse at 50% 45%, rgba(5, 12, 26, 0.45) 0%, rgba(5, 12, 26, 0.88) 75%);
+        }
+        #end-s1 {
+          top: 190px;
+          font-size: 110px;
+        }
+        #end-s2 {
+          top: 320px;
+          font-size: 190px;
+          color: #f2c25c;
+        }
+        #end-line {
+          position: absolute;
+          left: 660px;
+          width: 600px;
+          top: 575px;
+          height: 6px;
+          background: #f2c25c;
+          transform-origin: 50% 50%;
+        }
+        #end-sub {
+          top: 610px;
+          font-family: "Noto Sans KR", sans-serif;
+          font-weight: 800;
+          font-size: 46px;
+        }
+        #end-logo {
+          position: absolute;
+          left: 50%;
+          top: 720px;
+          margin-left: -150px;
+          width: 300px;
+          padding: 14px 24px;
+          border-radius: 20px;
+          background: #ffffff;
+        }
+        #end-logo img {
+          display: block;
+          width: 100%;
+        }
+        #end-ai {
+          position: absolute;
+          right: 36px;
+          bottom: 150px;
+          font-size: 22px;
+          color: #b9c6dd;
+        }
+      </style>
+      <div id="root" data-composition-id="end" data-width="1920" data-height="1080">
+        <div id="end-fade">
+          <img id="end-img" src="assets/aerial-end.jpg" alt="" />
+          <div id="end-shade"></div>
+          <div id="end-s1" class="head">준비된 이천,</div>
+          <div id="end-s2" class="head">출발선은 장호원</div>
+          <div id="end-line"></div>
+          <div id="end-sub" class="head">한국마사회 경마공원, 이천 장호원으로</div>
+          <div id="end-logo"><img src="assets/icheon-logo.png" alt="이천시" /></div>
+          <div id="end-ai">AI 생성 영상·이미지 포함 · 조감도는 상상도</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#end-fade", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0);
+        tl.fromTo("#end-img", { scale: 1.0 }, { scale: 1.1, duration: 6.4, ease: "none" }, 0);
+        tl.fromTo("#end-s1", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.6);
+        tl.fromTo("#end-s2", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "power4.out" }, 1.6);
+        tl.fromTo("#end-line", { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: "power3.inOut" }, 2.2);
+        tl.fromTo("#end-sub", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 2.6);
+        tl.fromTo("#end-logo", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 3.0);
+        tl.fromTo("#end-ai", { opacity: 0, y: 0 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 3.0);
+        window.__timelines["end"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

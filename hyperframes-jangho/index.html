@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>준비된 이천, 출발선은 장호원</title>
+    <script src="gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #000;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 장호원 경마공원 유치 시안. Clips reused from hyperframes-kra-film (Magnific Seedance);
+         plain.jpg, narration and score generated with Magnific. -->
+    <div id="root" data-composition-id="main" data-start="0" data-duration="60" data-width="1920" data-height="1080">
+      <div id="dawn" data-composition-id="dawn" data-composition-src="compositions/dawn.html"
+        data-start="0" data-duration="6.8" data-track-index="0" data-width="1920" data-height="1080"></div>
+      <div id="race" data-composition-id="race" data-composition-src="compositions/race.html"
+        data-start="6.6" data-duration="6.8" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="zone" data-composition-id="zone" data-composition-src="compositions/zone.html"
+        data-start="13.2" data-duration="10.3" data-track-index="0" data-width="1920" data-height="1080"></div>
+      <div id="map" data-composition-id="map" data-composition-src="compositions/map.html"
+        data-start="23.3" data-duration="12.7" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="plain" data-composition-id="plain" data-composition-src="compositions/plain.html"
+        data-start="35.8" data-duration="6.8" data-track-index="0" data-width="1920" data-height="1080"></div>
+      <div id="sign" data-composition-id="sign" data-composition-src="compositions/sign.html"
+        data-start="42.4" data-duration="6.0" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="gain" data-composition-id="gain" data-composition-src="compositions/gain.html"
+        data-start="48.2" data-duration="5.6" data-track-index="0" data-width="1920" data-height="1080"></div>
+      <div id="end" data-composition-id="end" data-composition-src="compositions/end.html"
+        data-start="53.6" data-duration="6.4" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="caps" data-composition-id="caps" data-composition-src="compositions/caps.html"
+        data-start="0" data-duration="60" data-track-index="2" data-width="1920" data-height="1080"></div>
+      <audio id="soundtrack" src="assets/audio/mix.mp3" data-start="0" data-duration="60" data-track-index="3"></audio>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

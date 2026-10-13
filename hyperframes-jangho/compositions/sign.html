@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          font-family: "Noto Sans KR", sans-serif;
+        }
+        #sign-bg {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at 50% 40%, #1a3563 0%, #0b1a33 65%, #060e1d 100%);
+        }
+        .head {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Black Han Sans", sans-serif;
+          color: #ffffff;
+          text-shadow: 0 6px 30px rgba(0, 0, 0, 0.55);
+        }
+        .tag {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          padding: 10px 30px;
+          border: 3px solid #f2c25c;
+          border-radius: 999px;
+          font-size: 38px;
+          font-weight: 800;
+          color: #f2c25c;
+          background: rgba(11, 26, 51, 0.7);
+          white-space: nowrap;
+        }
+        .gold {
+          color: #f2c25c;
+        }
+        #sign-tag {
+          top: 90px;
+        }
+        #sign-num {
+          top: 170px;
+          font-size: 200px;
+          color: #f2c25c;
+        }
+        #sign-num small {
+          font-size: 90px;
+          color: #ffffff;
+        }
+        #sign-dots {
+          position: absolute;
+          left: 0;
+          top: 520px;
+          width: 1920px;
+          height: 360px;
+        }
+        .sign-dot {
+          position: absolute;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: #f2c25c;
+        }
+        #sign-legend {
+          position: absolute;
+          right: 160px;
+          top: 470px;
+          font-size: 26px;
+          color: #b9c6dd;
+        }
+        #sign-chip {
+          top: 880px;
+        }
+      </style>
+      <div id="root" data-composition-id="sign" data-width="1920" data-height="1080">
+          <div id="sign-bg"></div>
+          <div id="sign-tag" class="tag">장호원읍 1차 유치 서명</div>
+          <div id="sign-num" class="head"><span id="sign-n">0</span><small>여 명</small></div>
+          <div id="sign-legend">● 1 = 주민 10명</div>
+          <div id="sign-dots"></div>
+          <div id="sign-chip" class="tag">주민 추진위원회 구성 · 시민이 먼저 움직였다</div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#sign-tag", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.3);
+        (function () {
+          let s = 7;
+          const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+          const host = document.querySelector("#sign-dots");
+          for (let i = 0; i < 400; i++) {
+            const d = document.createElement("div");
+            d.className = "sign-dot";
+            d.style.left = (288 + (i % 40) * 34) + "px";
+            d.style.top = (Math.floor(i / 40) * 34) + "px";
+            host.appendChild(d);
+            tl.fromTo(d, { opacity: 0, x: (rnd() - 0.5) * 900, y: -500 - rnd() * 400 },
+              { opacity: 1, x: 0, y: 0, duration: 0.9, ease: "power3.out" }, 0.6 + rnd() * 2.2);
+          }
+        })();
+        tl.fromTo("#sign-num", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "power4.out" }, 1.2);
+        { const o = { v: 0 }; tl.to(o, { v: 4000, duration: 2.4, ease: "power2.out", onUpdate: () => { const v = o.v; document.querySelector("#sign-n").textContent = Math.round(v).toLocaleString("en-US"); } }, 1.2); }
+        tl.fromTo("#sign-chip", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 3.3);
+        tl.fromTo("#sign-legend", { opacity: 0, y: 0 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 3.0);
+        window.__timelines["sign"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

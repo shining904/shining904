@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          font-family: "Noto Sans KR", sans-serif;
+        }
+        #caps-bar {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 170px;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.75) 100%);
+        }
+        .caps-line {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 44px;
+          text-align: center;
+          font-size: 42px;
+          font-weight: 500;
+          color: #ffffff;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+          opacity: 0;
+        }
+      </style>
+      <div id="root" data-composition-id="caps" data-width="1920" data-height="1080">
+          <div id="caps-bar"></div>
+          <div id="caps-c0" class="caps-line">대한민국 경마의 다음 출발선은, 어디일까요?</div>
+          <div id="caps-c1" class="caps-line">과천 경마공원 이전. 그 답을, 이천이 준비했습니다.</div>
+          <div id="caps-c2" class="caps-line">이천은 이미 말산업특구. 470여 두의 말과 말 전문 동물병원이 있는 도시입니다.</div>
+          <div id="caps-c3" class="caps-line">그리고, 이천이 고른 자리. 장호원.</div>
+          <div id="caps-c4" class="caps-line">국도 세 개 노선과 감곡IC, 중부내륙선 감곡장호원역이 가까워 어디서든 빠르게 닿습니다.</div>
+          <div id="caps-c5" class="caps-line">청미천의 너른 들, 햇사레 복숭아의 고장이 새로운 무대가 됩니다.</div>
+          <div id="caps-c6" class="caps-line">장호원 주민 4천여 명이, 먼저 서명했습니다.</div>
+          <div id="caps-c7" class="caps-line">준비된 이천. 출발선은, 장호원.</div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#caps-c0", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 1.0);
+        tl.to("#caps-c0", { opacity: 0, duration: 0.2, ease: "none" }, 4.8);
+        tl.fromTo("#caps-c1", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 7.2);
+        tl.to("#caps-c1", { opacity: 0, duration: 0.2, ease: "none" }, 12.3);
+        tl.fromTo("#caps-c2", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 13.8);
+        tl.to("#caps-c2", { opacity: 0, duration: 0.2, ease: "none" }, 20.85);
+        tl.fromTo("#caps-c3", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 23.8);
+        tl.to("#caps-c3", { opacity: 0, duration: 0.2, ease: "none" }, 27.7);
+        tl.fromTo("#caps-c4", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 28.0);
+        tl.to("#caps-c4", { opacity: 0, duration: 0.2, ease: "none" }, 35.7);
+        tl.fromTo("#caps-c5", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 36.2);
+        tl.to("#caps-c5", { opacity: 0, duration: 0.2, ease: "none" }, 41.1);
+        tl.fromTo("#caps-c6", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 42.8);
+        tl.to("#caps-c6", { opacity: 0, duration: 0.2, ease: "none" }, 46.8);
+        tl.fromTo("#caps-c7", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 54.2);
+        tl.to("#caps-c7", { opacity: 0, duration: 0.2, ease: "none" }, 57.7);
+        window.__timelines["caps"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

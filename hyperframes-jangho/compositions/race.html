@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          font-family: "Noto Sans KR", sans-serif;
+        }
+        #race-fade {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        #race-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        #race-shade {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(5, 12, 26, 0.15) 0%, rgba(5, 12, 26, 0.35) 55%, rgba(5, 12, 26, 0.85) 100%);
+        }
+        .head {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Black Han Sans", sans-serif;
+          color: #ffffff;
+          text-shadow: 0 6px 30px rgba(0, 0, 0, 0.55);
+        }
+        .tag {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          padding: 10px 30px;
+          border: 3px solid #f2c25c;
+          border-radius: 999px;
+          font-size: 38px;
+          font-weight: 800;
+          color: #f2c25c;
+          background: rgba(11, 26, 51, 0.7);
+          white-space: nowrap;
+        }
+        .gold {
+          color: #f2c25c;
+        }
+        #race-tag {
+          top: 260px;
+        }
+        #race-h {
+          top: 340px;
+          font-size: 170px;
+        }
+      </style>
+      <div id="root" data-composition-id="race" data-width="1920" data-height="1080">
+        <div id="race-fade">
+          <video id="race-video" src="assets/clips/race.mp4" data-start="0" data-duration="6.8" muted playsinline></video>
+          <div id="race-shade"></div>
+          <div id="race-tag" class="tag">과천 경마공원 이전</div>
+          <div id="race-h" class="head">그 답, <span class="gold">이천</span></div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#race-fade", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 0);
+        tl.fromTo("#race-video", { scale: 1.0 }, { scale: 1.08, duration: 6.8, ease: "none" }, 0);
+        tl.fromTo("#race-tag", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.5);
+        tl.fromTo("#race-h", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "power4.out" }, 2.9);
+        tl.to("#race-tag, #race-h", { opacity: 0, duration: 0.4, ease: "none" }, 6.2);
+        window.__timelines["race"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

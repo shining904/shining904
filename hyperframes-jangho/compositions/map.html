@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          font-family: "Noto Sans KR", sans-serif;
+        }
+        #map-bg {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle at 60% 55%, #1a3563 0%, #0b1a33 60%, #060e1d 100%);
+        }
+        #map-svg {
+          position: absolute;
+          inset: 0;
+        }
+        .map-lab {
+          position: absolute;
+          left: 860px;
+          top: 440px;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 84px;
+          color: #ffffff;
+        }
+        .map-near {
+          position: absolute;
+          font-size: 34px;
+          font-weight: 500;
+          color: #b9c6dd;
+        }
+        #map-l-yeoju {
+          left: 1560px;
+          top: 420px;
+        }
+        #map-l-anseong {
+          left: 560px;
+          top: 930px;
+        }
+        #map-l-eumseong {
+          left: 1500px;
+          top: 920px;
+        }
+        #map-pin {
+          position: absolute;
+          left: 1330px;
+          top: 760px;
+          width: 0;
+          height: 0;
+        }
+        #map-dot,
+        #map-ring {
+          position: absolute;
+          left: -22px;
+          top: -22px;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+        }
+        #map-dot {
+          background: #ffffff;
+          border: 8px solid #e0483a;
+        }
+        #map-ring {
+          border: 6px solid #ffffff;
+        }
+        .map-big {
+          position: absolute;
+          left: 1170px;
+          top: 800px;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 96px;
+          color: #ffffff;
+          text-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+        }
+        #map-chips {
+          position: absolute;
+          left: 1180px;
+          top: 300px;
+          display: flex;
+          flex-direction: column;
+          gap: 28px;
+        }
+        .map-chip {
+          padding: 22px 36px;
+          border-radius: 22px;
+          background: rgba(255, 246, 227, 0.96);
+          color: #0b1a33;
+          font-size: 44px;
+          font-weight: 500;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        }
+        .map-chip b {
+          font-weight: 800;
+          color: #b23a2c;
+          margin-right: 10px;
+        }
+        .map-chip.rail b {
+          color: #c2410c;
+        }
+        #map-note {
+          position: absolute;
+          right: 40px;
+          top: 36px;
+          font-size: 24px;
+          color: #b9c6dd;
+        }
+      </style>
+      <div id="root" data-composition-id="map" data-width="1920" data-height="1080">
+          <div id="map-bg"></div>
+          <svg id="map-svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+            <g id="map-world">
+              <path id="map-land" d="M 760 170 C 880 140, 1010 180, 1080 250 C 1170 320, 1240 330, 1300 420 C 1350 500, 1420 560, 1460 650 C 1500 740, 1460 830, 1380 870 C 1290 910, 1200 880, 1130 860 C 1040 830, 960 880, 880 860 C 790 840, 740 760, 680 700 C 610 630, 560 560, 580 470 C 600 380, 640 300, 690 230 C 710 200, 730 180, 760 170 Z" fill="#16294a" stroke="#f2c25c" stroke-width="5" />
+              <path id="map-jh" d="M 1250 640 C 1320 610, 1420 620, 1460 680 C 1480 750, 1450 820, 1380 860 C 1320 890, 1250 870, 1220 820 C 1190 760, 1200 680, 1250 640 Z" fill="#f2c25c" fill-opacity="0.85" />
+              <path id="map-river" d="M 1180 1080 C 1230 960, 1300 880, 1360 830 C 1420 790, 1500 760, 1620 700" fill="none" stroke="#6fb3e0" stroke-width="10" stroke-linecap="round" />
+              <path id="map-r3" class="map-road" d="M 900 300 C 1050 450, 1200 620, 1330 760 C 1420 860, 1520 960, 1600 1060" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" opacity="0" />
+              <path id="map-r37" class="map-road" d="M 1700 520 C 1580 600, 1450 690, 1330 760 C 1230 820, 1120 900, 1020 1060" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" opacity="0" />
+              <path id="map-r38" class="map-road" d="M 620 820 C 820 790, 1050 770, 1330 760 C 1500 755, 1680 770, 1900 800" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" opacity="0" />
+              <path id="map-rail" d="M 1560 120 C 1520 320, 1480 520, 1420 700 C 1390 800, 1370 900, 1350 1080" fill="none" stroke="#ff7a59" stroke-width="9" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" opacity="0" />
+            </g>
+          </svg>
+          <div id="map-l-icheon" class="map-lab">이천시</div>
+          <div id="map-l-yeoju" class="map-near">여주</div>
+          <div id="map-l-anseong" class="map-near">안성</div>
+          <div id="map-l-eumseong" class="map-near">충북 음성</div>
+          <div id="map-pin"><div id="map-ring"></div><div id="map-dot"></div></div>
+          <div id="map-l-jh" class="map-big">장호원읍</div>
+          <div id="map-chips">
+            <div id="map-c1" class="map-chip"><b>국도</b> 3 · 37 · 38호선</div>
+            <div id="map-c2" class="map-chip"><b>감곡IC</b> 약 4.5km</div>
+            <div id="map-c3" class="map-chip rail"><b>중부내륙선</b> 감곡장호원역 인접</div>
+          </div>
+          <div id="map-note">개념도 · 실제 위치·거리와 다를 수 있음</div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#map-land", { opacity: 0, scale: 0.9, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.8, ease: "power3.out" }, 0.1);
+        tl.fromTo("#map-l-icheon", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.5);
+        tl.fromTo("#map-l-yeoju, #map-l-anseong, #map-l-eumseong", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.8);
+        tl.fromTo("#map-jh", { opacity: 0 }, { opacity: 1, duration: 0.5, ease: "none" }, 1.4);
+        tl.fromTo("#map-pin", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "power4.out" }, 1.5);
+        tl.fromTo("#map-l-jh", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.45, ease: "power4.out" }, 1.8);
+        tl.fromTo("#map-ring", { scale: 0.4, opacity: 0.9 }, { scale: 2.2, opacity: 0, duration: 1.2, ease: "power1.out", repeat: 9 }, 1.6);
+        tl.to("#map-l-icheon, #map-l-yeoju, #map-l-anseong", { opacity: 0, duration: 0.4, ease: "none" }, 4.0);
+        tl.to("#map-world", { scale: 1.9, x: -570, y: -220, svgOrigin: "1330 760", duration: 1.4, ease: "power3.inOut" }, 4.0);
+        tl.to("#map-pin", { x: -570, y: -220, duration: 1.4, ease: "power3.inOut" }, 4.0);
+        tl.to("#map-l-jh", { x: -650, y: -190, duration: 1.4, ease: "power3.inOut" }, 4.0);
+        tl.to("#map-l-eumseong", { x: -620, y: -100, duration: 1.4, ease: "power3.inOut" }, 4.0);
+        tl.to("#map-river", { opacity: 0.6, duration: 0.3, ease: "none" }, 4.0);
+        tl.to("#map-r3", { strokeDashoffset: 0, duration: 1.0, ease: "power2.inOut" }, 5.0);
+        tl.set("#map-r3", { opacity: 1 }, 5.0);
+        tl.to("#map-r37", { strokeDashoffset: 0, duration: 1.0, ease: "power2.inOut" }, 5.35);
+        tl.set("#map-r37", { opacity: 1 }, 5.35);
+        tl.to("#map-r38", { strokeDashoffset: 0, duration: 1.0, ease: "power2.inOut" }, 5.7);
+        tl.set("#map-r38", { opacity: 1 }, 5.7);
+        tl.fromTo("#map-c1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 5.4);
+        tl.fromTo("#map-c2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 6.9);
+        tl.set("#map-rail", { opacity: 1 }, 8.1);
+        tl.to("#map-rail", { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut" }, 8.1);
+        tl.fromTo("#map-c3", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 8.6);
+        tl.fromTo("#map-note", { opacity: 0, y: 0 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 5.4);
+        window.__timelines["map"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
