@@ -1,13 +1,15 @@
 #!/bin/bash
 # Builds mix.mp3 (30 s): mock-tragic opera bed under the three "개우 도전" days with the
-# puppy's melodramatic inner-voice dubbing (Minho Yoon), record scratch at 21.75 s, then a
-# bouncy jersey-club beat under the hype MC (Ha-Rin) for the ending.
-# Rubber-stamp thuds land with each acting-rating stamp. Narration (Jiwoo) ducks the music with smoothstep ramps.
+# day-by-day narration, record scratch at 21.75 s, then a bouncy jersey-club beat
+# under the festival call-out.
+# Rubber-stamp thuds land with each acting-rating stamp. Narration ducks the music with smoothstep ramps.
 set -euo pipefail
 cd "$(dirname "$0")"
 LEN=30
-# d1f = d1 at 1.05x; d2g/d3g = d2/d3 raised 2.5 and 5 dB (whispered lines sat too low)
-NARR=("d1f.mp3 0.2 7.0" "d2g.mp3 7.6 5.55" "d3g.mp3 14.8 6.0" "mc.mp3 22.3 7.63")
+# VO=b: bright, bubbly Ha-Rin (eleven v3); VO=c: the same takes pitched up ~3.4 semitones
+# with shifted formants for a cartoon-character voice. OUT names the result.
+VO=${VO:-b}; OUT=${OUT:-mix.mp3}
+NARR=("${VO}1.mp3 0.3 4.6" "${VO}2.mp3 7.6 4.1" "${VO}3.mp3 14.8 2.85" "${VO}4.mp3 22.4 6.19")
 DUCK=0.4 RAMP=0.3
 ms() { python3 -c "print(int($1*1000))"; }
 inputs=(-i opera.wav -i club.wav -i scratch.mp3 -i sting.mp3)
@@ -38,4 +40,4 @@ for t in "${STAMPS[@]}"; do
   sf+="[k$idx]"; idx=$((idx + 1))
 done
 f+="[bed][narr][sc][st]${sf}amix=inputs=$((4 + ${#STAMPS[@]})):normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,apad,atrim=0:$LEN[out]"
-ffmpeg -v error -y "${inputs[@]}" -filter_complex "$f" -map "[out]" -ar 48000 -b:a 192k mix.mp3
+ffmpeg -v error -y "${inputs[@]}" -filter_complex "$f" -map "[out]" -ar 48000 -b:a 192k "$OUT"

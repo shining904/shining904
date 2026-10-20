@@ -22,10 +22,6 @@ DAYS = [("d1", "day1", 0.0, 7.4, "개우 도전 1일차", "상황: 산책이 취
         ("d2", "day2", 7.4, 7.2, "개우 도전 2일차", "상황: 고양이가 내 방석을 차지했다", 3),
         ("d3", "day3", 14.6, 7.4, "개우 도전 3일차", "상황: “목욕하자”", 4)]
 END_START, END_DUR = 22.0, 8.0
-# the puppy's inner-voice dubbing, shown as captions: day -> [(text, in, out)] in scene time
-LINES = {"d1": [("“산책이… 취소라고…?”", 0.25, 3.45), ("“안 돼… 이건 꿈이야…<br />꿈이라고 해줘어…!”", 3.45, 7.3)],
-         "d2": [("“너… 지금… 내 방석에서<br />뭐 하는 거야…?”", 0.25, 3.9), ("“우리… 이제… 끝이야.”", 3.9, 7.1)],
-         "d3": [("“모, 목욕…?”", 0.25, 2.1), ("“나는… 지금… 기절했다.<br />진짜다.”", 2.1, 7.3)]}
 
 
 def comp(cid, css, body, js):
@@ -161,11 +157,6 @@ for p, clip, s, d, day, sit, stars in DAYS:
     else:
         extra = '        <div id="d3-peek" class="meme-tag">(실눈 확인 중)</div>\n'
         js += stamp("#d3-peek", 4.6) + rate_stamp(p, 5.6)
-    lines = ""
-    for k, (t, a, b) in enumerate(LINES[p]):
-        lines += f'        <div id="{p}-l{k}" class="meme-line">{t}</div>\n'
-        js += f'        tl.fromTo("#{p}-l{k}", {{ opacity: 0, scale: 0.8 }}, {{ opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2)" }}, {a});\n'
-        js += f'        tl.to("#{p}-l{k}", {{ opacity: 0, duration: 0.15, ease: "none" }}, {b});\n'
     files[p] = comp(p, vcss + MEME_CSS + f'''        .meme-tag {{
           position: absolute;
           left: 50%;
@@ -180,25 +171,11 @@ for p, clip, s, d, day, sit, stars in DAYS:
           font-size: 46px;
           font-weight: 800;
         }}
-        .meme-line {{
-          position: absolute;
-          left: 40px;
-          right: 40px;
-          top: 470px;
-          text-align: center;
-          font-size: 62px;
-          font-weight: 800;
-          line-height: 1.25;
-          color: #ffffff;
-          -webkit-text-stroke: 10px #111111;
-          paint-order: stroke fill;
-          opacity: 0;
-        }}
 ''', vbody + f'''        <div class="meme-top">
           <div id="{p}-day" class="meme-day">{day}</div><br />
           <div id="{p}-sit" class="meme-sit">{sit}</div>
         </div>
-{extra}{lines}        <div id="{p}-rate" class="meme-rate">연기력<b>{star}</b></div>
+{extra}        <div id="{p}-rate" class="meme-rate">연기력<b>{star}</b></div>
 ''', js)
 
 # ending — stage clip + festival card

@@ -126,20 +126,6 @@
           font-size: 46px;
           font-weight: 800;
         }
-        .meme-line {
-          position: absolute;
-          left: 40px;
-          right: 40px;
-          top: 470px;
-          text-align: center;
-          font-size: 62px;
-          font-weight: 800;
-          line-height: 1.25;
-          color: #ffffff;
-          -webkit-text-stroke: 10px #111111;
-          paint-order: stroke fill;
-          opacity: 0;
-        }
       </style>
       <div id="root" data-composition-id="d3" data-width="1080" data-height="1920">
         <video id="d3-video" src="assets/clips/day3.mp4" data-start="0" data-duration="7.4" muted playsinline></video>
@@ -149,8 +135,6 @@
           <div id="d3-sit" class="meme-sit">상황: “목욕하자”</div>
         </div>
         <div id="d3-peek" class="meme-tag">(실눈 확인 중)</div>
-        <div id="d3-l0" class="meme-line">“모, 목욕…?”</div>
-        <div id="d3-l1" class="meme-line">“나는… 지금… 기절했다.<br />진짜다.”</div>
         <div id="d3-rate" class="meme-rate">연기력<b>★★★★☆</b></div>
       </div>
       <script>
@@ -161,10 +145,6 @@
         tl.fromTo("#d3-rate", { opacity: 0, scale: 3.2, rotation: -22 }, { opacity: 1, scale: 1, rotation: -8, duration: 0.17, ease: "power4.in" }, 5.6);
         tl.fromTo("#d3-video", { x: -22 }, { x: 0, duration: 0.45, ease: "elastic.out(1, 0.3)" }, 5.77);
         tl.fromTo("#d3-video", { scale: 1.07 }, { scale: 1.0, duration: 0.9, ease: "power2.out" }, 5.77);
-        tl.fromTo("#d3-l0", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2)" }, 0.25);
-        tl.to("#d3-l0", { opacity: 0, duration: 0.15, ease: "none" }, 2.1);
-        tl.fromTo("#d3-l1", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2)" }, 2.1);
-        tl.to("#d3-l1", { opacity: 0, duration: 0.15, ease: "none" }, 7.3);
         window.__timelines["d3"] = tl;
       </script>
     </template>
