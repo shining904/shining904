@@ -92,22 +92,25 @@
         .meme-rate {
           position: absolute;
           left: 50%;
-          top: 410px;
-          margin-left: -330px;
-          width: 660px;
-          padding: 18px 0;
-          border-radius: 24px;
-          background: rgba(17, 17, 17, 0.82);
+          top: 720px;
+          margin-left: -400px;
+          width: 800px;
+          padding: 22px 0 18px;
+          border: 12px solid #e8261f;
+          border-radius: 34px;
+          background: rgba(255, 250, 240, 0.93);
           text-align: center;
-          color: #ffffff;
-          font-size: 48px;
-          font-weight: 800;
+          color: #e8261f;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 76px;
+          line-height: 1.1;
+          box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
         }
         .meme-rate b {
-          font-family: "Black Han Sans", sans-serif;
+          display: block;
           font-weight: 400;
-          color: #ffd83d;
-          letter-spacing: 4px;
+          font-size: 104px;
+          letter-spacing: 6px;
         }
         .meme-tag {
           position: absolute;
@@ -131,13 +134,15 @@
           <div id="d2-day" class="meme-day">개우 도전 2일차</div><br />
           <div id="d2-sit" class="meme-sit">상황: 고양이가 내 방석을 차지했다</div>
         </div>
-        <div id="d2-rate" class="meme-rate">연기력 <b>★★★☆☆</b></div>
+        <div id="d2-rate" class="meme-rate">연기력<b>★★★☆☆</b></div>
       </div>
       <script>
         const tl = gsap.timeline({ paused: true });
         tl.fromTo("#d2-day", { opacity: 0, y: -40 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.8)" }, 0.15);
         tl.fromTo("#d2-sit", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.55);
-        tl.fromTo("#d2-rate", { opacity: 0, scale: 2.2, rotation: -14 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.35, ease: "power4.out" }, 5.6);
+        tl.fromTo("#d2-rate", { opacity: 0, scale: 3.2, rotation: -22 }, { opacity: 1, scale: 1, rotation: -8, duration: 0.17, ease: "power4.in" }, 5.6);
+        tl.fromTo("#d2-video", { x: -22 }, { x: 0, duration: 0.45, ease: "elastic.out(1, 0.3)" }, 5.77);
+        tl.fromTo("#d2-video", { scale: 1.07 }, { scale: 1.0, duration: 0.9, ease: "power2.out" }, 5.77);
         window.__timelines["d2"] = tl;
       </script>
     </template>

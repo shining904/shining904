@@ -56,6 +56,15 @@ def pop(sel, a, y=40, dur=0.5, ease="back.out(1.8)"):
     return f'        tl.fromTo("{sel}", {{ opacity: 0, y: {y} }}, {{ opacity: 1, y: 0, duration: {dur}, ease: "{ease}" }}, {a});\n'
 
 
+def rate_stamp(p, a, overscan=True):
+    # slams down like a rubber stamp, then the footage jolts from the impact
+    return (f'        tl.fromTo("#{p}-rate", {{ opacity: 0, scale: 3.2, rotation: -22 }}, {{ opacity: 1, scale: 1, rotation: -8, duration: 0.17, ease: "power4.in" }}, {a});\n'
+            + (f'        tl.fromTo("#{p}-video", {{ x: -22 }}, {{ x: 0, duration: 0.45, ease: "elastic.out(1, 0.3)" }}, {round(a + 0.17, 2)});\n'
+               f'        tl.fromTo("#{p}-video", {{ scale: 1.07 }}, {{ scale: 1.0, duration: 0.9, ease: "power2.out" }}, {round(a + 0.17, 2)});\n'
+               if overscan else  # the ending clip is already zoomed in, so only jolt sideways
+               f'        tl.fromTo("#{p}-video", {{ x: -22 }}, {{ x: 0, duration: 0.45, ease: "elastic.out(1, 0.3)" }}, {round(a + 0.17, 2)});\n'))
+
+
 def stamp(sel, a):
     return f'        tl.fromTo("{sel}", {{ opacity: 0, scale: 2.2, rotation: -14 }}, {{ opacity: 1, scale: 1, rotation: -6, duration: 0.35, ease: "power4.out" }}, {a});\n'
 
@@ -89,22 +98,25 @@ MEME_CSS = f'''        .meme-top {{
         .meme-rate {{
           position: absolute;
           left: 50%;
-          top: 410px;
-          margin-left: -330px;
-          width: 660px;
-          padding: 18px 0;
-          border-radius: 24px;
-          background: rgba(17, 17, 17, 0.82);
+          top: 720px;
+          margin-left: -400px;
+          width: 800px;
+          padding: 22px 0 18px;
+          border: 12px solid #e8261f;
+          border-radius: 34px;
+          background: rgba(255, 250, 240, 0.93);
           text-align: center;
-          color: #ffffff;
-          font-size: 48px;
-          font-weight: 800;
+          color: #e8261f;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 76px;
+          line-height: 1.1;
+          box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
         }}
         .meme-rate b {{
-          font-family: "Black Han Sans", sans-serif;
+          display: block;
           font-weight: 400;
-          color: {YEL};
-          letter-spacing: 4px;
+          font-size: 104px;
+          letter-spacing: 6px;
         }}
 '''
 
@@ -139,9 +151,9 @@ for p, clip, s, d, day, sit, stars in DAYS:
     extra = ""
     js = pop(f"#{p}-day", 0.15, -40) + pop(f"#{p}-sit", 0.55, 20, 0.4, "power3.out")
     if p == "d1":
-        js += stamp(f"#{p}-rate", 5.4)
+        js += rate_stamp(p, 5.4)
     elif p == "d2":
-        js += stamp(f"#{p}-rate", 5.6)
+        js += rate_stamp(p, 5.6)
     else:
         extra = '        <div id="d3-peek" class="meme-tag">(실눈 확인 중)</div>\n'
         js += stamp("#d3-peek", 4.6) + stamp(f"#{p}-rate", 5.6)
@@ -163,7 +175,7 @@ for p, clip, s, d, day, sit, stars in DAYS:
           <div id="{p}-day" class="meme-day">{day}</div><br />
           <div id="{p}-sit" class="meme-sit">{sit}</div>
         </div>
-{extra}        <div id="{p}-rate" class="meme-rate">연기력 <b>{star}</b></div>
+{extra}        <div id="{p}-rate" class="meme-rate">연기력<b>{star}</b></div>
 ''', js)
 
 # ending — stage clip + festival card
@@ -171,16 +183,13 @@ vcss, vbody = video_layer("end", "stage", END_DUR)
 CHIPS = ["멍냥이 장기자랑", "캣통령 토크콘서트", "댕댕이 가을운동회", "펫워크 산책교실"]
 chips = "".join(f'            <div class="end-chip">{c}</div>\n' for c in CHIPS)
 end_js = '        tl.fromTo("#end-video", { scale: 1.3, y: -250 }, { scale: 1.34, y: -250, duration: 8, ease: "none" }, 0);\n'
-end_js += stamp("#end-rate", 0.1)
-end_js += pop("#end-q", 0.9, -30) + pop("#end-card", 4.3, 120, 0.7, "power3.out")
+end_js += rate_stamp("end", 0.15, overscan=False)
+end_js += '        tl.to("#end-rate", { opacity: 0, scale: 0.85, duration: 0.3, ease: "power2.in" }, 1.6);\n'
+end_js += pop("#end-q", 1.8, -30) + pop("#end-card", 4.3, 120, 0.7, "power3.out")
 end_js += pop("#end-date", 4.8, 20) + pop("#end-place", 5.1, 20)
 end_js += '        tl.fromTo(".end-chip", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)", stagger: 0.12 }, 5.4);\n'
 end_js += pop("#end-foot", 6.0, 0)
-files["end"] = comp("end", vcss + MEME_CSS + f'''        #end-rate {{
-          top: 130px;
-          bottom: auto;
-        }}
-        #end-q {{
+files["end"] = comp("end", vcss + MEME_CSS + f'''        #end-q {{
           position: absolute;
           left: 0;
           right: 0;
@@ -263,7 +272,7 @@ files["end"] = comp("end", vcss + MEME_CSS + f'''        #end-rate {{
           font-size: 28px;
           color: #555555;
         }}
-''', vbody + f'''        <div id="end-rate" class="meme-rate">연기력 <b>★★★★★</b> ?!</div>
+''', vbody + f'''        <div id="end-rate" class="meme-rate">연기력 ?!<b>★★★★★</b></div>
         <div id="end-q">연기력 검증은<br /><span>여기서!</span></div>
         <div id="end-card">
           <div id="end-title"><small>멍냥이 장기자랑 출전 대기 중</small>2026 이천펫축제</div>
