@@ -250,7 +250,15 @@ files["end"] = comp("end", vcss + MEME_CSS + f'''        #end-rate {{
           font-size: 34px;
           font-weight: 800;
         }}
+        #end-logo {{
+          height: 92px;
+        }}
         #end-foot {{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 26px;
+          text-align: left;
           margin-top: 18px;
           font-size: 28px;
           color: #555555;
@@ -263,7 +271,7 @@ files["end"] = comp("end", vcss + MEME_CSS + f'''        #end-rate {{
           <div id="end-place">이천도자예술마을(예스파크) 일원</div>
           <div id="end-chips">
 {chips}          </div>
-          <div id="end-foot">개막 10.24(토) 오후 2시 · 이천시 · AI 생성 영상</div>
+          <div id="end-foot"><img id="end-logo" src="assets/icheon-logo.png" alt="이천시" /><span>개막 10.24(토) 오후 2시<br />AI 생성 영상</span></div>
         </div>
 ''', end_js)
 
