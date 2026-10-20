@@ -6,10 +6,10 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 LEN=30
-# VO=b: bright, bubbly Ha-Rin (eleven v3); VO=c: the same takes pitched up ~3.4 semitones
-# with shifted formants for a cartoon-character voice. OUT names the result.
-VO=${VO:-b}; OUT=${OUT:-mix.mp3}
-NARR=("${VO}1.mp3 0.3 4.6" "${VO}2.mp3 7.6 4.1" "${VO}3.mp3 14.8 2.85" "${VO}4.mp3 22.4 6.19")
+# Narration: a cheeky 8-year-old cartoon-girl voice (Seed Audio). k1-k4 are the raw takes
+# with long gaps squeezed out and levelled; k2f/k4f are sped up 1.1x/1.3x to fit their slots.
+OUT=${OUT:-mix.mp3}
+NARR=("k1.mp3 0.3 5.14" "k2f.mp3 7.6 6.35" "k3.mp3 14.8 3.77" "k4f.mp3 22.4 7.07")
 DUCK=0.4 RAMP=0.3
 ms() { python3 -c "print(int($1*1000))"; }
 inputs=(-i opera.wav -i club.wav -i scratch.mp3 -i sting.mp3)
