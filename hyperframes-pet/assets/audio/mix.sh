@@ -1,6 +1,7 @@
 #!/bin/bash
-# Builds mix.mp3 (30 s): a mock-sad "world's smallest violin" bed under the three "개우 도전"
-# days with the day-by-day narration, record scratch at 21.75 s, then a bouncy ukulele and
+# Builds mix.mp3 (30 s): a comedy bed under the three "개우 도전" days with the day-by-day
+# narration (BED=funnyA: variety-show pizzicato/tuba, BED=funnyB: whistling ukulele meme tune,
+# BED=violin: mock-sad violin), record scratch at 21.75 s, then a bouncy ukulele and
 # kazoo theme under the festival call-out.
 # Rubber-stamp thuds land with each acting-rating stamp. Narration ducks the music with smoothstep ramps.
 set -euo pipefail
@@ -8,13 +9,13 @@ cd "$(dirname "$0")"
 LEN=30
 # Narration: a cheeky 8-year-old cartoon-girl voice (Seed Audio). k1-k4 are the raw takes
 # with long gaps squeezed out and levelled; k2f/k4f are sped up 1.1x/1.3x to fit their slots.
-OUT=${OUT:-mix.mp3}
+OUT=${OUT:-mix.mp3}; BED=${BED:-funnyA}
 NARR=("k1.mp3 0.3 5.14" "k2f.mp3 7.6 6.35" "k3.mp3 14.8 3.77" "k4f.mp3 22.4 7.07")
 DUCK=0.4 RAMP=0.3
 ms() { python3 -c "print(int($1*1000))"; }
-inputs=(-i violin.wav -i uke.wav -i scratch.mp3 -i sting.mp3)
+inputs=(-i "$BED.wav" -i uke.wav -i scratch.mp3 -i sting.mp3)
 STAMPS=(5.57 13.17 20.37 22.32)
-f="[0:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:22,afade=t=in:d=0.2,afade=t=out:st=21.55:d=0.3,volume=1.75[dr];"
+f="[0:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:22,afade=t=in:d=0.2,afade=t=out:st=21.55:d=0.3,volume=1.8[dr];"
 f+="[1:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:8,afade=t=out:st=7.2:d=0.8,volume=1.65,adelay=22000|22000[hp];"
 f+="[dr][hp]amix=inputs=2:normalize=0[mus];"
 idx=4; labels=""
