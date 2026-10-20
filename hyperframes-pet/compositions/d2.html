@@ -118,13 +118,27 @@
           margin-left: -190px;
           width: 380px;
           text-align: center;
-          top: 530px;
+          top: 1160px;
           padding: 10px 26px;
           border-radius: 14px;
           background: #ffd83d;
           color: #111111;
           font-size: 46px;
           font-weight: 800;
+        }
+        .meme-line {
+          position: absolute;
+          left: 40px;
+          right: 40px;
+          top: 470px;
+          text-align: center;
+          font-size: 62px;
+          font-weight: 800;
+          line-height: 1.25;
+          color: #ffffff;
+          -webkit-text-stroke: 10px #111111;
+          paint-order: stroke fill;
+          opacity: 0;
         }
       </style>
       <div id="root" data-composition-id="d2" data-width="1080" data-height="1920">
@@ -134,6 +148,8 @@
           <div id="d2-day" class="meme-day">개우 도전 2일차</div><br />
           <div id="d2-sit" class="meme-sit">상황: 고양이가 내 방석을 차지했다</div>
         </div>
+        <div id="d2-l0" class="meme-line">“너… 지금… 내 방석에서<br />뭐 하는 거야…?”</div>
+        <div id="d2-l1" class="meme-line">“우리… 이제… 끝이야.”</div>
         <div id="d2-rate" class="meme-rate">연기력<b>★★★☆☆</b></div>
       </div>
       <script>
@@ -143,6 +159,10 @@
         tl.fromTo("#d2-rate", { opacity: 0, scale: 3.2, rotation: -22 }, { opacity: 1, scale: 1, rotation: -8, duration: 0.17, ease: "power4.in" }, 5.6);
         tl.fromTo("#d2-video", { x: -22 }, { x: 0, duration: 0.45, ease: "elastic.out(1, 0.3)" }, 5.77);
         tl.fromTo("#d2-video", { scale: 1.07 }, { scale: 1.0, duration: 0.9, ease: "power2.out" }, 5.77);
+        tl.fromTo("#d2-l0", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2)" }, 0.25);
+        tl.to("#d2-l0", { opacity: 0, duration: 0.15, ease: "none" }, 3.9);
+        tl.fromTo("#d2-l1", { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.2, ease: "back.out(2)" }, 3.9);
+        tl.to("#d2-l1", { opacity: 0, duration: 0.15, ease: "none" }, 7.1);
         window.__timelines["d2"] = tl;
       </script>
     </template>
