@@ -89,7 +89,7 @@ MEME_CSS = f'''        .meme-top {{
         .meme-rate {{
           position: absolute;
           left: 50%;
-          bottom: 260px;
+          top: 410px;
           margin-left: -330px;
           width: 660px;
           padding: 18px 0;
@@ -147,8 +147,11 @@ for p, clip, s, d, day, sit, stars in DAYS:
         js += stamp("#d3-peek", 4.6) + stamp(f"#{p}-rate", 5.6)
     files[p] = comp(p, vcss + MEME_CSS + f'''        .meme-tag {{
           position: absolute;
-          left: 90px;
-          top: 1080px;
+          left: 50%;
+          margin-left: -190px;
+          width: 380px;
+          text-align: center;
+          top: 530px;
           padding: 10px 26px;
           border-radius: 14px;
           background: {YEL};
