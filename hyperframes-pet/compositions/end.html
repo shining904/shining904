@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Black Han Sans";
+          font-weight: 400;
+          src: url("fonts/black-han-sans-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          font-family: "Noto Sans KR", sans-serif;
+        }
+        #end-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        #end-shade {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          height: 640px;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 100%);
+        }
+        .meme-top {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 150px;
+          text-align: center;
+        }
+        .meme-day {
+          display: inline-block;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 118px;
+          line-height: 1.1;
+          color: #ffffff;
+          -webkit-text-stroke: 14px #111111;
+          paint-order: stroke fill;
+        }
+        .meme-sit {
+          display: inline-block;
+          margin-top: 22px;
+          padding: 14px 34px;
+          border-radius: 18px;
+          background: #111111;
+          color: #ffd83d;
+          font-size: 50px;
+          font-weight: 800;
+        }
+        .meme-rate {
+          position: absolute;
+          left: 50%;
+          bottom: 260px;
+          margin-left: -330px;
+          width: 660px;
+          padding: 18px 0;
+          border-radius: 24px;
+          background: rgba(17, 17, 17, 0.82);
+          text-align: center;
+          color: #ffffff;
+          font-size: 48px;
+          font-weight: 800;
+        }
+        .meme-rate b {
+          font-family: "Black Han Sans", sans-serif;
+          font-weight: 400;
+          color: #ffd83d;
+          letter-spacing: 4px;
+        }
+        #end-rate {
+          top: 130px;
+          bottom: auto;
+        }
+        #end-q {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 250px;
+          text-align: center;
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 96px;
+          line-height: 1.15;
+          color: #ffffff;
+          -webkit-text-stroke: 12px #111111;
+          paint-order: stroke fill;
+        }
+        #end-q span {
+          color: #ffd83d;
+        }
+        #end-card {
+          position: absolute;
+          left: 60px;
+          right: 60px;
+          bottom: 60px;
+          padding: 34px 40px 30px;
+          border-radius: 40px;
+          background: rgba(255, 255, 255, 0.95);
+          text-align: center;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+        #end-title {
+          font-family: "Black Han Sans", sans-serif;
+          font-size: 92px;
+          line-height: 1.1;
+          color: #222222;
+        }
+        #end-title small {
+          display: block;
+          font-size: 44px;
+          color: #c2410c;
+        }
+        #end-date {
+          display: inline-block;
+          margin-top: 18px;
+          padding: 10px 36px;
+          border-radius: 999px;
+          background: #ff4d4d;
+          color: #ffffff;
+          font-size: 50px;
+          font-weight: 800;
+        }
+        #end-place {
+          margin-top: 14px;
+          font-size: 40px;
+          font-weight: 800;
+          color: #222222;
+        }
+        #end-chips {
+          margin-top: 22px;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 12px;
+        }
+        .end-chip {
+          padding: 10px 22px;
+          border-radius: 999px;
+          background: #fff1c2;
+          border: 3px solid #f2b705;
+          color: #4a3500;
+          font-size: 34px;
+          font-weight: 800;
+        }
+        #end-foot {
+          margin-top: 18px;
+          font-size: 28px;
+          color: #555555;
+        }
+      </style>
+      <div id="root" data-composition-id="end" data-width="1080" data-height="1920">
+        <video id="end-video" src="assets/clips/stage.mp4" data-start="0" data-duration="8.0" muted playsinline></video>
+        <div id="end-shade"></div>
+        <div id="end-rate" class="meme-rate">연기력 <b>★★★★★</b> ?!</div>
+        <div id="end-q">연기력 검증은<br /><span>여기서!</span></div>
+        <div id="end-card">
+          <div id="end-title"><small>멍냥이 장기자랑 출전 대기 중</small>2026 이천펫축제</div>
+          <div id="end-date">10.24(토) ~ 25(일)</div>
+          <div id="end-place">이천도자예술마을(예스파크) 일원</div>
+          <div id="end-chips">
+            <div class="end-chip">멍냥이 장기자랑</div>
+            <div class="end-chip">캣통령 토크콘서트</div>
+            <div class="end-chip">댕댕이 가을운동회</div>
+            <div class="end-chip">펫워크 산책교실</div>
+          </div>
+          <div id="end-foot">개막 10.24(토) 오후 2시 · 이천시 · AI 생성 영상</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#end-video", { scale: 1.3, y: -250 }, { scale: 1.34, y: -250, duration: 8, ease: "none" }, 0);
+        tl.fromTo("#end-rate", { opacity: 0, scale: 2.2, rotation: -14 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.35, ease: "power4.out" }, 0.1);
+        tl.fromTo("#end-q", { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.8)" }, 0.9);
+        tl.fromTo("#end-card", { opacity: 0, y: 120 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 4.3);
+        tl.fromTo("#end-date", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.8)" }, 4.8);
+        tl.fromTo("#end-place", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.8)" }, 5.1);
+        tl.fromTo(".end-chip", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)", stagger: 0.12 }, 5.4);
+        tl.fromTo("#end-foot", { opacity: 0, y: 0 }, { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.8)" }, 6.0);
+        window.__timelines["end"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
