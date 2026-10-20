@@ -73,7 +73,7 @@ MEME_CSS = f'''        .meme-top {{
           position: absolute;
           left: 0;
           right: 0;
-          top: 150px;
+          top: 230px;
           text-align: center;
         }}
         .meme-day {{
@@ -193,7 +193,7 @@ files["end"] = comp("end", vcss + MEME_CSS + f'''        #end-q {{
           position: absolute;
           left: 0;
           right: 0;
-          top: 250px;
+          top: 280px;
           text-align: center;
           font-family: "Black Han Sans", sans-serif;
           font-size: 96px;
@@ -207,10 +207,10 @@ files["end"] = comp("end", vcss + MEME_CSS + f'''        #end-q {{
         }}
         #end-card {{
           position: absolute;
-          left: 60px;
-          right: 60px;
-          bottom: 60px;
-          padding: 34px 40px 30px;
+          left: 70px;
+          right: 150px;
+          bottom: 400px;
+          padding: 28px 30px 24px;
           border-radius: 40px;
           background: rgba(255, 255, 255, 0.95);
           text-align: center;
@@ -218,33 +218,33 @@ files["end"] = comp("end", vcss + MEME_CSS + f'''        #end-q {{
         }}
         #end-title {{
           font-family: "Black Han Sans", sans-serif;
-          font-size: 92px;
+          font-size: 80px;
           line-height: 1.1;
           color: #222222;
         }}
         #end-title small {{
           display: block;
-          font-size: 44px;
+          font-size: 38px;
           color: #c2410c;
         }}
         #end-date {{
           display: inline-block;
-          margin-top: 18px;
+          margin-top: 12px;
           padding: 10px 36px;
           border-radius: 999px;
           background: {RED};
           color: #ffffff;
-          font-size: 50px;
+          font-size: 44px;
           font-weight: 800;
         }}
         #end-place {{
           margin-top: 14px;
-          font-size: 40px;
+          font-size: 36px;
           font-weight: 800;
           color: #222222;
         }}
         #end-chips {{
-          margin-top: 22px;
+          margin-top: 16px;
           display: flex;
           flex-wrap: wrap;
           justify-content: center;
@@ -256,11 +256,11 @@ files["end"] = comp("end", vcss + MEME_CSS + f'''        #end-q {{
           background: #fff1c2;
           border: 3px solid #f2b705;
           color: #4a3500;
-          font-size: 34px;
+          font-size: 30px;
           font-weight: 800;
         }}
         #end-logo {{
-          height: 92px;
+          height: 74px;
         }}
         #end-foot {{
           display: flex;
@@ -268,7 +268,7 @@ files["end"] = comp("end", vcss + MEME_CSS + f'''        #end-q {{
           justify-content: center;
           gap: 26px;
           text-align: left;
-          margin-top: 18px;
+          margin-top: 12px;
           font-size: 28px;
           color: #555555;
         }}
