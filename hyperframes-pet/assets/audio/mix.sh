@@ -15,8 +15,8 @@ DUCK=0.4 RAMP=0.3
 ms() { python3 -c "print(int($1*1000))"; }
 inputs=(-i "$BED.wav" -i uke.wav -i scratch.mp3 -i sting.mp3)
 STAMPS=(5.57 13.17 20.37 22.32)
-f="[0:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:22,afade=t=in:d=0.2,afade=t=out:st=21.55:d=0.3,volume=1.8[dr];"
-f+="[1:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:8,afade=t=out:st=7.2:d=0.8,volume=1.65,adelay=22000|22000[hp];"
+f="[0:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:22,afade=t=in:d=0.2,afade=t=out:st=21.55:d=0.3,volume=1.27[dr];"
+f+="[1:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:8,afade=t=out:st=7.2:d=0.8,volume=1.17,adelay=22000|22000[hp];"
 f+="[dr][hp]amix=inputs=2:normalize=0[mus];"
 idx=4; labels=""
 for n in "${NARR[@]}"; do
