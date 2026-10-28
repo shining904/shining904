@@ -9,6 +9,8 @@ Presets (camera/object motion over the clip):
     turntable  object spins 360° once, camera fixed slightly above
     reveal     camera dollies in and orbits 60° while the object turns 90° (hero shot)
     float      object bobs and sways gently, camera orbits 25° (loop-friendly B-roll)
+    cruise     long object (ship, submarine, train) glides past a low 3/4 camera, no floor;
+               pass --bow=-x if the model's nose points to -X
 
 The background is transparent (film_transparent) with a shadow-catcher floor, so the frames
 drop straight onto any HyperFrames / p5 / canvas background. Encode with encode_alpha.sh.
@@ -28,11 +30,13 @@ ap.add_argument("--out", required=True)
 ap.add_argument("--frames", type=int, default=120)
 ap.add_argument("--fps", type=int, default=30)
 ap.add_argument("--size", default="1080x1080")
-ap.add_argument("--preset", default="turntable", choices=["turntable", "reveal", "float"])
+ap.add_argument("--preset", default="turntable", choices=["turntable", "reveal", "float", "cruise"])
 ap.add_argument("--samples", type=int, default=48)
 ap.add_argument("--still", type=int, help="render only this frame (look check)")
 ap.add_argument("--key", default="1.0,0.92,0.82", help="key light colour r,g,b")
 ap.add_argument("--rim", default="0.75,0.85,1.0", help="rim light colour r,g,b")
+ap.add_argument("--bow", default="+x", choices=["+x", "-x"], help="cruise: which way the nose points")
+ap.add_argument("--world", type=float, default=0.6, help="ambient world light strength")
 a = ap.parse_args(argv)
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -59,15 +63,17 @@ s = 2.0 / size
 pivot.scale = (s, s, s)
 centre = (lo + hi) / 2
 pivot.location = (-centre.x * s, -centre.y * s, -lo.z * s)  # sit on the floor at z=0
+if a.preset == "cruise":  # floats mid-water: centre the model on the origin instead
+    pivot.location = (-centre.x * s, -centre.y * s, -centre.z * s)
 height = (hi.z - lo.z) * s
 for o in meshes:
     for poly in o.data.polygons:
         poly.use_smooth = True
 
 # --- floor that only catches shadows ------------------------------------------------------
-bpy.ops.mesh.primitive_plane_add(size=30, location=(0, 0, 0))
-floor = bpy.context.object
-floor.is_shadow_catcher = True
+if a.preset != "cruise":
+    bpy.ops.mesh.primitive_plane_add(size=30, location=(0, 0, 0))
+    bpy.context.object.is_shadow_catcher = True
 
 # --- lights: warm key, cool rim, soft fill; dim neutral world -----------------------------
 def area(name, loc, energy, color, size_):
@@ -86,7 +92,7 @@ area("fill", (-4.0, -3.0, 1.5), 180, "1,1,1", 4.0)
 world = bpy.data.worlds.new("w")
 world.use_nodes = True
 world.node_tree.nodes["Background"].inputs[0].default_value = (0.05, 0.05, 0.06, 1)
-world.node_tree.nodes["Background"].inputs[1].default_value = 0.6
+world.node_tree.nodes["Background"].inputs[1].default_value = a.world
 sc.world = world
 
 # --- camera + motion preset ---------------------------------------------------------------
@@ -129,6 +135,13 @@ elif a.preset == "reveal":
     key(rig, "rotation_euler", F, (0, 0, math.radians(20)))
     key(pivot, "rotation_euler", 1, (0, 0, 0))
     key(pivot, "rotation_euler", F, (0, 0, math.radians(90)))
+elif a.preset == "cruise":
+    target.location = (0, 0, 0)
+    d = 1 if a.bow == "+x" else -1   # camera starts ahead of the bow and drifts aft
+    key(cam, "location", 1, (d * 3.0, -1.9, -0.45), "LINEAR")
+    key(cam, "location", F, (d * 0.9, -2.5, -0.1), "LINEAR")
+    key(target, "location", 1, (d * 0.35, 0, 0), "LINEAR")
+    key(target, "location", F, (d * -0.15, 0, 0), "LINEAR")
 else:  # float
     cam.location = (0, -dist, height * 0.8)
     for f, z, r in ((1, 0.0, -0.08), (F // 2, 0.12, 0.08), (F, 0.0, -0.08)):
