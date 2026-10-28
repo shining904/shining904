@@ -285,8 +285,8 @@ body = f'''        <div id="bg"></div>
         <div id="t0" class="t thin" style="top:640px;font-size:92px">천 년을 건너온 이름, <b style="font-weight:900">서희</b></div>
         <div id="t1" class="t thin" style="top:520px;font-size:230px;color:{GOLD}">993</div>
         <div id="t1b" class="t cap" style="top:806px;font-size:46px">고려, 거란의 침입</div>
-        <div id="t2" class="t thin" style="top:1240px;font-size:80px">칼 대신, <b style="font-weight:900">지혜로</b></div>
-        <div id="t2b" class="t" style="top:1350px;font-size:58px;font-weight:300">나라를 지켜낸 서희의 외교 담판</div>
+        <div id="t2" class="t thin" style="top:1170px;font-size:80px">칼 대신, <b style="font-weight:900">지혜로</b></div>
+        <div id="t2b" class="t" style="top:1278px;font-size:58px;font-weight:300">나라를 지켜낸 서희의 외교 담판</div>
         <div id="mname"><span>이천시장</span><b>성수석</b></div>
         <div id="t3" class="t" style="top:1178px;font-size:50px;line-height:1.3;font-weight:300;text-shadow:0 2px 10px rgba(0,0,0,0.95)">“서희함의 진수를<br /><b style="font-weight:800">진심으로 축하드립니다”</b></div>
         <div id="t4" class="t thin" style="top:420px;font-size:80px">서희의 이름, <b style="font-weight:900">바다로</b></div>
