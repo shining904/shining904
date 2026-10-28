@@ -1,3 +1,5 @@
 work/
 out/preview.mp4
 node_modules
+.transcode-cache/
+__pycache__/
