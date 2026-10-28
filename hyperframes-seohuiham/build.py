@@ -224,12 +224,12 @@ files["open"] = clip("open", "assets/clips/sea-open.mp4", 7.6, KIN_CSS + '''    
 # ---------------------------------------------------------------- cliff: Seo Hui, kinetic name card
 files["cliff"] = clip("cliff", "assets/clips/cliff.mp4", 8.4, KIN_CSS + f'''        #cliff-han {{
           position: absolute;
-          left: 60px;
-          top: 520px;
+          left: 70px;
+          top: 300px;
           font-family: "Nanum Myeongjo", serif;
           font-weight: 800;
-          font-size: 330px;
-          color: rgba(255, 236, 200, 0.1);
+          font-size: 300px;
+          color: rgba(255, 236, 200, 0.06);
           -webkit-text-stroke: 2px rgba(255, 236, 200, 0.55);
           white-space: nowrap;
         }}
@@ -297,6 +297,9 @@ files["side"] = clip("side", "assets/clips/sub-side.mp4", 8.4, KIN_CSS + f'''   
           font-size: 64px;
           color: #ffffff;
         }}
+        .call i {{
+          font-style: normal;
+        }}
         .call span {{
           font-size: 26px;
           letter-spacing: 6px;
@@ -324,7 +327,7 @@ files["side"] = clip("side", "assets/clips/sub-side.mp4", 8.4, KIN_CSS + f'''   
           top: 760px;
         }}
 ''', '''          <div id="side-d1" class="dot" style="left:1060px;top:300px"></div>
-          <div id="side-c1" class="call hud"><b><span id="side-ton">0</span>톤급</b><span>DISPLACEMENT</span></div>
+          <div id="side-c1" class="call hud"><b><i id="side-ton">0</i>톤급</b><span>DISPLACEMENT</span></div>
           <div id="side-c2" class="call hud"><b>장보고-Ⅲ 배치-Ⅱ</b><span>2번함 · 2026. 11. 3. 진수</span></div>
           <div id="side-c3" class="call hud"><b>국산화율 약 80%</b><span>K-SUBMARINE</span></div>
 ''', '        tl.fromTo("#side-d1", { opacity: 0, scale: 3 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 1.0);\n'
@@ -383,7 +386,7 @@ files["title"] = clip("title", "assets/clips/title-bg.mp4", 15.9, KIN_CSS + f'''
           font-size: 66px;
         }}
 ''', '''          <div id="title-dim"></div>
-          <div id="title-name" class="kin gold"><span class="c">서</span><span class="c">희</span><span class="c">함</span></div>
+          <div id="title-name" class="kin"><span class="c gold">서</span><span class="c gold">희</span><span class="c gold">함</span></div>
           <div id="title-sweep"></div>
           <div id="title-r1" class="rule"></div>
           <div id="title-en" class="hud">ROKS SEO HUI</div>
