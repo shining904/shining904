@@ -59,7 +59,6 @@ for a, b in [("createImageData(270, 480)", "createImageData(480, 270)"), ("i < 2
 # text layout
 LEFT = "left:140px;right:auto;text-align:left;"
 restyle("t0", "top:400px;font-size:84px")
-restyle("t0b", "top:620px;font-size:34px")
 restyle("t1", "top:130px;font-size:200px;color:{GOLD}")
 restyle("t1b", "top:370px;font-size:40px")
 restyle("t2", "top:720px;font-size:76px")
@@ -67,13 +66,11 @@ restyle("t2b", "top:830px;font-size:52px;font-weight:300")
 restyle("t3", LEFT + "top:620px;font-size:56px;line-height:1.3;font-weight:300")
 restyle("t4", "top:130px;font-size:84px")
 restyle("title", "top:240px;font-size:240px;font-weight:900;letter-spacing:-4px")
-restyle("title-en", "top:572px;font-size:50px")
 restyle("d1", "top:110px;font-size:72px;letter-spacing:8px")
 restyle("d2", "top:200px;font-size:104px;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)")
 restyle("d3", "top:700px;font-size:72px;font-weight:400;text-shadow:0 2px 18px rgba(0,0,0,0.9)")
 sub('의 안전한 항해를<br /><b style="font-weight:800">응원합니다</b>', '의 안전한 항해를 <b style="font-weight:800">응원합니다</b>')
 restyle("fill-seohui", "left:1102px;top:230px;width:396px;height:581px")
-restyle("d4", "top:800px;font-size:48px;font-weight:700;letter-spacing:6px;color:#ffffff;text-shadow:0 2px 14px rgba(0,0,0,0.95), 0 0 4px rgba(0,0,0,0.8)")
 restyle("fill-sub", "left:480px;top:400px;width:960px;height:400px;filter:brightness(0.92) contrast(1.05)")
 restyle("co1", "left:750px;top:640px")
 restyle("co2", "left:1220px;top:620px")
@@ -88,7 +85,7 @@ css += """        #amb {
           text-align: left;
         }
         #sign {
-          top: 880px;
+          top: 830px;
         }
 """
 body = f\'\'\'''')

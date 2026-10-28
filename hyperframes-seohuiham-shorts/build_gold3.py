@@ -202,7 +202,7 @@ css = f'''        #bg {{
           position: absolute;
           left: 0;
           right: 0;
-          top: 1360px;
+          top: 1310px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -229,22 +229,19 @@ body = f'''        <div id="bg"></div>
         <div id="leak"></div>
         <canvas id="grain" width="270" height="480"></canvas>
         <div id="t0" class="t thin" style="top:640px;font-size:92px">천 년을 건너온 이름, <b style="font-weight:900">서희</b></div>
-        <div id="t0b" class="t cap" style="top:1170px;font-size:38px">A NAME ACROSS A THOUSAND YEARS</div>
         <div id="t1" class="t thin" style="top:520px;font-size:230px;color:{GOLD}">993</div>
-        <div id="t1b" class="t cap" style="top:780px;font-size:42px">GORYEO · THE KHITAN INVASION</div>
+        <div id="t1b" class="t cap" style="top:780px;font-size:46px">고려, 거란의 침입</div>
         <div id="t2" class="t thin" style="top:1240px;font-size:80px">칼 대신, <b style="font-weight:900">지혜로</b></div>
         <div id="t2b" class="t" style="top:1350px;font-size:58px;font-weight:300">나라를 지켜낸 서희의 외교 담판</div>
         <div id="amb"><div id="amb-pill">이천시 AI 홍보대사</div><div id="amb-name">서희</div></div>
         <div id="t3" class="t" style="top:1305px;font-size:60px;line-height:1.3;font-weight:300">이천시민들과 함께<br /><b style="font-weight:800">서희함의 진수를 축하합니다</b></div>
         <div id="t4" class="t thin" style="top:420px;font-size:80px">서희의 이름, <b style="font-weight:900">바다로</b></div>
-        <div id="co1" class="co" style="left:330px;top:1060px"><i></i><u style="height:230px"></u><div style="left:-210px;top:240px"><b>장보고-Ⅲ 배치-Ⅱ</b><span>KSS-III BATCH-II · 2번함</span></div></div>
+        <div id="co1" class="co" style="left:330px;top:1060px"><i></i><u style="height:230px"></u><div style="left:-210px;top:240px"><b>장보고-Ⅲ 배치-Ⅱ</b><span>2번함</span></div></div>
         <div id="co2" class="co" style="left:800px;top:1040px"><i></i><u style="height:250px"></u><div style="left:-200px;top:260px"><b>3,600톤급</b><span>잠수함</span></div></div>
         <div id="title" class="t" style="top:470px;font-size:260px;font-weight:900;letter-spacing:-4px"><span class="gold">서</span><span class="gold">희</span><span class="gold">함</span></div>
-        <div id="title-en" class="t cap" style="top:806px;font-size:54px">ROKS SEO HUI</div>
         <div id="d1" class="t thin" style="top:230px;font-size:84px;letter-spacing:8px">2026. 11. 3.</div>
         <div id="d2" class="t" style="top:350px;font-size:116px;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)">진수를 축하합니다</div>
         <div id="d3" class="t" style="top:1050px;font-size:80px;line-height:1.28;font-weight:400;text-shadow:0 2px 18px rgba(0,0,0,0.9)"><b style="font-weight:800;color:#ffe6a8">서희함</b>의 안전한 항해를<br /><b style="font-weight:800">응원합니다</b></div>
-        <div id="d4" class="t" style="top:1262px;font-size:52px;font-weight:700;letter-spacing:6px;color:#ffffff;text-shadow:0 2px 14px rgba(0,0,0,0.95), 0 0 4px rgba(0,0,0,0.8)">이천시장 <span style="font-weight:900">성수석</span></div>
         <div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /></div>
         <div id="flash"></div>
 '''
@@ -394,7 +391,7 @@ js += '        tl.to("#leak", { keyframes: [{ opacity: 1, x: 300, duration: 4 },
 js += '        tl.to("#leak", { keyframes: [{ opacity: 1, x: 500, y: 600, duration: 2.5 }, { opacity: 0, x: 900, y: 800, duration: 3 }], ease: "sine.inOut" }, 13.4);\n'
 js += f'        tl.to("#leak", {{ keyframes: [{{ opacity: 1, x: 200, y: 200, duration: 1.0 }}, {{ opacity: 0, x: 600, y: 300, duration: 3 }}], ease: "sine.inOut" }}, {HIT});\n'
 # 0–4.6 horizon
-js += rise("#t0", 0.6, 1.2) + rise("#t0b", 1.2) + out("#t0, #t0b", 4.2, 0.5)
+js += rise("#t0", 0.6, 1.2) + out("#t0", 4.2, 0.5)
 # 4.6–12.2 the sea of 993
 js += rise("#t1", 6.6, 1.1) + rise("#t1b", 7.2) + rise("#t2", 8.4) + rise("#t2b", 9.0) + out("#t1, #t1b, #t2, #t2b", 11.8, 0.5)
 # 12.2–17.4 Seo Hui, AI ambassador
@@ -416,21 +413,20 @@ js += out("#t4", HIT - 0.4, 0.3)
 js += f'        tl.to("#flash", {{ keyframes: [{{ opacity: 1, duration: 0.06 }}, {{ opacity: 0, duration: 1.0 }}] }}, {HIT - 0.06});\n'
 js += f'        tl.fromTo("#title span", {{ opacity: 0, y: 60, scale: 1.3, filter: "blur(16px)" }}, {{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.6, ease: "power4.out", stagger: 0.12 }}, {HIT});\n'
 js += f'        tl.set("#title", {{ opacity: 1 }}, {HIT});\n'
-js += rise("#title-en", HIT + 0.9, 0.8)
 js += f'        tl.fromTo("#title span", {{ backgroundPosition: "120% 0, 0 0" }}, {{ backgroundPosition: "-20% 0, 0 0", duration: 1.4, ease: "power2.inOut", stagger: 0.08, immediateRender: false }}, {HIT + 0.7});\n'
 js += f'        tl.fromTo("#title span", {{ backgroundPosition: "120% 0, 0 0" }}, {{ backgroundPosition: "-20% 0, 0 0", duration: 1.4, ease: "power2.inOut", stagger: 0.08, immediateRender: false }}, {HIT + 2.9});\n'
 js += f'        tl.to("#fill-sub", {{ y: 160, scale: 1.12, filter: "brightness(1) contrast(1)", duration: 1.2, ease: "power2.inOut" }}, {HIT + 0.1});\n'
 js += fade("#v-side", 25.0, 0.55, 1.2) + fade("#fill-sub", 25.4, 0, 1.0)
 js += '        tl.fromTo("#v-side", { scale: 1.12 }, { scale: 1.0, duration: 5.6, ease: "none" }, 25.0);\n'
-js += out("#title, #title-en", 29.0, 0.6)
+js += out("#title", 29.0, 0.6)
 # 29.4– sunrise: date, congratulations, safe voyage, sign
 js += fade("#v-surf", 29.4, 1, 1.4) + '        tl.fromTo("#v-surf", { scale: 1.0 }, { scale: 1.08, duration: 8.1, ease: "none" }, 29.4);\n'
 js += fade("#v-launch-a", 31.6, 1, 0.9) + '        tl.fromTo("#v-launch-a", { scale: 1.0 }, { scale: 1.04, duration: 2.9, ease: "none" }, 31.6);\n'
 js += fade("#v-launch-b", 34.3, 1, 0.5) + '        tl.fromTo("#v-launch-b", { scale: 1.02 }, { scale: 1.06, duration: 3.04, ease: "none" }, 34.3);\n'
 js += fade("#endshade", 29.8, 1, 1.2) + rise("#d1", 30.4) + rise("#d2", 31.0, 1.0)
-js += rise("#d3", 32.6, 1.1) + rise("#d4", 33.4, 0.9)
+js += rise("#d3", 32.6, 1.1)
 js += '        tl.fromTo("#sign", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }, 33.8);\n'
-js += out("#d1, #d2, #d3, #d4, #sign", 36.5, 0.8) + fade("#v-launch-b", 36.6, 0.0, 0.7)
+js += out("#d1, #d2, #d3, #sign", 36.5, 0.8) + fade("#v-launch-b", 36.6, 0.0, 0.7)
 
 d = setup("gold3")
 html = index("서희함 · 금빛 한 줄 확장판", "①+ extended one-take gold line short. Silhouettes traced from Magnific cut-outs; footage Seedance; score Lyria 3 Pro.",
