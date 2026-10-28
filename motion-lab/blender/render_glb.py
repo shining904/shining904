@@ -11,6 +11,11 @@ Presets (camera/object motion over the clip):
     float      object bobs and sways gently, camera orbits 25° (loop-friendly B-roll)
     cruise     long object (ship, submarine, train) glides past a low 3/4 camera, no floor;
                pass --bow=-x if the model's nose points to -X
+    profile    long object: camera swings from a low front 3/4 view round to the exact side
+               profile (bow to the right), no floor — ends matching a side-on silhouette
+
+--material gold swaps every material for polished gold; --yaw turns the model first so its
+bow points along +X.
 
 The background is transparent (film_transparent) with a shadow-catcher floor, so the frames
 drop straight onto any HyperFrames / p5 / canvas background. Encode with encode_alpha.sh.
@@ -30,7 +35,10 @@ ap.add_argument("--out", required=True)
 ap.add_argument("--frames", type=int, default=120)
 ap.add_argument("--fps", type=int, default=30)
 ap.add_argument("--size", default="1080x1080")
-ap.add_argument("--preset", default="turntable", choices=["turntable", "reveal", "float", "cruise"])
+ap.add_argument("--preset", default="turntable", choices=["turntable", "reveal", "float", "cruise", "profile"])
+ap.add_argument("--material", default="", choices=["", "gold"], help="override every material")
+ap.add_argument("--yaw", type=float, default=0.0, help="rotate the model about Z first (degrees)")
+ap.add_argument("--dist", type=float, help="camera distance override")
 ap.add_argument("--samples", type=int, default=48)
 ap.add_argument("--still", type=int, help="render only this frame (look check)")
 ap.add_argument("--key", default="1.0,0.92,0.82", help="key light colour r,g,b")
@@ -65,13 +73,30 @@ centre = (lo + hi) / 2
 pivot.location = (-centre.x * s, -centre.y * s, -lo.z * s)  # sit on the floor at z=0
 if a.preset == "cruise":  # floats mid-water: centre the model on the origin instead
     pivot.location = (-centre.x * s, -centre.y * s, -centre.z * s)
+if a.preset in ("cruise", "profile"):
+    pivot.location = (-centre.x * s, -centre.y * s, -centre.z * s)
 height = (hi.z - lo.z) * s
+if a.yaw:
+    yaw = bpy.data.objects.new("yaw", None)
+    sc.collection.objects.link(yaw)
+    pivot.parent = yaw
+    yaw.rotation_euler = (0, 0, math.radians(a.yaw))
+if a.material == "gold":
+    gold = bpy.data.materials.new("gold")
+    gold.use_nodes = True
+    b = gold.node_tree.nodes["Principled BSDF"]
+    b.inputs["Base Color"].default_value = (1.0, 0.72, 0.36, 1)
+    b.inputs["Metallic"].default_value = 1.0
+    b.inputs["Roughness"].default_value = 0.2
+    for o in meshes:
+        o.data.materials.clear()
+        o.data.materials.append(gold)
 for o in meshes:
     for poly in o.data.polygons:
         poly.use_smooth = True
 
 # --- floor that only catches shadows ------------------------------------------------------
-if a.preset != "cruise":
+if a.preset not in ("cruise", "profile"):
     bpy.ops.mesh.primitive_plane_add(size=30, location=(0, 0, 0))
     bpy.context.object.is_shadow_catcher = True
 
@@ -110,7 +135,7 @@ rig = bpy.data.objects.new("rig", None)  # camera orbits by rotating this
 sc.collection.objects.link(rig)
 cam.parent = rig
 aspect = w / h
-dist = 6.2 if aspect <= 1 else 5.4
+dist = a.dist or (6.2 if aspect <= 1 else 5.4)
 
 sc.frame_start, sc.frame_end = 1, a.frames
 sc.render.fps = a.fps
@@ -142,6 +167,11 @@ elif a.preset == "cruise":
     key(cam, "location", F, (d * 0.9, -2.5, -0.1), "LINEAR")
     key(target, "location", 1, (d * 0.35, 0, 0), "LINEAR")
     key(target, "location", F, (d * -0.15, 0, 0), "LINEAR")
+elif a.preset == "profile":
+    target.location = (0, 0, 0)
+    cam.location = (0, -dist, 0.12)
+    key(rig, "rotation_euler", 1, (0, 0, math.radians(58)), "BEZIER")
+    key(rig, "rotation_euler", F, (0, 0, 0), "BEZIER")
 else:  # float
     cam.location = (0, -dist, height * 0.8)
     for f, z, r in ((1, 0.0, -0.08), (F // 2, 0.12, 0.08), (F, 0.0, -0.08)):
