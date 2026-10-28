@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Pretendard";
+          font-weight: 500;
+          src: url("fonts/Pretendard-Medium.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Pretendard";
+          font-weight: 700;
+          src: url("fonts/Pretendard-Bold.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Pretendard";
+          font-weight: 800;
+          src: url("fonts/Pretendard-ExtraBold.woff2") format("woff2");
+        }
+        @font-face {
+          font-family: "Pretendard";
+          font-weight: 900;
+          src: url("fonts/Pretendard-Black.woff2") format("woff2");
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .g {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+        }
+        .wd {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Pretendard", sans-serif;
+          font-weight: 900;
+          line-height: 1;
+          letter-spacing: -4px;
+          opacity: 0;
+        }
+        .sm {
+          font-weight: 700;
+          letter-spacing: 0;
+        }
+        .vid {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .ko {
+          position: absolute;
+          inset: 0;
+          background: #000;
+          mix-blend-mode: multiply;
+        }
+        .ko .wd {
+          color: #ffffff;
+        }
+        .bar {
+          position: absolute;
+          left: 90px;
+          right: 90px;
+          height: 14px;
+          transform-origin: 0 50%;
+        }
+        #flash {
+          position: absolute;
+          inset: 0;
+          background: #ffffff;
+          opacity: 0;
+        }
+        #sign {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 1330px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 30px;
+          opacity: 0;
+        }
+        #sign img {
+          height: 120px;
+        }
+        #sign div {
+          font-family: "Pretendard", sans-serif;
+          font-weight: 800;
+          font-size: 58px;
+          color: #ffffff;
+        }
+        #sign i {
+          width: 3px;
+          height: 90px;
+          background: #e3b25a;
+        }
+      </style>
+      <div id="root" data-composition-id="type" data-width="1080" data-height="1920">
+        <div id="g0" class="g" style="background:#000">
+          <div id="g0-bar" class="bar" style="top:1500px;background:#e3b25a"></div>
+          <div id="g0w0" class="wd" style="top:660px;font-size:360px;color:#e3b25a;">993</div>
+          <div id="g0w1" class="wd" style="top:1060px;font-size:150px;color:#ffffff;">년</div>
+        </div>
+        <div id="g1" class="g" style="background:#f4efe6">
+          <div id="g1-bar" class="bar" style="top:380px;background:#e3b25a"></div>
+          <div id="g1w0" class="wd" style="top:520px;font-size:520px;color:#0b1d3a;">칼</div>
+          <div id="g1w1" class="wd" style="top:1120px;font-size:230px;color:#d4412f;">대신</div>
+        </div>
+        <div id="g2" class="g" style="background:#0b1d3a">
+          <div id="g2-bar" class="bar" style="top:1500px;background:#e3b25a"></div>
+          <div id="g2w0" class="wd" style="top:700px;font-size:300px;color:#ffffff;">지혜로</div>
+          <div id="g2w1" class="wd" style="top:1060px;font-size:110px;color:#e3b25a;font-weight:800">나라를 지킨</div>
+        </div>
+        <div id="g3" class="g">
+          <video id="v-cliff" class="vid" src="assets/cliff.mp4" data-start="6" data-duration="4.1" muted playsinline></video>
+          <div class="ko">
+            <div id="g3w0" class="wd" style="top:560px;font-size:420px">서희</div>
+          </div>
+          <div id="g3w1" class="wd sm" style="top:1080px;font-size:72px;color:#ffffff">고려의 외교관</div>
+          <div id="g3w2" class="wd" style="top:1240px;font-size:120px;color:#e3b25a">그 이름이,</div>
+        </div>
+        <div id="g4" class="g">
+          <video id="v-front" class="vid" src="assets/sub-side.mp4" data-start="10.05" data-duration="4.0" muted playsinline style="filter:brightness(1.25)"></video>
+          <div class="ko">
+            <div id="g4w0" class="wd" style="top:600px;font-size:330px;letter-spacing:-10px">서희함</div>
+          </div>
+          <div id="g4w1" class="wd" style="top:600px;font-size:330px;letter-spacing:-10px;color:transparent;-webkit-text-stroke:3px #e3b25a">서희함</div>
+        </div>
+        <div id="g5" class="g">
+          <video id="v-side" class="vid" src="assets/sub-surface.mp4" data-start="14.05" data-duration="6.95" muted playsinline style="filter:brightness(0.55)"></video>
+          <div id="g5w0" class="wd sm" style="top:330px;font-size:84px;color:#ffffff">2026. 11. 3.</div>
+          <div id="g5w1" class="wd" style="top:450px;font-size:250px;color:#e3b25a">진수</div>
+          <div id="g5w2" class="wd sm" style="top:820px;font-size:92px;color:#ffffff">축하합니다</div>
+          <div id="g5w3" class="wd sm" style="top:960px;font-size:46px;color:#d6e6f5;font-weight:500">천 년의 지혜, 바다를 지키다</div>
+          <div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /><i></i><div>경기도 이천시</div></div>
+        </div>
+        <div id="flash"></div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.set("#g0", { opacity: 1 }, 0.0);
+        tl.set("#g0", { opacity: 0 }, 2.0);
+        tl.fromTo("#g0", { scale: 1 }, { scale: 1.06, duration: 2.0, ease: "none" }, 0.0);
+        tl.fromTo("#g0-bar", { scaleX: 0 }, { scaleX: 1, duration: 1.8, ease: "power2.inOut" }, 0.1);
+        tl.fromTo("#g0w0", { opacity: 0, scale: 2.6 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power4.out" }, 0.25);
+        tl.to("#g0w0", { x: 12, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 0.43);
+        tl.fromTo("#g0w1", { opacity: 0, scale: 2.6 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power4.out" }, 1.2);
+        tl.to("#g0w1", { x: 12, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 1.38);
+        tl.to("#flash", { keyframes: [{ opacity: 0.6, duration: 0.03 }, { opacity: 0, duration: 0.14 }] }, 2.0);
+        tl.set("#g1", { opacity: 1 }, 2.0);
+        tl.set("#g1", { opacity: 0 }, 4.0);
+        tl.fromTo("#g1", { scale: 1 }, { scale: 1.06, duration: 2.0, ease: "none" }, 2.0);
+        tl.fromTo("#g1-bar", { scaleX: 0 }, { scaleX: 1, duration: 1.8, ease: "power2.inOut" }, 2.1);
+        tl.fromTo("#g1w0", { opacity: 0, scale: 2.6 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power4.out" }, 2.1);
+        tl.to("#g1w0", { x: 12, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 2.28);
+        tl.fromTo("#g1w1", { opacity: 0, scale: 2.6 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power4.out" }, 3.0);
+        tl.to("#g1w1", { x: 12, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 3.18);
+        tl.to("#flash", { keyframes: [{ opacity: 0.6, duration: 0.03 }, { opacity: 0, duration: 0.14 }] }, 4.0);
+        tl.set("#g2", { opacity: 1 }, 4.0);
+        tl.set("#g2", { opacity: 0 }, 6.0);
+        tl.fromTo("#g2", { scale: 1 }, { scale: 1.06, duration: 2.0, ease: "none" }, 4.0);
+        tl.fromTo("#g2-bar", { scaleX: 0 }, { scaleX: 1, duration: 1.8, ease: "power2.inOut" }, 4.1);
+        tl.fromTo("#g2w0", { opacity: 0, scale: 2.6 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power4.out" }, 4.1);
+        tl.to("#g2w0", { x: 12, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 4.28);
+        tl.fromTo("#g2w1", { opacity: 0, scale: 2.6 }, { opacity: 1, scale: 1, duration: 0.18, ease: "power4.out" }, 4.9);
+        tl.to("#g2w1", { x: 12, duration: 0.04, yoyo: true, repeat: 3, ease: "none" }, 5.08);
+        tl.to("#flash", { keyframes: [{ opacity: 0.6, duration: 0.03 }, { opacity: 0, duration: 0.14 }] }, 6.0);
+        tl.set("#g3", { opacity: 1 }, 6.0);
+        tl.set("#g3", { opacity: 0 }, 10.05);
+        tl.fromTo("#g3w0", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 6.05);
+        tl.to("#g3w0", { scale: 1.25, duration: 3.5, ease: "power1.in" }, 6.55);
+        tl.fromTo("#g3w1", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 7.0);
+        tl.fromTo("#g3w2", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 8.6);
+        tl.to("#flash", { keyframes: [{ opacity: 1, duration: 0.04 }, { opacity: 0, duration: 0.5 }] }, 10.010000000000002);
+        tl.set("#g4", { opacity: 1 }, 10.05);
+        tl.set("#g4", { opacity: 0 }, 14.05);
+        tl.fromTo("#g4w0, #g4w1", { opacity: 1, scale: 1.9 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power4.out" }, 10.05);
+        tl.to("#g4w0, #g4w1", { scale: 1.12, duration: 3.2, ease: "none" }, 10.4);
+        tl.to("#g4w0, #g4w1", { scale: 9, duration: 0.45, ease: "power3.in" }, 13.6);
+        tl.set("#g5", { opacity: 1 }, 14.05);
+        tl.fromTo("#g5w0", { opacity: 0, y: -60 }, { opacity: 1, y: 0, duration: 0.3, ease: "power4.out" }, 14.2);
+        tl.fromTo("#g5w1", { opacity: 0, scale: 2.6 }, { opacity: 1, scale: 1, duration: 0.22, ease: "power4.out" }, 14.6);
+        tl.fromTo("#g5w2", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 15.6);
+        tl.fromTo("#g5w3", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 16.3);
+        tl.fromTo("#sign", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 17.0);
+        tl.to("#g5w0, #g5w1, #g5w2, #g5w3, #sign", { opacity: 0, duration: 0.7, ease: "power1.in" }, 20.2);
+        window.__timelines["type"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
