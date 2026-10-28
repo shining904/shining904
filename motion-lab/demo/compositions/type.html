@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF;
+        }
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Nanum Brush Script";
+          font-weight: 400;
+          src: url("fonts/nanum-brush-script-latin-400-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF;
+        }
+        @font-face {
+          font-family: "Nanum Brush Script";
+          font-weight: 400;
+          src: url("fonts/nanum-brush-script-korean-400-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2190-21FF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .type-line {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          color: #f6ead6;
+        }
+        #type-l1 {
+          top: 250px;
+          font-size: 96px;
+        }
+        #type-l2 {
+          top: 372px;
+          font-size: 64px;
+          color: #e9b75f;
+        }
+        .type-c1,
+        .type-c2 {
+          display: inline-block;
+        }
+        #type-title {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 1225px;
+          text-align: center;
+          font-family: "Nanum Brush Script", cursive;
+          font-size: 300px;
+          line-height: 1;
+          color: #e9b75f;
+          text-shadow: 0 0 40px rgba(233, 140, 60, 0.45);
+        }
+        #type-seal {
+          position: absolute;
+          left: 760px;
+          top: 1270px;
+          width: 120px;
+          height: 120px;
+          border: 6px solid #d8432c;
+          border-radius: 14px;
+          color: #d8432c;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          font-size: 46px;
+          line-height: 52px;
+          text-align: center;
+          padding-top: 4px;
+        }
+        #type-sub {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 1510px;
+          text-align: center;
+          font-family: "Noto Sans KR", sans-serif;
+          font-weight: 500;
+          font-size: 34px;
+          letter-spacing: 12px;
+          color: #e8d8bf;
+        }
+      </style>
+      <div id="root" data-composition-id="type" data-width="1080" data-height="1920">
+        <div id="type-l1" class="type-line"><span class="type-c1">흙</span><span class="type-c1">과</span><span class="type-c1">&nbsp;</span><span class="type-c1">불</span><span class="type-c1">이</span></div>
+        <div id="type-l2" class="type-line"><span class="type-c2">빚</span><span class="type-c2">어</span><span class="type-c2">낸</span><span class="type-c2">&nbsp;</span><span class="type-c2">하</span><span class="type-c2">얀</span><span class="type-c2">&nbsp;</span><span class="type-c2">시</span><span class="type-c2">간</span></div>
+        <div id="type-title">이천</div>
+        <div id="type-seal">利<br />川</div>
+        <div id="type-sub">ICHEON · 도자기의 도시</div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo(".type-c1", { opacity: 0, y: 40, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "power3.out", stagger: 0.09 }, 0.8);
+        tl.fromTo(".type-c2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out", stagger: 0.05 }, 1.9);
+        tl.to("#type-l1, #type-l2", { opacity: 0, y: -30, duration: 0.6, ease: "power2.in" }, 8.8);
+        tl.fromTo("#type-title", { clipPath: "inset(0 100% 0 0)", opacity: 1 }, { clipPath: "inset(0 0% 0 0)", duration: 1.0, ease: "power2.inOut" }, 9.6);
+        tl.fromTo("#type-seal", { opacity: 0, scale: 2.4, rotation: -16 }, { opacity: 1, scale: 1, rotation: -6, duration: 0.2, ease: "power4.in" }, 10.7);
+        tl.fromTo("#type-sub", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, 11.1);
+        window.__timelines["type"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #jar-box {
+          position: absolute;
+          left: 130px;
+          top: 450px;
+          width: 820px;
+          height: 820px;
+        }
+        #jar-video {
+          width: 100%;
+          height: 100%;
+          -webkit-mask-image: radial-gradient(ellipse 48% 50% at 50% 52%, #000 62%, transparent 100%);
+          mask-image: radial-gradient(ellipse 48% 50% at 50% 52%, #000 62%, transparent 100%);
+        }
+      </style>
+      <div id="root" data-composition-id="jar" data-width="1080" data-height="1920">
+        <div id="jar-box">
+          <video id="jar-video" src="assets/3d/jar.webm" data-start="0" data-duration="12.6" muted playsinline></video>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#jar-box", { opacity: 0, y: 80, scale: 0.92 }, { opacity: 1, y: 0, scale: 1, duration: 1.4, ease: "power3.out" }, 0);
+        tl.to("#jar-box", { y: -40, scale: 0.94, duration: 1.6, ease: "power2.inOut" }, 7.0);
+        window.__timelines["jar"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #ink-host {
+          position: absolute;
+          inset: 0;
+        }
+      </style>
+      <div id="root" data-composition-id="ink" data-width="1080" data-height="1920">
+        <div id="ink-host"></div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        const W = 1080, H = 1920, CX = 540, CY = 880, R = 390;
+        const clamp = (v) => Math.max(0, Math.min(1, v));
+        const prog = (t, a, b) => clamp((t - a) / (b - a));
+        const ease = (x) => 1 - Math.pow(1 - x, 3);
+        let P = null;
+        new p5(function (p) {
+          p.setup = function () {
+            p.createCanvas(W, H).parent(document.getElementById("ink-host"));
+            p.pixelDensity(1);
+            p.noLoop();
+            P = p;
+          };
+          p.draw = function () {};
+        });
+        // ensō: one brush loop with a gap, pressure fading at the tail
+        const ENSO = [];
+        for (let i = 0; i <= 520; i++) {
+          const a = -Math.PI * 0.62 + (i / 520) * Math.PI * 1.86;
+          const wob = 1 + 0.012 * Math.sin(i * 0.055) + 0.006 * Math.sin(i * 0.185);
+          ENSO.push([CX + Math.cos(a) * R * wob, CY + Math.sin(a) * R * wob * 1.02]);
+        }
+        const UNDER = [];
+        for (let i = 0; i <= 90; i++) UNDER.push([300 + i * 5.4, 1470 + Math.sin(i * 0.09) * 10 - i * 0.25]);
+        // dry brush: 9 bristles, each a continuous path broken into short runs so pressure and
+        // ink can change along the stroke (separate tiny segments read as beads, not ink)
+        function brush(pts, amt, w, col, alpha, seed) {
+          const n = Math.floor((pts.length - 1) * amt), ctx = P.drawingContext, RUN = 6;
+          ctx.lineCap = "round";
+          ctx.lineJoin = "round";
+          for (let b = 0; b < 9; b++) {
+            const lane = (b - 4) / 4;
+            for (let i0 = 0; i0 < n; i0 += RUN) {
+              const u = i0 / (pts.length - 1);
+              if (P.noise(i0 * 0.05, b * 13 + seed) < 0.12 + 0.35 * u * Math.abs(lane)) continue;  // dry gaps
+              const press = Math.sin(Math.PI * Math.min(1, u * 1.05 + 0.05)) * (0.75 + 0.25 * P.noise(i0 * 0.03, seed));
+              ctx.beginPath();
+              for (let i = i0; i <= Math.min(n, i0 + RUN); i++) {
+                const [x0, y0] = pts[Math.max(0, i - 1)], [x1, y1] = pts[Math.min(pts.length - 1, i + 1)];
+                const dx = x1 - x0, dy = y1 - y0, len = Math.hypot(dx, dy) || 1;
+                const off = lane * w * 0.5 * press + (P.noise(i * 0.02, b * 5 + seed) - 0.5) * w * 0.18;
+                const x = pts[i][0] - (dy / len) * off, y = pts[i][1] + (dx / len) * off;
+                if (i === i0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+              }
+              const a = alpha * (0.55 + 0.45 * P.noise(i0 * 0.04, b + seed)) / 255;
+              ctx.strokeStyle = `rgba(${col[0]},${col[1]},${col[2]},${a})`;
+              ctx.lineWidth = Math.max(1, w * 0.2 * (0.6 + press));
+              ctx.stroke();
+            }
+          }
+        }
+        // embers: each has a fixed seed, so its position is a pure function of time
+        const EMB = [];
+        for (let i = 0; i < 140; i++) {
+          const r = (k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
+          EMB.push({ x: r(1) * W, born: 1.2 + r(2) * 13, speed: 120 + r(3) * 260, sway: 20 + r(4) * 50, size: 2 + r(5) * 5, ph: r(6) * 6.28, life: 2.5 + r(7) * 3 });
+        }
+        function render(t) {
+          if (!P) return;
+          P.clear();
+          P.randomSeed(3);
+          P.noiseSeed(3);
+          const ctx = P.drawingContext;
+          // ensō
+          const e = ease(prog(t, 0.3, 2.4)), fade = 1 - 0.55 * prog(t, 9.0, 10.0);
+          if (e > 0) {
+            ctx.shadowColor = "rgba(233,183,95,0.6)";
+            ctx.shadowBlur = 18;
+            brush(ENSO, e, 30, [233, 183, 95], 210 * fade, 7);
+            ctx.shadowBlur = 0;
+          }
+          // underline brushed under the title
+          const u = ease(prog(t, 10.2, 11.0));
+          if (u > 0) brush(UNDER, u, 16, [233, 183, 95], 230, 21);
+          // embers rising, brighter after the title lands
+          const boost = 1 + 0.8 * prog(t, 10.0, 11.0);
+          P.noStroke();
+          for (const m of EMB) {
+            const age = t - m.born;
+            if (age < 0 || age > m.life) continue;
+            const k = age / m.life, y = 1950 - age * m.speed;
+            const x = m.x + Math.sin(age * 1.7 + m.ph) * m.sway;
+            const a = Math.sin(Math.PI * k) * 255 * Math.min(1, boost);
+            ctx.shadowColor = "rgba(255,150,60,0.9)";
+            ctx.shadowBlur = 12;
+            P.fill(255, 170 + 60 * (1 - k), 90, a);
+            P.circle(x, y, m.size * boost * (1 - 0.5 * k));
+          }
+          ctx.shadowBlur = 0;
+        }
+        const state = { t: 0 };
+        tl.to(state, { t: 15, duration: 15, ease: "none", onUpdate: () => render(state.t) }, 0);
+        window.__timelines["ink"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

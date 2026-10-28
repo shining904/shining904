@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #kiln-cv {
+          position: absolute;
+          inset: 0;
+        }
+      </style>
+      <div id="root" data-composition-id="kiln" data-width="1080" data-height="1920">
+        <canvas id="kiln-cv" width="1080" height="1920"></canvas>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        const cv = document.getElementById("kiln-cv"), ctx = cv.getContext("2d");
+        const W = 1080, H = 1920;
+        // tiny seeded hash so every frame's grain is the same on every render (seek-safe)
+        const hash = (n) => { n = (n << 13) ^ n; return 1 - ((n * (n * n * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824; };
+        const grain = document.createElement("canvas");
+        grain.width = 270; grain.height = 480;
+        const g = grain.getContext("2d"), gimg = g.createImageData(270, 480);
+        function render(t) {
+          const up = Math.min(1, t / 1.6);                 // glow fades in
+          const breath = 0.85 + 0.15 * Math.sin(t * 2.1) + 0.05 * Math.sin(t * 7.3);
+          ctx.fillStyle = "#120c09";
+          ctx.fillRect(0, 0, W, H);
+          // kiln mouth glow from below, breathing like a fire
+          let rg = ctx.createRadialGradient(540, 2050, 80, 540, 1900, 1300 * breath);
+          rg.addColorStop(0, `rgba(255,150,60,${0.85 * up})`);
+          rg.addColorStop(0.35, `rgba(196,74,26,${0.45 * up})`);
+          rg.addColorStop(1, "rgba(18,12,9,0)");
+          ctx.fillStyle = rg;
+          ctx.fillRect(0, 0, W, H);
+          // cool halo behind the jar
+          rg = ctx.createRadialGradient(540, 860, 40, 540, 860, 620);
+          rg.addColorStop(0, `rgba(255,236,205,${0.16 * up})`);
+          rg.addColorStop(1, "rgba(255,236,205,0)");
+          ctx.fillStyle = rg;
+          ctx.fillRect(0, 0, W, H);
+          // grain: new pattern every 2 frames, upscaled
+          const f = Math.floor(t * 15);
+          for (let i = 0; i < gimg.data.length; i += 4) {
+            const v = 128 + hash(i * 7 + f * 104729) * 70;
+            gimg.data[i] = gimg.data[i + 1] = gimg.data[i + 2] = v;
+            gimg.data[i + 3] = 22;
+          }
+          g.putImageData(gimg, 0, 0);
+          ctx.imageSmoothingEnabled = false;
+          ctx.drawImage(grain, 0, 0, W, H);
+          // vignette
+          rg = ctx.createRadialGradient(540, 900, 500, 540, 900, 1250);
+          rg.addColorStop(0, "rgba(0,0,0,0)");
+          rg.addColorStop(1, "rgba(0,0,0,0.6)");
+          ctx.fillStyle = rg;
+          ctx.fillRect(0, 0, W, H);
+        }
+        const state = { t: 0 };
+        tl.to(state, { t: 15, duration: 15, ease: "none", onUpdate: () => render(state.t) }, 0);
+        window.__timelines["kiln"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
