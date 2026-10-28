@@ -1,6 +1,6 @@
 # 16:9 (1920x1080) edition of the v3 gold short, for event screens and YouTube. It reuses
-# build_gold3.py and re-lays it out: the line's shapes are re-fitted to the wide frame (map and
-# Seo Hui on the right with text in a left column, everything else centred) and the vertical
+# build_gold3.py and re-lays it out: the line's shapes are re-fitted to the wide frame (Seo Hui on
+# the right with text in a left column, everything else centred) and the vertical
 # launch clip is dropped in favour of the 16:9 sunrise footage.
 import re
 import lib
@@ -31,10 +31,9 @@ sub('SHAPES = {"h0"', '''def fit(pts, s, cx, cy, ox, oy):
 
 SHAPES = {"h0"''')
 sub('LINE_OUT = 30.4', '''LINE_OUT = 30.4
-SHAPES.update({"h0": flat(360, 1560, 560), "korea": fit(SHAPES["korea"], 0.75, 540, 940, 1300, 560),
+SHAPES.update({"h0": flat(360, 1560, 560),
                "wave": wave(620, 44, 4, -40, 1960), "seohui": fit(SHAPES["seohui"], 0.75, 540, 940, 1300, 560),
-               "sub": fit(SHAPES["sub"], 1.0, 0, 1020, 420, 600), "under": flat(660, 1260, 545), "h1": flat(-40, 1960, 457)})
-ICN = fit([ICN], 0.75, 540, 940, 1300, 560)[0]''')
+               "sub": fit(SHAPES["sub"], 1.0, 0, 1020, 420, 600), "under": flat(660, 1260, 545), "h1": flat(-40, 1960, 457)})''')
 sub('''          width: 1080px;
           height: 1920px;''', '''          width: 1920px;
           height: 1080px;''')
@@ -61,8 +60,6 @@ for a, b in [("createImageData(270, 480)", "createImageData(480, 270)"), ("i < 2
 LEFT = "left:140px;right:auto;text-align:left;"
 restyle("t0", "top:400px;font-size:84px")
 restyle("t0b", "top:620px;font-size:34px")
-restyle("tk", LEFT + "top:330px;font-size:84px")
-restyle("tk2", LEFT + "top:450px;font-size:42px")
 restyle("t1", "top:130px;font-size:200px;color:{GOLD}")
 restyle("t1b", "top:370px;font-size:40px")
 restyle("t2", "top:720px;font-size:76px")

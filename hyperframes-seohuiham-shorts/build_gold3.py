@@ -1,7 +1,7 @@
 # ①++ 금빛 한 줄 v3 (37.5 s) — gold2 with a brighter score, the submarine in natural colour
 # (no gold tint), a launch-ceremony clip in the finale and Seo Hui's closing voice line.
-# Based on 금빛 한 줄 확장판 — one gold line, no cuts: horizon → Korean peninsula with 이천 lit
-# (서희의 고향) → the sea of 993 → Seo Hui, Icheon's AI ambassador → the submarine → underline of
+# Based on 금빛 한 줄 확장판 — one gold line, no cuts: horizon → the sea of 993 → Seo Hui, Icheon's
+# AI ambassador → the submarine → underline of
 # 서희함 at the score's hit → the real sunrise horizon, "서희함의 안전한 항해를 응원합니다".
 # Adds gold particle bursts at each morph, drifting motes, film grain, a light leak and a slow push-in.
 import json
@@ -9,7 +9,7 @@ import math
 import lib
 from lib import GOLD, comp, index, setup, write, out
 
-DUR, HIT = 37.5, 24.1          # score: goldB.mp3 41.95 s → end, hit at 66.05 s
+DUR, HIT = 37.5, 24.1          # score: goldC.mp3 delayed 0.75 s so its hit (23.35 s) lands at 24.1 s
 lib.DUR = DUR
 C = json.load(open("shared/assets/contours.json"))
 N = 420
@@ -27,42 +27,9 @@ def wave(y, amp, crests, x0=-40, x1=1120):
     return a + [[p[0], p[1] + 0.6] for p in reversed(a)]
 
 
-# peninsula outline (approximate, concept only) — same coordinates as the map short
-COAST = [(124.3, 39.9), (124.7, 39.6), (125.1, 39.5), (125.4, 39.0), (125.1, 38.7), (125.3, 38.3), (124.8, 38.0),
-         (125.6, 37.7), (126.1, 37.7), (126.6, 37.5), (126.8, 37.0), (126.5, 36.6), (126.5, 36.0), (126.7, 35.5),
-         (126.4, 34.8), (126.6, 34.4), (127.4, 34.6), (128.0, 34.8), (128.6, 34.9), (129.1, 35.1), (129.4, 35.5),
-         (129.5, 36.0), (129.4, 36.6), (129.3, 37.1), (128.9, 37.7), (128.5, 38.3), (128.3, 38.6), (127.8, 39.1),
-         (127.5, 39.3), (127.6, 39.8), (128.3, 40.0), (128.9, 40.5), (129.7, 40.9), (129.8, 41.4), (130.2, 42.0),
-         (130.7, 42.3), (130.0, 42.9), (129.3, 42.4), (128.9, 42.0), (128.1, 42.0), (127.5, 41.7), (126.9, 41.8),
-         (126.3, 41.3), (125.4, 40.6), (124.9, 40.3)]
-PX = lambda lon, lat: (540 + (lon - 127.5) * 110, 940 - (lat - 38.65) * 110)
-
-
-def resample(poly, n):
-    """closed polygon → n evenly spaced points, clockwise on screen, starting at the leftmost point"""
-    pts = [PX(*c) for c in poly]
-    if sum(pts[i][0] * pts[(i + 1) % len(pts)][1] - pts[(i + 1) % len(pts)][0] * pts[i][1] for i in range(len(pts))) > 0:
-        pts = pts[::-1]
-    k = min(range(len(pts)), key=lambda i: pts[i][0])
-    pts = pts[k:] + pts[:k]
-    segs = [(pts[i], pts[(i + 1) % len(pts)]) for i in range(len(pts))]
-    lens = [math.dist(a, b) for a, b in segs]
-    total, out_, j, acc = sum(lens), [], 0, 0.0
-    for s in range(n):
-        d = total * s / n
-        while acc + lens[j] < d:
-            acc += lens[j]
-            j += 1
-        u = (d - acc) / lens[j]
-        (ax, ay), (bx, by) = segs[j]
-        out_.append([round(ax + (bx - ax) * u, 1), round(ay + (by - ay) * u, 1)])
-    return out_
-
-
-ICN = [round(v, 1) for v in PX(127.44, 37.27)]
-SHAPES = {"h0": flat(80, 1000, 1000), "korea": resample(COAST, N), "wave": wave(1040, 50, 3), "seohui": [[x, round(y - 60, 1)] for x, y in C["seohui"]],
+SHAPES = {"h0": flat(80, 1000, 1000), "wave": wave(1040, 50, 3), "seohui": [[x, round(y - 60, 1)] for x, y in C["seohui"]],
           "sub": C["sub"], "under": flat(250, 830, 770), "h1": flat(-40, 1120, 812)}
-MORPHS = [(2.6, 4.3, "h0", "korea"), (7.6, 9.0, "korea", "wave"), (12.2, 13.7, "wave", "seohui"),
+MORPHS = [(4.6, 6.2, "h0", "wave"), (12.2, 13.7, "wave", "seohui"),
           (17.4, 18.9, "seohui", "sub"), (HIT + 0.05, HIT + 0.9, "sub", "under"), (29.4, 30.6, "under", "h1")]
 LINE_OUT = 30.4
 
@@ -152,26 +119,6 @@ css = f'''        #bg {{
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
-        }}
-        #icn {{
-          position: absolute;
-          left: {ICN[0] + 34}px;
-          top: {ICN[1] - 52}px;
-          font-family: "Pretendard", sans-serif;
-          opacity: 0;
-          white-space: nowrap;
-        }}
-        #icn b {{
-          display: block;
-          font-weight: 900;
-          font-size: 80px;
-          color: #ffe6a8;
-        }}
-        #icn span {{
-          font-weight: 500;
-          font-size: 40px;
-          letter-spacing: 4px;
-          color: #f3ead8;
         }}
         #amb {{
           position: absolute;
@@ -289,14 +236,11 @@ body = f'''        <div id="bg"></div>
           <img id="fill-seohui" class="fill" src="assets/seohui-cut.png" alt="" style="left:240px;top:500px;width:600px;height:880px" />
           <img id="fill-sub" class="fill" src="assets/sub-cut.png" alt="" style="left:60px;top:820px;width:960px;height:400px;filter:brightness(0.92) contrast(1.05)" />
           <canvas id="cv" width="1080" height="1920"></canvas>
-          <div id="icn"><b>이천</b><span>ICHEON</span></div>
         </div>
         <div id="leak"></div>
         <canvas id="grain" width="270" height="480"></canvas>
         <div id="t0" class="t thin" style="top:640px;font-size:92px">천 년을 건너온 이름, <b style="font-weight:900">서희</b></div>
         <div id="t0b" class="t cap" style="top:1170px;font-size:38px">A NAME ACROSS A THOUSAND YEARS</div>
-        <div id="tk" class="t thin" style="top:250px;font-size:84px">그 이름의 고향, <b style="font-weight:900;color:#ffe6a8">이천</b></div>
-        <div id="tk2" class="t cap" style="top:370px;font-size:46px">고려의 외교관 서희 · 이천 서씨</div>
         <div id="t1" class="t thin" style="top:520px;font-size:230px;color:{GOLD}">993</div>
         <div id="t1b" class="t cap" style="top:780px;font-size:42px">GORYEO · THE KHITAN INVASION</div>
         <div id="t2" class="t thin" style="top:1240px;font-size:80px">칼 대신, <b style="font-weight:900">지혜로</b></div>
@@ -316,7 +260,7 @@ body = f'''        <div id="bg"></div>
 '''
 js = '''        const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
         const gv = document.getElementById("grain"), gx = gv.getContext("2d"), gimg = gx.createImageData(270, 480);
-        const S = __SHAPES__, M = __MORPHS__, N = __N__, ICN = __ICN__, HIT = __HIT__, OUT = __OUT__;
+        const S = __SHAPES__, M = __MORPHS__, N = __N__, HIT = __HIT__, OUT = __OUT__;
         const clamp = (v) => Math.max(0, Math.min(1, v));
         const io = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
         const hash = (n) => { const s = Math.sin(n * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); };
@@ -366,29 +310,6 @@ js = '''        const cv = document.getElementById("cv"), ctx = cv.getContext("2
             ctx.arc(x, y, 1 + r3 * 2.2, 0, Math.PI * 2);
             ctx.fill();
           }
-        }
-        function icheon(t) {
-          // 이천 lights up on the peninsula between the two morphs
-          const a = clamp((t - 4.3) / 0.4) * (1 - clamp((t - 7.4) / 0.4));
-          if (a <= 0) return;
-          const [x, y] = ICN;
-          ctx.shadowColor = "rgba(255,210,130,1)";
-          for (let k = 0; k < 3; k++) {
-            const ph = ((t - 4.3) * 0.7 + k / 3) % 1;
-            ctx.globalAlpha = a * (1 - ph) * 0.8;
-            ctx.strokeStyle = "#ffe0a0";
-            ctx.lineWidth = 2.5;
-            ctx.shadowBlur = 12;
-            ctx.beginPath();
-            ctx.arc(x, y, 12 + ph * 90, 0, Math.PI * 2);
-            ctx.stroke();
-          }
-          ctx.globalAlpha = a;
-          ctx.shadowBlur = 30;
-          ctx.fillStyle = "#fff6dc";
-          ctx.beginPath();
-          ctx.arc(x, y, 11, 0, Math.PI * 2);
-          ctx.fill();
         }
         function line(t) {
           const fade = 1 - clamp((t - OUT) / 1.0);
@@ -455,7 +376,6 @@ js = '''        const cv = document.getElementById("cv"), ctx = cv.getContext("2
           shock(t);
           motes(t);
           line(t);
-          icheon(t);
           sparks(t);
           ctx.globalAlpha = 1;
           ctx.shadowBlur = 0;
@@ -464,7 +384,7 @@ js = '''        const cv = document.getElementById("cv"), ctx = cv.getContext("2
         const state = { t: 0 };
         tl.to(state, { t: __DUR__, duration: __DUR__, ease: "none", onUpdate: () => render(state.t) }, 0);
 '''
-for k, v in {"__SHAPES__": json.dumps(SHAPES), "__MORPHS__": json.dumps(MORPHS), "__N__": str(N), "__ICN__": json.dumps(ICN),
+for k, v in {"__SHAPES__": json.dumps(SHAPES), "__MORPHS__": json.dumps(MORPHS), "__N__": str(N),
              "__HIT__": str(HIT), "__OUT__": str(LINE_OUT), "__DUR__": str(DUR)}.items():
     js = js.replace(k, v)
 
@@ -483,13 +403,10 @@ js += f'        tl.to("#cam", {{ scale: 1.0, duration: 0.8, ease: "power3.out" }
 js += '        tl.to("#leak", { keyframes: [{ opacity: 1, x: 300, duration: 4 }, { opacity: 0, x: 700, duration: 4 }], ease: "sine.inOut" }, 1.0);\n'
 js += '        tl.to("#leak", { keyframes: [{ opacity: 1, x: 500, y: 600, duration: 2.5 }, { opacity: 0, x: 900, y: 800, duration: 3 }], ease: "sine.inOut" }, 13.4);\n'
 js += f'        tl.to("#leak", {{ keyframes: [{{ opacity: 1, x: 200, y: 200, duration: 1.0 }}, {{ opacity: 0, x: 600, y: 300, duration: 3 }}], ease: "sine.inOut" }}, {HIT});\n'
-# 0–2.6 horizon
-js += rise("#t0", 0.6, 1.2) + rise("#t0b", 1.2) + out("#t0, #t0b", 2.5, 0.5)
-# 2.6–7.6 peninsula, 이천
-js += rise("#tk", 3.6, 1.0) + rise("#tk2", 4.3) + '        tl.fromTo("#icn", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }, 4.6);\n'
-js += out("#tk, #tk2, #icn", 7.2, 0.5)
-# 7.6–12.2 the sea of 993
-js += rise("#t1", 8.6, 1.1) + rise("#t1b", 9.2) + rise("#t2", 9.8) + rise("#t2b", 10.4) + out("#t1, #t1b, #t2, #t2b", 11.8, 0.5)
+# 0–4.6 horizon
+js += rise("#t0", 0.6, 1.2) + rise("#t0b", 1.2) + out("#t0, #t0b", 4.2, 0.5)
+# 4.6–12.2 the sea of 993
+js += rise("#t1", 6.6, 1.1) + rise("#t1b", 7.2) + rise("#t2", 8.4) + rise("#t2b", 9.0) + out("#t1, #t1b, #t2, #t2b", 11.8, 0.5)
 # 12.2–17.4 Seo Hui, AI ambassador
 js += fade("#fill-seohui", 13.4, 0.92, 0.9) + '        tl.fromTo("#fill-seohui", { scale: 1.04 }, { scale: 1, duration: 3.6, ease: "none" }, 13.4);\n'
 js += '        tl.fromTo("#amb", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 13.8);\n'
@@ -529,4 +446,4 @@ d = setup("gold3")
 html = index("서희함 · 금빛 한 줄 확장판", "①+ extended one-take gold line short. Silhouettes traced from Magnific cut-outs; footage Seedance; score Lyria 3 Pro.",
              [("gold3", 0, DUR)], bg="#050505").replace("assets/music.mp3", "assets/music-gold3-mix.mp3")
 write(d, {"gold3": comp("gold3", ["pre"], css, body, js)}, html)
-print("ok", ICN)
+print("ok")
