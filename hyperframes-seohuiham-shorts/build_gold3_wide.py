@@ -73,7 +73,7 @@ restyle("d2", "top:200px;font-size:104px;font-weight:800;text-shadow:0 3px 18px 
 restyle("d3", "top:700px;font-size:72px;font-weight:400;text-shadow:0 2px 18px rgba(0,0,0,0.9)")
 sub('의 안전한 항해를<br /><b style="font-weight:800">응원합니다</b>', '의 안전한 항해를 <b style="font-weight:800">응원합니다</b>')
 restyle("fill-seohui", "left:1102px;top:230px;width:396px;height:581px")
-restyle("d4", "top:810px;font-size:36px;font-weight:700;letter-spacing:4px;color:#ffe6a8;text-shadow:0 2px 14px rgba(0,0,0,0.95), 0 0 4px rgba(0,0,0,0.8)")
+restyle("d4", "top:800px;font-size:48px;font-weight:700;letter-spacing:6px;color:#ffffff;text-shadow:0 2px 14px rgba(0,0,0,0.95), 0 0 4px rgba(0,0,0,0.8)")
 restyle("fill-sub", "left:480px;top:400px;width:960px;height:400px;filter:brightness(0.92) contrast(1.05)")
 restyle("co1", "left:750px;top:640px")
 restyle("co2", "left:1220px;top:620px")
