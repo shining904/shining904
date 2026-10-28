@@ -97,116 +97,120 @@ COAST = [(124.3, 39.9), (124.7, 39.6), (125.1, 39.5), (125.4, 39.0), (125.1, 38.
 YALU = [(124.3, 39.9), (124.9, 40.3), (125.4, 40.6), (126.3, 41.3), (126.9, 41.8), (127.5, 41.7), (128.1, 42.0)]
 SIX = [("흥화진", 124.65, 40.25), ("용주", 124.85, 39.95), ("통주", 125.15, 40.05), ("철주", 125.05, 39.75),
        ("귀주", 125.45, 40.0), ("곽주", 125.4, 39.7)]
-proj = lambda lon, lat: (round(1010 + (lon - 124) * 104, 1), round(45 + (43 - lat) * 104, 1))
+# the map is inked onto a real-looking hanji scroll on the war-council table (assets/img/table1.png);
+# the scroll's paper spans roughly x 640-1345, y 290-840 of the 1920x1080 frame
+proj = lambda lon, lat: (round(905 + (lon - 124) * 54, 1), round(318 + (43 - lat) * 54, 1))
 coast = [proj(*p) for p in COAST]
 yalu = [proj(*p) for p in YALU]
-six = [(n, *proj(lo, la)) for n, lo, la in SIX]
-files["ink"] = comp("ink", ["myeongjo", "noto"], f'''        #ink-host {{
+six = [proj(lo, la) for _, lo, la in SIX]
+GX, GY = proj(125.0, 40.0)  # zoom target: the 강동 6주 area
+files["ink"] = comp("ink", ["myeongjo", "brush", "noto"], f"""        #ink-cam {{
           position: absolute;
           inset: 0;
         }}
-        .ink-year {{
+        #ink-table {{
           position: absolute;
-          left: 150px;
-          top: 300px;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+        }}
+        #ink-host {{
+          position: absolute;
+          inset: 0;
+          mix-blend-mode: multiply;
+        }}
+        #ink-flicker {{
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at 22% 18%, rgba(255, 170, 80, 0.22) 0%, rgba(255, 170, 80, 0) 45%);
+          mix-blend-mode: screen;
+        }}
+        .ink-w {{
+          position: absolute;
           font-family: "Nanum Myeongjo", serif;
           font-weight: 800;
-          color: {INK};
+          color: rgba(30, 24, 18, 0.88);
+          mix-blend-mode: multiply;
         }}
         #ink-y1 {{
-          font-size: 150px;
+          left: 672px;
+          top: 330px;
+          font-size: 76px;
         }}
         #ink-y2 {{
-          top: 480px;
-          font-size: 52px;
-          color: #7a2b1f;
-        }}
-        .ink-lab {{
-          position: absolute;
-          font-family: "Nanum Myeongjo", serif;
-          font-weight: 800;
-          font-size: 44px;
-          color: {INK};
+          left: 676px;
+          top: 420px;
+          font-size: 26px;
+          color: rgba(122, 43, 31, 0.9);
         }}
         #ink-khitan {{
-          left: 1150px;
-          top: 40px;
-          color: #f4ecdc;
+          left: 1120px;
+          top: 300px;
+          font-size: 26px;
+          color: rgba(240, 230, 210, 0.95);
+          mix-blend-mode: normal;
         }}
         #ink-goryeo {{
-          left: 1250px;
-          top: 520px;
+          left: 1020px;
+          top: 560px;
+          font-size: 26px;
         }}
         #ink-gd {{
-          position: absolute;
-          left: 150px;
-          top: 330px;
-          font-family: "Nanum Myeongjo", serif;
-          font-weight: 800;
-          font-size: 120px;
-          color: #8a5a10;
+          left: 672px;
+          top: 470px;
+          font-family: "Nanum Brush Script", cursive;
+          font-weight: 400;
+          font-size: 72px;
+          color: rgba(150, 100, 20, 0.95);
         }}
         #ink-gd-sub {{
-          position: absolute;
-          left: 155px;
-          top: 480px;
-          font-family: "Noto Sans KR", sans-serif;
-          font-weight: 500;
-          font-size: 38px;
-          color: {INK};
+          left: 676px;
+          top: 548px;
+          font-size: 20px;
         }}
         #ink-name {{
-          position: absolute;
-          left: 150px;
+          left: 676px;
           top: 600px;
-          font-family: "Nanum Myeongjo", serif;
-          font-weight: 800;
-          font-size: 64px;
-          color: {INK};
+          font-size: 36px;
         }}
         #ink-name small {{
-          font-size: 34px;
-          color: #7a2b1f;
-          margin-left: 18px;
+          font-size: 18px;
+          color: rgba(122, 43, 31, 0.9);
+          margin-left: 10px;
         }}
         #ink-note {{
           position: absolute;
-          right: 30px;
-          bottom: 120px;
+          left: 30px;
+          top: 24px;
           font-family: "Noto Sans KR", sans-serif;
           font-size: 20px;
-          color: #6b6153;
+          color: rgba(230, 215, 190, 0.7);
         }}
-''', f'''        <div id="ink-host"></div>
-        <div id="ink-y1" class="ink-year">993</div>
-        <div id="ink-y2" class="ink-year">고려 성종 12년</div>
-        <div id="ink-khitan" class="ink-lab">거란</div>
-        <div id="ink-goryeo" class="ink-lab">고려</div>
-        <div id="ink-gd">강동 6주</div>
-        <div id="ink-gd-sub">압록강까지, 280리의 땅</div>
-        <div id="ink-name">서희<small>徐熙 · 942–998</small></div>
+""", """        <div id="ink-cam">
+          <img id="ink-table" src="assets/img/table1.png" alt="" />
+          <div id="ink-host"></div>
+          <div id="ink-y1" class="ink-w">993</div>
+          <div id="ink-y2" class="ink-w">고려 성종 12년</div>
+          <div id="ink-khitan" class="ink-w">거란</div>
+          <div id="ink-goryeo" class="ink-w">고려</div>
+          <div id="ink-gd" class="ink-w">강동 6주</div>
+          <div id="ink-gd-sub" class="ink-w">압록강까지, 280리의 땅</div>
+          <div id="ink-name" class="ink-w">서희<small>徐熙 · 942–998</small></div>
+          <div id="ink-flicker"></div>
+        </div>
         <div id="ink-note">개념도 · 실제 경계와 다를 수 있음</div>
-''', f'''        const W = {W}, H = {H};
-        const COAST = {json.dumps(coast)}, YALU = {json.dumps(yalu)}, SIX = {json.dumps([[x, y] for _, x, y in six])};
+""", f"""        const W = {W}, H = {H};
+        const COAST = {json.dumps(coast)}, YALU = {json.dumps(yalu)}, SIX = {json.dumps(six)};
+        const PAPER = [650, 300, 1335, 832];   // ink stays on the paper
         const clamp = (v) => Math.max(0, Math.min(1, v));
         const prog = (t, a, b) => clamp((t - a) / (b - a));
         const ease = (x) => 1 - Math.pow(1 - x, 3);
-        let P = null, paper = null;
+        let P = null;
         new p5(function (p) {{
           p.setup = function () {{
             p.createCanvas(W, H).parent(document.getElementById("ink-host"));
             p.pixelDensity(1);
             p.noLoop();
-            paper = p.createGraphics(W, H);
-            paper.pixelDensity(1);
-            paper.randomSeed(4);
-            paper.background(239, 230, 210);
-            paper.noStroke();
-            for (let i = 0; i < 14000; i++) {{
-              const g = paper.random(-16, 10);
-              paper.fill(206 + g, 192 + g, 166 + g, paper.random(14, 40));
-              paper.circle(paper.random(W), paper.random(H), paper.random(1, 3));
-            }}
             P = p;
           }};
           p.draw = function () {{}};
@@ -221,89 +225,96 @@ files["ink"] = comp("ink", ["myeongjo", "noto"], f'''        #ink-host {{
         }}
         function render(t) {{
           if (!P) return;
+          P.clear();
           P.randomSeed(9);
           P.noiseSeed(9);
           const ctx = P.drawingContext;
-          P.image(paper, 0, 0);
-          // coastline brushed in, then a pale wash inside
-          const c = ease(prog(t, 0.2, 2.6));
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(PAPER[0], PAPER[1], PAPER[2] - PAPER[0], PAPER[3] - PAPER[1]);
+          ctx.clip();
+          // coastline brushed in with a dry ink brush
+          const c = ease(prog(t, 0.4, 3.0));
           ctx.lineJoin = "round";
           ctx.lineCap = "round";
-          for (let k = 0; k < 3; k++) {{
+          for (let k = 0; k < 4; k++) {{
             ctx.save();
-            ctx.translate((P.noise(k) - 0.5) * 3, (P.noise(k + 9) - 0.5) * 3);
+            ctx.translate((P.noise(k) - 0.5) * 2.4, (P.noise(k + 9) - 0.5) * 2.4);
             path(COAST, c);
-            ctx.strokeStyle = `rgba(29,26,23,${{0.55 - k * 0.12}})`;
-            ctx.lineWidth = 5 - k * 1.2;
+            ctx.strokeStyle = `rgba(28,22,16,${{0.5 - k * 0.1}})`;
+            ctx.lineWidth = 3.4 - k * 0.7;
             ctx.stroke();
             ctx.restore();
           }}
           if (c >= 1) {{
             path(COAST, 1);
             ctx.closePath();
-            ctx.fillStyle = "rgba(120,96,60,0.10)";
+            ctx.fillStyle = "rgba(120,90,50,0.10)";
             ctx.fill();
           }}
-          // Khitan ink bleeding down from the north, stopping at the river (t 2.5-8)
-          const k = ease(prog(t, 2.5, 8.0)) * (1 - prog(t, 25.6, 27.6));
+          // Khitan ink soaking into the paper from the north edge
+          const k = ease(prog(t, 2.6, 8.0)) * (1 - prog(t, 25.6, 27.6));
           if (k > 0) {{
-            for (let i = 0; i < 70; i++) {{
-              const bx = 1000 + P.noise(i * 0.3) * 760, by = -60 + P.noise(i * 0.3, 5) * 180;
-              const r = (70 + P.noise(i, 2) * 160) * k;
-              const g = ctx.createRadialGradient(bx, by + 120 * k, 0, bx, by + 120 * k, r);
-              g.addColorStop(0, `rgba(20,18,16,${{0.55 * k}})`);
-              g.addColorStop(1, "rgba(20,18,16,0)");
+            for (let i = 0; i < 60; i++) {{
+              const bx = 960 + P.noise(i * 0.3) * 380, by = 300 + P.noise(i * 0.3, 5) * 40;
+              const r = (30 + P.noise(i, 2) * 80) * k;
+              const g = ctx.createRadialGradient(bx, by + 40 * k, 0, bx, by + 40 * k, r);
+              g.addColorStop(0, `rgba(15,12,10,${{0.6 * k}})`);
+              g.addColorStop(0.7, `rgba(15,12,10,${{0.25 * k}})`);
+              g.addColorStop(1, "rgba(15,12,10,0)");
               ctx.fillStyle = g;
-              ctx.fillRect(bx - r, by + 120 * k - r, r * 2, r * 2);
+              ctx.fillRect(bx - r, by + 40 * k - r, r * 2, r * 2);
             }}
-            // spearheads pushing south across the river
             for (let a = 0; a < 3; a++) {{
-              const ax = 1090 + a * 120, len = 120 + 140 * prog(t, 4 + a * 0.4, 8);
-              ctx.strokeStyle = `rgba(122,43,31,${{0.85 * k}})`;
-              ctx.lineWidth = 9;
+              const ax = 1010 + a * 70, len = 50 + 80 * prog(t, 4 + a * 0.4, 8);
+              ctx.strokeStyle = `rgba(140,30,20,${{0.85 * k}})`;
+              ctx.lineWidth = 5;
               ctx.beginPath();
-              ctx.moveTo(ax, 150);
-              ctx.lineTo(ax + 20, 150 + len);
-              ctx.stroke();
-              ctx.beginPath();
-              ctx.moveTo(ax + 20 - 18, 150 + len - 26);
-              ctx.lineTo(ax + 20, 150 + len);
-              ctx.lineTo(ax + 20 + 22, 150 + len - 22);
+              ctx.moveTo(ax, 360);
+              ctx.lineTo(ax + 10, 360 + len);
+              ctx.moveTo(ax + 10 - 11, 360 + len - 15);
+              ctx.lineTo(ax + 10, 360 + len);
+              ctx.lineTo(ax + 10 + 13, 360 + len - 12);
               ctx.stroke();
             }}
           }}
-          // 강동 6주: the border along the Yalu drawn in gold, six fortresses lighting up (t 27-31)
+          ctx.restore();
+          // 강동 6주 in gold leaf along the Yalu, the six fortresses pressed in like seals
           const y = ease(prog(t, 27.4, 30.0));
           if (y > 0) {{
-            ctx.shadowColor = "rgba(217,164,65,0.9)";
-            ctx.shadowBlur = 20;
+            ctx.shadowColor = "rgba(255,190,80,0.9)";
+            ctx.shadowBlur = 10;
             path(YALU, y);
-            ctx.strokeStyle = "#d9a441";
-            ctx.lineWidth = 12;
+            ctx.strokeStyle = "#c8902a";
+            ctx.lineWidth = 6;
             ctx.stroke();
             ctx.shadowBlur = 0;
             SIX.forEach(([sx, sy], i) => {{
               const s = ease(prog(t, 28.6 + i * 0.25, 29.2 + i * 0.25));
               if (s <= 0) return;
-              ctx.fillStyle = "rgba(217,164,65,0.35)";
+              ctx.fillStyle = "rgba(200,144,42,0.35)";
               ctx.beginPath();
-              ctx.arc(sx, sy, 30 * s, 0, Math.PI * 2);
+              ctx.arc(sx, sy, 12 * s, 0, Math.PI * 2);
               ctx.fill();
-              ctx.fillStyle = "#b5781d";
-              ctx.beginPath();
-              ctx.arc(sx, sy, 10 * s, 0, Math.PI * 2);
-              ctx.fill();
+              ctx.fillStyle = "#a8321f";
+              ctx.fillRect(sx - 3.5 * s, sy - 3.5 * s, 7 * s, 7 * s);
             }});
           }}
         }}
         const state = {{ t: 0 }};
         tl.to(state, {{ t: 34.5, duration: 34.5, ease: "none", onUpdate: () => render(state.t) }}, 0);
-        tl.fromTo("#ink-host", {{ scale: 1.0 }}, {{ scale: 1.06, duration: 10, ease: "sine.inOut" }}, 0);
-        tl.set("#ink-host", {{ transformOrigin: "1120px 330px" }}, 0);
-        tl.to("#ink-host", {{ scale: 1.6, x: -250, y: 150, duration: 3.5, ease: "power2.inOut" }}, 26.0);
-''' + pop("#ink-y1", 0.8, 40, 1.0) + pop("#ink-y2", 1.4) + pop("#ink-khitan", 3.0, -20) + pop("#ink-goryeo", 1.8)
-    + out("#ink-y1, #ink-y2, #ink-khitan, #ink-goryeo", 9.0)
-    + pop("#ink-gd", 28.0) + pop("#ink-gd-sub", 28.8) + pop("#ink-name", 31.0) + pop("#ink-note", 27.5, 0)
+        // candle flicker
+        tl.to(state, {{ duration: 34.5, ease: "none", onUpdate: () => {{
+          const f = 0.75 + 0.15 * Math.sin(state.t * 7.1) + 0.1 * Math.sin(state.t * 12.7 + 1);
+          document.getElementById("ink-flicker").style.opacity = f;
+        }} }}, 0);
+        // camera: slow push over the table, then a move onto the north-west for 강동 6주
+        tl.fromTo("#ink-cam", {{ scale: 1.08 }}, {{ scale: 1.22, duration: 10, ease: "sine.inOut" }}, 0);
+        tl.set("#ink-cam", {{ transformOrigin: "{GX}px {GY - 40}px" }}, 0);
+        tl.to("#ink-cam", {{ scale: 2.1, x: {960 - GX}, y: {470 - GY}, duration: 3.5, ease: "power2.inOut" }}, 26.0);
+""" + pop("#ink-y1", 1.0, 20, 1.2) + pop("#ink-y2", 1.6, 10) + pop("#ink-khitan", 3.4, -10) + pop("#ink-goryeo", 2.4, 10)
+    + out("#ink-y1, #ink-y2, #ink-khitan, #ink-goryeo", 9.0) + pop("#ink-gd", 28.0, 10) + pop("#ink-gd-sub", 28.8, 6)
+    + pop("#ink-name", 31.0, 6) + pop("#ink-note", 27.5, 0)
     + out("#ink-gd, #ink-gd-sub, #ink-name, #ink-note", 33.6, 0.5))
 
 
@@ -352,12 +363,12 @@ files["ocean"] = comp("ocean", ["myeongjo", "noto"], f'''        #ocean-cv {{
         #ocean-facts {{
           position: absolute;
           left: 120px;
-          top: 170px;
+          top: 110px;
         }}
         #ocean-name {{
           font-family: "Nanum Myeongjo", serif;
           font-weight: 800;
-          font-size: 150px;
+          font-size: 120px;
           line-height: 1.05;
           color: #ffffff;
           text-shadow: 0 0 40px rgba(80, 170, 255, 0.45);
@@ -371,10 +382,10 @@ files["ocean"] = comp("ocean", ["myeongjo", "noto"], f'''        #ocean-cv {{
           color: #9fd4ff;
         }}
         .ocean-row {{
-          margin-top: 26px;
+          margin-top: 18px;
           font-family: "Noto Sans KR", sans-serif;
           font-weight: 800;
-          font-size: 40px;
+          font-size: 36px;
           color: #e8f4ff;
         }}
         .ocean-row b {{
@@ -472,6 +483,7 @@ files["sub"] = comp("sub", [], '''        #sub-box {
         <div id="sub-haze"></div>
 ''', '''        tl.fromTo("#sub-box", { opacity: 0, x: 220 }, { opacity: 1, x: 0, duration: 2.4, ease: "power2.out" }, 0);
         tl.to("#sub-box", { x: -60, duration: 13.6, ease: "none" }, 2.4);
+        tl.to("#sub-box", { y: 190, duration: 2.2, ease: "power2.inOut" }, 7.6);
         tl.to("#sub-box", { opacity: 0, duration: 1.0, ease: "none" }, 15.0);
 ''')
 
