@@ -1,0 +1,8 @@
+{
+  "name": "seohuiham-gold4-wide",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "hyperframes": "0.8.82"
+  }
+}
