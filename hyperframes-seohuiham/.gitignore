@@ -2,3 +2,4 @@ work/
 node_modules
 .transcode-cache/
 __pycache__/
+renders/work-*/
