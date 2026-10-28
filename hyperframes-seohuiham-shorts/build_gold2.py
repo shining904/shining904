@@ -59,7 +59,7 @@ def resample(poly, n):
 
 ICN = [round(v, 1) for v in PX(127.44, 37.27)]
 SHAPES = {"h0": flat(80, 1000, 1000), "korea": resample(COAST, N), "wave": wave(1040, 50, 3), "seohui": C["seohui"],
-          "sub": C["sub"], "under": flat(250, 830, 800), "h1": flat(-40, 1120, 812)}
+          "sub": C["sub"], "under": flat(250, 830, 770), "h1": flat(-40, 1120, 812)}
 MORPHS = [(2.6, 4.3, "h0", "korea"), (7.6, 9.0, "korea", "wave"), (12.2, 13.7, "wave", "seohui"),
           (17.4, 18.9, "seohui", "sub"), (HIT + 0.05, HIT + 0.9, "sub", "under"), (29.4, 30.6, "under", "h1")]
 LINE_OUT = 30.4
@@ -241,23 +241,24 @@ body = f'''        <div id="bg"></div>
           <img id="fill-seohui" class="fill" src="assets/seohui-cut.png" alt="" style="left:240px;top:560px;width:600px;height:880px" />
           <img id="fill-sub" class="fill" src="assets/sub-cut.png" alt="" style="left:60px;top:820px;width:960px;height:400px" />
           <canvas id="cv" width="1080" height="1920"></canvas>
-          <div id="icn"><b>이천</b><span>서희의 고향</span></div>
+          <div id="icn"><b>이천</b><span>ICHEON</span></div>
         </div>
         <div id="leak"></div>
         <canvas id="grain" width="270" height="480"></canvas>
-        <div id="t0" class="t thin" style="top:640px;font-size:92px">천 년을 건너온 <b style="font-weight:900">이름</b></div>
+        <div id="t0" class="t thin" style="top:640px;font-size:92px">천 년을 건너온 이름, <b style="font-weight:900">서희</b></div>
         <div id="t0b" class="t cap" style="top:1180px;font-size:32px">A NAME ACROSS A THOUSAND YEARS</div>
-        <div id="tk" class="t cap" style="top:250px;font-size:34px">ICHEON · GYEONGGI-DO</div>
+        <div id="tk" class="t thin" style="top:250px;font-size:84px">그 이름의 고향, <b style="font-weight:900;color:#ffe6a8">이천</b></div>
+        <div id="tk2" class="t cap" style="top:370px;font-size:32px">고려의 외교관 서희 · 이천 서씨</div>
         <div id="t1" class="t thin" style="top:520px;font-size:230px;color:{GOLD}">993</div>
         <div id="t1b" class="t cap" style="top:780px;font-size:34px">GORYEO · THE KHITAN INVASION</div>
         <div id="t2" class="t thin" style="top:1240px;font-size:80px">칼 대신, <b style="font-weight:900">지혜로</b></div>
-        <div id="t2b" class="t thin" style="top:1350px;font-size:44px">나라를 지킨 고려의 외교관 서희</div>
+        <div id="t2b" class="t thin" style="top:1350px;font-size:44px">나라를 지켜낸 서희의 외교 담판</div>
         <div id="amb"><div id="amb-pill">이천시 AI 홍보대사</div><div id="amb-name">서희</div></div>
         <div id="t3" class="t" style="top:1470px;font-size:56px;font-weight:300">그 이름을 이어 <b style="font-weight:800">함께 축하합니다</b></div>
         <div id="t4" class="t thin" style="top:420px;font-size:92px">그 이름, <b style="font-weight:900">다시 바다로</b></div>
         <div id="t4b" class="t cap" style="top:1300px;font-size:34px">THE NAME RETURNS TO THE SEA</div>
         <div id="title" class="t" style="top:470px;font-size:260px;font-weight:900;letter-spacing:-4px"><span class="gold">서</span><span class="gold">희</span><span class="gold">함</span></div>
-        <div id="title-en" class="t cap" style="top:790px;font-size:44px">ROKS SEO HUI</div>
+        <div id="title-en" class="t cap" style="top:806px;font-size:44px">ROKS SEO HUI</div>
         <div id="d1" class="t thin" style="top:250px;font-size:64px;letter-spacing:8px">2026. 11. 3.</div>
         <div id="d2" class="t" style="top:345px;font-size:96px;font-weight:800">진수를 축하합니다</div>
         <div id="d3" class="t" style="top:1210px;font-size:60px;font-weight:400;text-shadow:0 2px 16px rgba(0,0,0,0.85)"><b style="font-weight:800;color:#ffe6a8">서희함</b>의 안전한 항해를 응원합니다</div>
@@ -419,8 +420,8 @@ js += f'        tl.to("#leak", {{ keyframes: [{{ opacity: 1, x: 200, y: 200, dur
 # 0–2.6 horizon
 js += rise("#t0", 0.6, 1.2) + rise("#t0b", 1.2) + out("#t0, #t0b", 2.5, 0.5)
 # 2.6–7.6 peninsula, 이천
-js += rise("#tk", 4.4) + '        tl.fromTo("#icn", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }, 4.6);\n'
-js += out("#tk, #icn", 7.2, 0.5)
+js += rise("#tk", 3.6, 1.0) + rise("#tk2", 4.3) + '        tl.fromTo("#icn", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }, 4.6);\n'
+js += out("#tk, #tk2, #icn", 7.2, 0.5)
 # 7.6–12.2 the sea of 993
 js += rise("#t1", 8.6, 1.1) + rise("#t1b", 9.2) + rise("#t2", 9.8) + rise("#t2b", 10.4) + out("#t1, #t1b, #t2, #t2b", 11.8, 0.5)
 # 12.2–17.4 Seo Hui, AI ambassador
