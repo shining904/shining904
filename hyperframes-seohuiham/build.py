@@ -370,19 +370,37 @@ files["finale"] = clip("finale", "assets/clips/sub-surface.mp4", 11.6, '''      
           font-size: 18px;
           color: rgba(255, 255, 255, 0.6);
         }
+        #fin-shade {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          height: 520px;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.45) 60%, rgba(0, 0, 0, 0) 100%);
+        }
+        #fin-shade2 {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 420px;
+          background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+        }
         #fin-black {
           position: absolute;
           inset: 0;
           background: #000;
           opacity: 0;
         }
-''', '''          <div id="fin-1" class="ttl"><span class="gold">서희함</span>의 진수를 진심으로 축하합니다</div>
+''', '''          <div id="fin-shade"></div>
+          <div id="fin-shade2"></div>
+          <div id="fin-1" class="ttl"><span class="gold">서희함</span>의 진수를 진심으로 축하합니다</div>
           <div id="fin-2" class="ttl">천 년의 지혜와 함께, 안전한 항해를 기원합니다</div>
           <div id="fin-from" class="ttl">이천시민 일동</div>
           <div id="fin-logo"><img src="assets/img/icheon-logo.png" alt="이천시" /></div>
           <div id="fin-ai">본 영상은 AI로 제작되었으며 일부 장면은 연출입니다</div>
           <div id="fin-black"></div>
-''', reveal("#fin-1", 1.4, 1.6) + pop("#fin-2", 2.8, 14) + pop("#fin-from", 4.6, 14) + pop("#fin-logo", 5.2, 14)
+''', '        tl.fromTo("#fin-shade, #fin-shade2", { opacity: 0 }, { opacity: 1, duration: 1.2, ease: "none" }, 1.0);\n' + reveal("#fin-1", 1.4, 1.6) + pop("#fin-2", 2.8, 14) + pop("#fin-from", 4.6, 14) + pop("#fin-logo", 5.2, 14)
     + pop("#fin-ai", 5.2, 0) + '        tl.to("#fin-black", { opacity: 1, duration: 1.4, ease: "none" }, 10.2);\n',
     fade_in=1.0, push=(1.0, 1.06))
 

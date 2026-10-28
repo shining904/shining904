@@ -120,6 +120,22 @@
           font-size: 18px;
           color: rgba(255, 255, 255, 0.6);
         }
+        #fin-shade {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          height: 520px;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.45) 60%, rgba(0, 0, 0, 0) 100%);
+        }
+        #fin-shade2 {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 420px;
+          background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+        }
         #fin-black {
           position: absolute;
           inset: 0;
@@ -131,6 +147,8 @@
         <div id="finale-fade">
           <video id="finale-video" src="assets/clips/sub-surface.mp4" data-start="0" data-duration="11.6" muted playsinline></video>
           <div id="finale-bars"></div>
+          <div id="fin-shade"></div>
+          <div id="fin-shade2"></div>
           <div id="fin-1" class="ttl"><span class="gold">서희함</span>의 진수를 진심으로 축하합니다</div>
           <div id="fin-2" class="ttl">천 년의 지혜와 함께, 안전한 항해를 기원합니다</div>
           <div id="fin-from" class="ttl">이천시민 일동</div>
@@ -143,6 +161,7 @@
         const tl = gsap.timeline({ paused: true });
         tl.fromTo("#finale-fade", { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "none" }, 0);
         tl.fromTo("#finale-video", { scale: 1.0 }, { scale: 1.06, duration: 11.6, ease: "none" }, 0);
+        tl.fromTo("#fin-shade, #fin-shade2", { opacity: 0 }, { opacity: 1, duration: 1.2, ease: "none" }, 1.0);
         tl.fromTo("#fin-1", { opacity: 0, scale: 1.12, filter: "blur(14px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.6, ease: "power2.out" }, 1.4);
         tl.fromTo("#fin-2", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 2.8);
         tl.fromTo("#fin-from", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 4.6);
