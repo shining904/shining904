@@ -1,7 +1,8 @@
 # ①+++ 금빛 한 줄 v4 (37.5 s) — gold3 with the Seo Hui stage replaced by the mayor: the gold line
 # closes into a circle, the circle opens like an iris and the mayor's interview plays inside it
 # (name above, his words as a caption below), then the circle flows on into the submarine.
-# Everything else is gold3. MAYOR=<file> picks the interview clip (default: a placeholder);
+# The finale reads only '서희함의 진수를 축하합니다', signed off by hand '이천시장 성수석 올림'
+# (no logo). Everything else is gold3. MAYOR=<file> picks the interview clip (default: a placeholder);
 # GREEN=1 fills the circle with chroma green instead, for compositing the footage elsewhere.
 import json
 import math
@@ -231,19 +232,31 @@ css = f'''        #bg {{
           background: radial-gradient(ellipse at 50% 40%, rgba(255, 238, 200, 1) 0%, rgba(255, 238, 200, 0) 65%);
           opacity: 0;
         }}
-        #sign {{
+        #letter {{
           position: absolute;
-          left: 0;
-          right: 0;
-          top: 1290px;
+          right: 110px;
+          top: 1160px;
           display: flex;
-          justify-content: center;
-          align-items: center;
+          align-items: baseline;
           gap: 26px;
+          font-family: "Nanum Myeongjo", serif;
+          color: #fdf6e6;
+          text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
+          white-space: nowrap;
+        }}
+        #l-title, #l-end {{
+          font-weight: 700;
+          font-size: 50px;
+          letter-spacing: 4px;
           opacity: 0;
         }}
-        #sign img {{
-          height: 150px;
+        #l-name {{
+          font-family: "Nanum Brush Script", cursive;
+          font-size: 190px;
+          line-height: 1;
+          color: #ffffff;
+          transform: rotate(-4deg);
+          clip-path: inset(-20% 100% -20% 0);
         }}
 '''
 body = f'''        <div id="bg"></div>
@@ -272,10 +285,8 @@ body = f'''        <div id="bg"></div>
         <div id="co1" class="co" style="left:330px;top:1060px"><i></i><u style="height:230px"></u><div style="left:-210px;top:240px"><b>장보고-Ⅲ 배치-Ⅱ</b><span>2번함</span></div></div>
         <div id="co2" class="co" style="left:800px;top:1040px"><i></i><u style="height:250px"></u><div style="left:-200px;top:260px"><b>3,600톤급</b><span>잠수함</span></div></div>
         <div id="title" class="t" style="top:470px;font-size:260px;font-weight:900;letter-spacing:-4px"><span class="gold">서</span><span class="gold">희</span><span class="gold">함</span></div>
-        <div id="d1" class="t thin" style="top:230px;font-size:84px;letter-spacing:8px">2026. 11. 3.</div>
-        <div id="d2" class="t" style="top:350px;font-size:116px;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)">진수를 축하합니다</div>
-        <div id="d3" class="t" style="top:1050px;font-size:80px;line-height:1.28;font-weight:400;text-shadow:0 2px 18px rgba(0,0,0,0.9)"><b style="font-weight:800;color:#ffe6a8">서희함</b>의 안전한 항해를<br /><b style="font-weight:800">응원합니다</b></div>
-        <div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /></div>
+        <div id="d2" class="t" style="top:250px;font-size:112px;line-height:1.22;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)"><span style="color:#ffe6a8">서희함</span>의<br />진수를 축하합니다</div>
+        <div id="letter"><span id="l-title">이천시장</span><span id="l-name">성수석</span><span id="l-end">올림</span></div>
         <div id="ai-note">이 영상은 AI로 제작되어 실제와 다를 수 있습니다</div>
         <div id="flash"></div>
 '''
@@ -457,17 +468,19 @@ js += f'        tl.to("#fill-sub", {{ y: 160, scale: 1.12, filter: "brightness(1
 js += fade("#v-side", 25.0, 0.55, 1.2) + fade("#fill-sub", 25.4, 0, 1.0)
 js += '        tl.fromTo("#v-side", { scale: 1.12 }, { scale: 1.0, duration: 5.6, ease: "none" }, 25.0);\n'
 js += out("#title", 29.0, 0.6)
-# 29.4– sunrise: date, congratulations, safe voyage, sign
+# 29.4– sunrise: the congratulation and the signed sign-off
 js += fade("#v-surf", 29.4, 1, 1.4) + '        tl.fromTo("#v-surf", { scale: 1.0 }, { scale: 1.08, duration: 8.1, ease: "none" }, 29.4);\n'
 js += fade("#v-launch-a", 31.6, 1, 0.9) + '        tl.fromTo("#v-launch-a", { scale: 1.0 }, { scale: 1.04, duration: 2.9, ease: "none" }, 31.6);\n'
 js += fade("#v-launch-b", 34.3, 1, 0.5) + '        tl.fromTo("#v-launch-b", { scale: 1.02 }, { scale: 1.06, duration: 3.04, ease: "none" }, 34.3);\n'
-js += fade("#endshade", 29.8, 1, 1.2) + rise("#d1", 30.4) + rise("#d2", 31.0, 1.0)
-js += rise("#d3", 32.6, 1.1)
-js += '        tl.fromTo("#sign", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }, 33.8);\n'
-js += out("#d1, #d2, #d3, #sign", 36.5, 0.8) + fade("#v-launch-b", 36.6, 0.0, 0.7)
+js += fade("#endshade", 29.8, 1, 1.2) + rise("#d2", 30.6, 1.1)
+js += fade("#l-title", 32.3, 1, 0.8)
+# the name is written on with the brush, left to right, then the sign-off
+js += '        tl.to("#l-name", { clipPath: "inset(-20% 0% -20% 0)", duration: 1.5, ease: "power1.inOut" }, 32.8);\n'
+js += fade("#l-end", 34.3, 1, 0.8)
+js += out("#d2, #letter", 36.5, 0.8) + fade("#v-launch-b", 36.6, 0.0, 0.7)
 
 d = setup("gold4-green" if GREEN else "gold4")
 html = index("서희함 · 금빛 한 줄 확장판", "①+ extended one-take gold line short. Silhouettes traced from Magnific cut-outs; footage Seedance; score Lyria 3 Pro.",
              [("gold4", 0, DUR)], bg="#050505").replace("assets/music.mp3", "assets/music-gold4-mix.mp3")
-write(d, {"gold4": comp("gold4", ["pre"], css, body, js)}, html)
+write(d, {"gold4": comp("gold4", ["pre", "brush", "myeongjo"], css, body, js)}, html)
 print("ok")

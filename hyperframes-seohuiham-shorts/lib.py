@@ -46,6 +46,10 @@ def faces(*names):
             out += _fontsource("gowun-dodum", "Gowun Dodum", 400)
         elif n == "jua":
             out += _fontsource("jua", "Jua", 400)
+        elif n == "brush":
+            out += _fontsource("nanum-brush-script", "Nanum Brush Script", 400)
+        elif n == "myeongjo":
+            out += _fontsource("nanum-myeongjo", "Nanum Myeongjo", 400) + _fontsource("nanum-myeongjo", "Nanum Myeongjo", 700)
     return out
 
 
