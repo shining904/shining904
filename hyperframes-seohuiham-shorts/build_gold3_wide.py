@@ -87,6 +87,10 @@ css += """        #amb {
         #sign {
           top: 830px;
         }
+        #ai-note {
+          top: 1032px;
+          font-size: 24px;
+        }
 """
 body = f\'\'\'''')
 exec(compile(src, "build_gold3.py (wide)", "exec"))

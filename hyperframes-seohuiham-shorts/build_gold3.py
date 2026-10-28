@@ -192,6 +192,19 @@ css = f'''        #bg {{
           letter-spacing: 2px;
           color: #f0cf8a;
         }}
+        #ai-note {{
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 1462px;
+          text-align: center;
+          font-family: "Pretendard", sans-serif;
+          font-weight: 500;
+          font-size: 28px;
+          color: rgba(255, 255, 255, 0.82);
+          text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+          white-space: nowrap;
+        }}
         #flash {{
           position: absolute;
           inset: 0;
@@ -202,7 +215,7 @@ css = f'''        #bg {{
           position: absolute;
           left: 0;
           right: 0;
-          top: 1310px;
+          top: 1290px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -243,6 +256,7 @@ body = f'''        <div id="bg"></div>
         <div id="d2" class="t" style="top:350px;font-size:116px;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)">진수를 축하합니다</div>
         <div id="d3" class="t" style="top:1050px;font-size:80px;line-height:1.28;font-weight:400;text-shadow:0 2px 18px rgba(0,0,0,0.9)"><b style="font-weight:800;color:#ffe6a8">서희함</b>의 안전한 항해를<br /><b style="font-weight:800">응원합니다</b></div>
         <div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /></div>
+        <div id="ai-note">이 영상은 AI로 제작되어 실제와 다를 수 있습니다</div>
         <div id="flash"></div>
 '''
 js = '''        const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
@@ -391,6 +405,7 @@ js += '        tl.to("#leak", { keyframes: [{ opacity: 1, x: 300, duration: 4 },
 js += '        tl.to("#leak", { keyframes: [{ opacity: 1, x: 500, y: 600, duration: 2.5 }, { opacity: 0, x: 900, y: 800, duration: 3 }], ease: "sine.inOut" }, 13.4);\n'
 js += f'        tl.to("#leak", {{ keyframes: [{{ opacity: 1, x: 200, y: 200, duration: 1.0 }}, {{ opacity: 0, x: 600, y: 300, duration: 3 }}], ease: "sine.inOut" }}, {HIT});\n'
 # 0–4.6 horizon
+js += '        tl.fromTo("#ai-note", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "none" }, 0.3);\n'
 js += rise("#t0", 0.6, 1.2) + out("#t0", 4.2, 0.5)
 # 4.6–12.2 the sea of 993
 js += rise("#t1", 6.6, 1.1) + rise("#t1b", 7.2) + rise("#t2", 8.4) + rise("#t2b", 9.0) + out("#t1, #t1b, #t2, #t2b", 11.8, 0.5)
