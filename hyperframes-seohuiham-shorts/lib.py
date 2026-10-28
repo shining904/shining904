@@ -9,7 +9,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 W, H, DUR, HIT = 1080, 1920, 21, 10.05
 GOLD = "#e3b25a"
 
-_PRE = {500: "Medium", 700: "Bold", 800: "ExtraBold", 900: "Black"}
+_PRE = {200: "ExtraLight", 300: "Light", 500: "Medium", 700: "Bold", 800: "ExtraBold", 900: "Black"}
 
 
 def _fontsource(name, family, weight):
