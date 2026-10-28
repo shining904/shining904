@@ -29,7 +29,7 @@ def circle(cx, cy, r):
     return [[round(cx + r * math.cos(math.pi - 2 * math.pi * i / N), 1), round(cy + r * math.sin(math.pi - 2 * math.pi * i / N), 1)] for i in range(N)]
 
 
-WIN = (540, 860, 360)   # the interview window: centre x, centre y, radius
+WIN = (540, 880, 440)   # the interview window: centre x, centre y, radius
 
 
 def wave(y, amp, crests, x0=-40, x1=1120):
@@ -153,7 +153,7 @@ css = f'''        #bg {{
           position: absolute;
           left: 0;
           right: 0;
-          top: 300px;
+          top: 210px;
           text-align: center;
           font-family: "Pretendard", sans-serif;
           opacity: 0;
@@ -280,7 +280,7 @@ body = f'''        <div id="bg"></div>
         <div id="t2" class="t thin" style="top:1240px;font-size:80px">칼 대신, <b style="font-weight:900">지혜로</b></div>
         <div id="t2b" class="t" style="top:1350px;font-size:58px;font-weight:300">나라를 지켜낸 서희의 외교 담판</div>
         <div id="mname"><span>이천시장</span><b>성수석</b></div>
-        <div id="t3" class="t" style="top:1262px;font-size:54px;line-height:1.3;font-weight:300;text-shadow:0 2px 12px rgba(0,0,0,0.8)">“서희함의 진수를<br /><b style="font-weight:800">진심으로 축하드립니다”</b></div>
+        <div id="t3" class="t" style="top:1352px;font-size:48px;font-weight:300;text-shadow:0 2px 12px rgba(0,0,0,0.8)">“서희함의 진수를 <b style="font-weight:800">진심으로 축하드립니다”</b></div>
         <div id="t4" class="t thin" style="top:420px;font-size:80px">서희의 이름, <b style="font-weight:900">바다로</b></div>
         <div id="co1" class="co" style="left:330px;top:1060px"><i></i><u style="height:230px"></u><div style="left:-210px;top:240px"><b>장보고-Ⅲ 배치-Ⅱ</b><span>2번함</span></div></div>
         <div id="co2" class="co" style="left:800px;top:1040px"><i></i><u style="height:250px"></u><div style="left:-200px;top:260px"><b>3,600톤급</b><span>잠수함</span></div></div>

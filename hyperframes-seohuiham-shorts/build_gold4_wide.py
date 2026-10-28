@@ -25,7 +25,8 @@ def restyle(el_id, style):
 
 # frame size
 sub("lib.DUR = DUR", "lib.DUR = DUR\nlib.W, lib.H = 1920, 1080")
-sub("WIN = (540, 860, 360)", "WIN = (1300, 540, 360)")
+sub("WIN = (540, 880, 440)", "WIN = (1300, 530, 450)")
+sub("“서희함의 진수를 <b", "“서희함의 진수를<br /><b")
 # shapes: re-fit to the wide frame (the interview circle is already built from WIN)
 sub('SHAPES = {"h0"', '''def fit(pts, s, cx, cy, ox, oy):
     return [[round((x - cx) * s + ox, 1), round((y - cy) * s + oy, 1)] for x, y in pts]
@@ -79,7 +80,7 @@ sub("\nbody = f'''", '''
 css += """        #mname {
           left: 140px;
           right: auto;
-          top: 330px;
+          top: 300px;
           text-align: left;
         }
         #letter {
