@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF;
+        }
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF, U+4E00-9FFF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2160-216F;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2160-216F;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #front-fade {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        #front-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          
+        }
+        #front-bars {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 18%, rgba(0, 0, 0, 0) 78%, rgba(0, 0, 0, 0.6) 100%);
+        }
+        .ttl {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          color: #f7efe0;
+          text-shadow: 0 6px 40px rgba(0, 0, 0, 0.7);
+        }
+        .gold {
+          background: linear-gradient(180deg, #fff3cf 0%, #e3b25a 45%, #9a6a1c 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          text-shadow: none;
+          filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.6));
+        }
+      </style>
+      <div id="root" data-composition-id="front" data-width="1920" data-height="1080">
+        <div id="front-fade">
+          <video id="front-video" src="assets/clips/sub-front.mp4" data-start="0" data-duration="8.4" muted playsinline></video>
+          <div id="front-bars"></div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#front-fade", { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "none" }, 0);
+        tl.fromTo("#front-video", { scale: 1.0 }, { scale: 1.08, duration: 8.4, ease: "none" }, 0);
+        window.__timelines["front"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,15 +1,15 @@
 #!/bin/bash
-# Builds mix.mp3 (78 s): the Lyria score under every spoken line (narrator n1-n4, young Seo Hui
+# Builds mix.mp3: the Lyria score (MUSIC, default epic.mp3 for the 73 s cut; music.mp3 + LEN=78 for v1) under every spoken line (narrator n1-n4, young Seo Hui
 # y1, mature Seo Hui s1). Each voice is levelled to -18 LUFS, the score dips to DUCK under the
 # voices with smoothstep ramps, and the whole mix is normalised to -14 LUFS.
 # Line cues come from ../../work/lines.json, written by build.py.
 set -euo pipefail
 cd "$(dirname "$0")"
-LEN=78 GAIN=0.5 DUCK=0.5 RAMP=0.4
+MUSIC=${MUSIC:-epic.mp3} LEN=${LEN:-73} GAIN=0.5 DUCK=0.5 RAMP=0.4
 mapfile -t NARR < <(python3 -c "import json;[print(f,s,d) for f,s,d in json.load(open('../../work/lines.json'))]")
 ms() { python3 -c "print(int($1*1000))"; }
-inputs=(-i music.mp3)
-f="[0:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:$LEN,afade=t=in:d=1.0,afade=t=out:st=75.5:d=2.5,volume=$GAIN[mus];"
+inputs=(-i "$MUSIC")
+f="[0:a]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:$LEN,afade=t=in:d=1.0,afade=t=out:st=$(python3 -c "print($LEN-2.5)"):d=2.5,volume=$GAIN[mus];"
 idx=1; labels=""; w=""
 for n in "${NARR[@]}"; do
   read -r file start len <<<"$n"; inputs+=(-i "$file"); d=$(ms "$start")

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF;
+        }
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF, U+4E00-9FFF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2160-216F;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2160-216F;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .ttl {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          color: #f7efe0;
+          text-shadow: 0 6px 40px rgba(0, 0, 0, 0.7);
+        }
+        .gold {
+          background: linear-gradient(180deg, #fff3cf 0%, #e3b25a 45%, #9a6a1c 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          text-shadow: none;
+          filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.6));
+        }
+        #title-cv {
+          position: absolute;
+          inset: 0;
+        }
+        #title-ghost {
+          position: absolute;
+          left: -80px;
+          top: -40px;
+          width: 1100px;
+          height: 1160px;
+          object-fit: cover;
+          object-position: 50% 30%;
+          mix-blend-mode: screen;
+          -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 42%, #000 40%, transparent 85%);
+          mask-image: radial-gradient(ellipse 50% 50% at 50% 42%, #000 40%, transparent 85%);
+          filter: grayscale(0.4) sepia(0.4) hue-rotate(170deg) brightness(0.9);
+        }
+        #title-sub {
+          position: absolute;
+          left: 0;
+          top: 330px;
+          width: 1920px;
+          height: 1080px;
+        }
+        #title-subv {
+          width: 100%;
+          height: 100%;
+        }
+        #title-flash {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at 50% 45%, rgba(255, 240, 200, 0.95) 0%, rgba(255, 240, 200, 0) 60%);
+          mix-blend-mode: screen;
+          opacity: 0;
+        }
+        #title-name {
+          top: 200px;
+          font-size: 230px;
+          letter-spacing: 30px;
+        }
+        #title-en {
+          top: 470px;
+          font-family: "Noto Sans KR", sans-serif;
+          font-weight: 500;
+          font-size: 34px;
+          letter-spacing: 26px;
+          color: #bfe3ff;
+        }
+        #title-facts {
+          top: 540px;
+          font-family: "Noto Sans KR", sans-serif;
+          font-weight: 500;
+          font-size: 32px;
+          color: #e7f2ff;
+        }
+        #title-facts b {
+          color: #e3b25a;
+          font-weight: 800;
+        }
+        #title-motto {
+          top: 640px;
+          font-size: 60px;
+        }
+      </style>
+      <div id="root" data-composition-id="title" data-width="1920" data-height="1080">
+        <canvas id="title-cv" width="1920" height="1080"></canvas>
+        <img id="title-ghost" src="assets/img/portrait.png" alt="" />
+        <div id="title-sub"><video id="title-subv" src="assets/3d/sub.webm" data-start="0" data-duration="15.9" muted playsinline></video></div>
+        <div id="title-flash"></div>
+        <div id="title-name" class="ttl gold">서희함</div>
+        <div id="title-en" class="ttl">ROKS SEO HUI</div>
+        <div id="title-facts" class="ttl"><b>장보고-Ⅲ 배치-Ⅱ</b> 2번함 · <b>3,600톤급</b> 잠수함 · <b>2026. 11. 3.</b> 진수</div>
+        <div id="title-motto" class="ttl">천 년의 지혜, 바다를 지키다</div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        const cv = document.getElementById("title-cv"), ctx = cv.getContext("2d");
+        const rnd = (i, k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
+        function render(t) {
+          const g = ctx.createLinearGradient(0, 0, 0, 1080);
+          g.addColorStop(0, "#0c3f6e");
+          g.addColorStop(0.55, "#04203d");
+          g.addColorStop(1, "#010a16");
+          ctx.fillStyle = g;
+          ctx.fillRect(0, 0, 1920, 1080);
+          ctx.globalCompositeOperation = "lighter";
+          for (let i = 0; i < 8; i++) {
+            const x = 120 + i * 240 + Math.sin(t * 0.35 + i) * 50, w = 60 + rnd(i, 1) * 110;
+            const s = ctx.createLinearGradient(0, 0, 0, 1080);
+            s.addColorStop(0, "rgba(120,200,255,0.14)");
+            s.addColorStop(1, "rgba(120,200,255,0)");
+            ctx.fillStyle = s;
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x + w, 0);
+            ctx.lineTo(x + w * 2.4 - 260, 1080);
+            ctx.lineTo(x - 260, 1080);
+            ctx.fill();
+          }
+          ctx.globalCompositeOperation = "source-over";
+          for (let i = 0; i < 200; i++) {
+            const x = (rnd(i, 4) * 1920 + t * (10 + rnd(i, 5) * 22)) % 1920;
+            const y = (rnd(i, 6) * 1080 + t * (6 + rnd(i, 7) * 12)) % 1080;
+            ctx.fillStyle = `rgba(200,230,255,${0.12 + rnd(i, 8) * 0.3})`;
+            ctx.beginPath();
+            ctx.arc(x, y, 1 + rnd(i, 9) * 2, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+        const state = { t: 0 };
+        tl.to(state, { t: 15.9, duration: 15.9, ease: "none", onUpdate: () => render(state.t) }, 0);
+        tl.fromTo("#title-cv", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "none" }, 0);
+        // Seo Hui's face appears over the sea like a memory, the submarine passes beneath
+        tl.fromTo("#title-ghost", { opacity: 0, scale: 1.08 }, { opacity: 0.42, scale: 1.0, duration: 3.0, ease: "power2.out" }, 0.6);
+        tl.to("#title-ghost", { opacity: 0.18, duration: 1.0, ease: "none" }, 5.2);
+        tl.fromTo("#title-sub", { opacity: 0, x: 260 }, { opacity: 1, x: 0, duration: 2.2, ease: "power2.out" }, 0.4);
+        tl.to("#title-sub", { x: -80, duration: 13, ease: "none" }, 2.6);
+        // the hit (score at ~36.3 s = 5.3 s into this scene)
+        tl.fromTo("#title-flash", { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, 5.25);
+        tl.to("#title-flash", { opacity: 0, duration: 1.2, ease: "power2.out" }, 5.33);
+        tl.fromTo("#title-name", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power4.out" }, 5.25);
+        tl.fromTo("#title-en", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 6.0);
+        tl.fromTo("#title-facts", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 6.8);
+        tl.fromTo("#title-motto", { opacity: 0, scale: 1.12, filter: "blur(14px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 1.4, ease: "power2.out" }, 8.6);
+        tl.to("#title-name, #title-en, #title-facts, #title-motto, #title-sub, #title-ghost", { opacity: 0, duration: 1.0, ease: "power1.in" }, 14.6);
+        window.__timelines["title"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
