@@ -455,6 +455,9 @@ if not GREEN:
     js += '        tl.fromTo("#mayor", { scale: 1.08 }, { scale: 1.0, duration: 4.9, ease: "none" }, 13.5);\n'
 js += '        tl.fromTo("#mname", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 14.0);\n'
 js += rise("#t3", 14.4) + out("#mname, #t3", 17.5, 0.5)
+# the AI notice steps aside while the real interview footage is on screen
+js += '        tl.to("#ai-note", { opacity: 0, duration: 0.4, ease: "power1.inOut" }, 13.2);\n'
+js += '        tl.to("#ai-note", { opacity: 1, duration: 0.5, ease: "power1.inOut" }, 18.3);\n'
 # 17.4–24.1 the submarine
 js += fade("#deep", 17.8, 1, 2.0)
 js += rise("#t4", 19.6) + fade("#fill-sub", 19.3, 0.9, 1.0)
