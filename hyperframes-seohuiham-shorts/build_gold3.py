@@ -1,5 +1,6 @@
 # ①++ 금빛 한 줄 v3 (37.5 s) — gold2 with a brighter score, the submarine in natural colour
-# (no gold tint), a launch-ceremony clip in the finale and Seo Hui's closing voice line.
+# (no gold tint), a launch-ceremony clip in the finale, and Seo Hui (Icheon's AI ambassador)
+# voicing the message: congratulating with the citizens of Icheon and cheering the safe voyage.
 # Based on 금빛 한 줄 확장판 — one gold line, no cuts: horizon → the sea of 993 → Seo Hui, Icheon's
 # AI ambassador → the submarine → underline of
 # 서희함 at the score's hit → the real sunrise horizon, "서희함의 안전한 항해를 응원합니다".
@@ -27,10 +28,10 @@ def wave(y, amp, crests, x0=-40, x1=1120):
     return a + [[p[0], p[1] + 0.6] for p in reversed(a)]
 
 
-SHAPES = {"h0": flat(80, 1000, 1000), "wave": wave(1040, 50, 3), "seohui": [[x, round(y - 60, 1)] for x, y in C["seohui"]],
+SHAPES = {"h0": flat(80, 1000, 1000), "wave": wave(1040, 50, 3), "seohui": [[round(540 + (x - 540) * 0.88, 1), round(500 + (y - 560) * 0.88, 1)] for x, y in C["seohui"]],
           "sub": C["sub"], "under": flat(250, 830, 770), "h1": flat(-40, 1120, 812)}
 MORPHS = [(4.6, 6.2, "h0", "wave"), (12.2, 13.7, "wave", "seohui"),
-          (17.4, 18.9, "seohui", "sub"), (HIT + 0.05, HIT + 0.9, "sub", "under"), (29.4, 30.6, "under", "h1")]
+          (17.6, 19.0, "seohui", "sub"), (HIT + 0.05, HIT + 0.9, "sub", "under"), (29.4, 30.6, "under", "h1")]
 LINE_OUT = 30.4
 
 css = f'''        #bg {{
@@ -233,7 +234,7 @@ body = f'''        <div id="bg"></div>
         <div id="vig"></div>
         <div id="endshade"></div>
         <div id="cam">
-          <img id="fill-seohui" class="fill" src="assets/seohui-cut.png" alt="" style="left:240px;top:500px;width:600px;height:880px" />
+          <img id="fill-seohui" class="fill" src="assets/seohui-cut.png" alt="" style="left:276px;top:500px;width:528px;height:774px" />
           <img id="fill-sub" class="fill" src="assets/sub-cut.png" alt="" style="left:60px;top:820px;width:960px;height:400px;filter:brightness(0.92) contrast(1.05)" />
           <canvas id="cv" width="1080" height="1920"></canvas>
         </div>
@@ -246,15 +247,16 @@ body = f'''        <div id="bg"></div>
         <div id="t2" class="t thin" style="top:1240px;font-size:80px">칼 대신, <b style="font-weight:900">지혜로</b></div>
         <div id="t2b" class="t" style="top:1350px;font-size:58px;font-weight:300">나라를 지켜낸 서희의 외교 담판</div>
         <div id="amb"><div id="amb-pill">이천시 AI 홍보대사</div><div id="amb-name">서희</div></div>
-        <div id="t3" class="t" style="top:1405px;font-size:62px;font-weight:300">그 이름을 이어 <b style="font-weight:800">함께 축하합니다</b></div>
-        <div id="t4" class="t thin" style="top:420px;font-size:92px">그 이름, <b style="font-weight:900">다시 바다로</b></div>
+        <div id="t3" class="t" style="top:1305px;font-size:60px;line-height:1.3;font-weight:300">이천시민들과 함께<br /><b style="font-weight:800">서희함의 진수를 축하합니다</b></div>
+        <div id="t4" class="t thin" style="top:420px;font-size:80px">서희의 이름, <b style="font-weight:900">다시 바다로</b></div>
         <div id="co1" class="co" style="left:330px;top:1060px"><i></i><u style="height:230px"></u><div style="left:-210px;top:240px"><b>장보고-Ⅲ 배치-Ⅱ</b><span>KSS-III BATCH-II · 2번함</span></div></div>
         <div id="co2" class="co" style="left:800px;top:1040px"><i></i><u style="height:250px"></u><div style="left:-200px;top:260px"><b>3,600톤급</b><span>잠수함</span></div></div>
         <div id="title" class="t" style="top:470px;font-size:260px;font-weight:900;letter-spacing:-4px"><span class="gold">서</span><span class="gold">희</span><span class="gold">함</span></div>
         <div id="title-en" class="t cap" style="top:806px;font-size:54px">ROKS SEO HUI</div>
         <div id="d1" class="t thin" style="top:230px;font-size:84px;letter-spacing:8px">2026. 11. 3.</div>
         <div id="d2" class="t" style="top:350px;font-size:116px;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)">진수를 축하합니다</div>
-        <div id="d3" class="t" style="top:1120px;font-size:80px;line-height:1.28;font-weight:400;text-shadow:0 2px 18px rgba(0,0,0,0.9)"><b style="font-weight:800;color:#ffe6a8">서희함</b>의 안전한 항해를<br /><b style="font-weight:800">응원합니다</b></div>
+        <div id="d3" class="t" style="top:1050px;font-size:80px;line-height:1.28;font-weight:400;text-shadow:0 2px 18px rgba(0,0,0,0.9)"><b style="font-weight:800;color:#ffe6a8">서희함</b>의 안전한 항해를<br /><b style="font-weight:800">응원합니다</b></div>
+        <div id="d4" class="t cap" style="top:1268px;font-size:40px;font-weight:700;letter-spacing:4px;color:#ffe6a8;text-shadow:0 2px 14px rgba(0,0,0,0.95), 0 0 4px rgba(0,0,0,0.8)">— 이천시 AI 홍보대사 서희 —</div>
         <div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /><i></i><div>경기도 이천시</div></div>
         <div id="flash"></div>
 '''
@@ -408,9 +410,9 @@ js += rise("#t0", 0.6, 1.2) + rise("#t0b", 1.2) + out("#t0, #t0b", 4.2, 0.5)
 # 4.6–12.2 the sea of 993
 js += rise("#t1", 6.6, 1.1) + rise("#t1b", 7.2) + rise("#t2", 8.4) + rise("#t2b", 9.0) + out("#t1, #t1b, #t2, #t2b", 11.8, 0.5)
 # 12.2–17.4 Seo Hui, AI ambassador
-js += fade("#fill-seohui", 13.4, 0.92, 0.9) + '        tl.fromTo("#fill-seohui", { scale: 1.04 }, { scale: 1, duration: 3.6, ease: "none" }, 13.4);\n'
+js += fade("#fill-seohui", 13.4, 0.92, 0.9) + '        tl.fromTo("#fill-seohui", { scale: 1.04 }, { scale: 1, duration: 4.0, ease: "none" }, 13.4);\n'
 js += '        tl.fromTo("#amb", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 13.8);\n'
-js += rise("#t3", 14.6) + fade("#fill-seohui", 16.9, 0, 0.5) + out("#amb, #t3", 16.9, 0.5)
+js += rise("#t3", 13.8) + fade("#fill-seohui", 17.3, 0, 0.5) + out("#amb, #t3", 17.3, 0.5)
 # 17.4–24.1 the submarine
 js += fade("#deep", 17.2, 1, 2.0)
 js += rise("#t4", 19.4) + fade("#fill-sub", 19.0, 0.9, 1.0)
@@ -438,9 +440,9 @@ js += fade("#v-surf", 29.4, 1, 1.4) + '        tl.fromTo("#v-surf", { scale: 1.0
 js += fade("#v-launch-a", 31.6, 1, 0.9) + '        tl.fromTo("#v-launch-a", { scale: 1.0 }, { scale: 1.04, duration: 2.9, ease: "none" }, 31.6);\n'
 js += fade("#v-launch-b", 34.3, 1, 0.5) + '        tl.fromTo("#v-launch-b", { scale: 1.02 }, { scale: 1.06, duration: 3.04, ease: "none" }, 34.3);\n'
 js += fade("#endshade", 29.8, 1, 1.2) + rise("#d1", 30.4) + rise("#d2", 31.0, 1.0)
-js += rise("#d3", 32.6, 1.1)
+js += rise("#d3", 32.6, 1.1) + rise("#d4", 33.4, 0.9)
 js += '        tl.fromTo("#sign", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }, 33.8);\n'
-js += out("#d1, #d2, #d3, #sign", 36.5, 0.8) + fade("#v-launch-b", 36.6, 0.0, 0.7)
+js += out("#d1, #d2, #d3, #d4, #sign", 36.5, 0.8) + fade("#v-launch-b", 36.6, 0.0, 0.7)
 
 d = setup("gold3")
 html = index("서희함 · 금빛 한 줄 확장판", "①+ extended one-take gold line short. Silhouettes traced from Magnific cut-outs; footage Seedance; score Lyria 3 Pro.",
