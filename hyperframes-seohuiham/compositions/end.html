@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF;
+        }
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF, U+4E00-9FFF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2160-216F;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2160-216F;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #end-bg {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at 50% 45%, #0b2a4d 0%, #04182e 60%, #010a15 100%);
+        }
+        #end-line1 {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 300px;
+          text-align: center;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          font-size: 104px;
+          color: #ffffff;
+        }
+        #end-line1 span {
+          color: #d9a441;
+        }
+        #end-rule {
+          position: absolute;
+          left: 760px;
+          width: 400px;
+          top: 470px;
+          height: 4px;
+          background: #d9a441;
+        }
+        #end-line2 {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 510px;
+          text-align: center;
+          font-family: "Noto Sans KR", sans-serif;
+          font-weight: 500;
+          font-size: 40px;
+          color: #cfe2f5;
+        }
+        #end-from {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 660px;
+          text-align: center;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          font-size: 54px;
+          color: #ffffff;
+        }
+        #end-logo {
+          position: absolute;
+          left: 50%;
+          top: 780px;
+          margin-left: -130px;
+          width: 260px;
+          padding: 12px 20px;
+          border-radius: 18px;
+          background: #ffffff;
+        }
+        #end-logo img {
+          display: block;
+          width: 100%;
+        }
+        #end-ai {
+          position: absolute;
+          right: 30px;
+          bottom: 22px;
+          font-family: "Noto Sans KR", sans-serif;
+          font-size: 20px;
+          color: #7f97b0;
+        }
+      </style>
+      <div id="root" data-composition-id="end" data-width="1920" data-height="1080">
+        <div id="end-bg"></div>
+        <div id="end-line1"><span>서희함</span>의 진수를 진심으로 축하합니다</div>
+        <div id="end-rule"></div>
+        <div id="end-line2">천 년의 지혜와 함께, 안전한 항해를 기원합니다</div>
+        <div id="end-from">이천시민 일동</div>
+        <div id="end-logo"><img src="assets/img/icheon-logo.png" alt="이천시" /></div>
+        <div id="end-ai">본 영상은 AI로 제작되었으며 역사 장면은 재연입니다</div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#end-bg", { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "none" }, 0);
+        tl.fromTo("#end-line1", { opacity: 0, y: 30, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.4, ease: "power3.out" }, 0.6);
+        tl.fromTo("#end-rule", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: "power3.inOut" }, 1.6);
+        tl.fromTo("#end-line2", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 2.2);
+        tl.fromTo("#end-from", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 3.4);
+        tl.fromTo("#end-logo", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 4.0);
+        tl.fromTo("#end-ai", { opacity: 0, y: 0 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 4.0);
+        tl.to("#end-bg, #end-line1, #end-rule, #end-line2, #end-from, #end-logo, #end-ai", { opacity: 0, duration: 1.0, ease: "power1.in" }, 10.2);
+        window.__timelines["end"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF;
+        }
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF, U+4E00-9FFF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #tent-fade {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        #tent-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        #tent-q {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 90px;
+          text-align: center;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          font-size: 58px;
+          color: #f6ead2;
+          text-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
+        }
+      </style>
+      <div id="root" data-composition-id="tent" data-width="1920" data-height="1080">
+        <div id="tent-fade">
+          <video id="tent-video" src="assets/clips/tent.mp4" data-start="0" data-duration="8.4" muted playsinline></video>
+        <div id="tent-q">칼이 아닌 말로, 나라를 지키다</div>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#tent-fade", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "none" }, 0);
+        tl.fromTo("#tent-video", { scale: 1.0 }, { scale: 1.05, duration: 8.4, ease: "none" }, 0);
+        tl.fromTo("#tent-q", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }, 5.6);
+        window.__timelines["tent"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

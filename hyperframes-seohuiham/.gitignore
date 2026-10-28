@@ -1,0 +1,4 @@
+work/
+node_modules
+.transcode-cache/
+__pycache__/

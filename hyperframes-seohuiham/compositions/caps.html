@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2160-216F;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2160-216F;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        .caps-line {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 46px;
+          text-align: center;
+          font-family: "Noto Sans KR", sans-serif;
+          font-weight: 500;
+          font-size: 40px;
+          color: #ffffff;
+          opacity: 0;
+        }
+        .caps-line span {
+          display: inline-block;
+          padding: 8px 26px;
+          border-radius: 12px;
+          background: rgba(0, 0, 0, 0.55);
+        }
+      </style>
+      <div id="root" data-composition-id="caps" data-width="1920" data-height="1080">
+        <div id="caps-c0" class="caps-line"><span>서기 993년. 거란의 대군이 고려의 북쪽 국경을 넘었습니다.</span></div>
+        <div id="caps-c1" class="caps-line"><span>모두가 땅을 내주자고 할 때, 한 사람이 홀로 적진으로 걸어 들어갔습니다.</span></div>
+        <div id="caps-c2" class="caps-line"><span>“우리는 고구려를 이은 나라요. 그래서 나라 이름도, 고려입니다.”</span></div>
+        <div id="caps-c3" class="caps-line"><span>칼 한 번 쓰지 않고, 압록강까지 강동 6주를 얻어낸 고려의 외교관. 서희.</span></div>
+        <div id="caps-c4" class="caps-line"><span>그로부터 천 년. 그 이름이 다시, 나라를 지키러 바다로 나아갑니다.</span></div>
+        <div id="caps-c5" class="caps-line"><span>서희함 장병 여러분.</span></div>
+        <div id="caps-c6" class="caps-line"><span>천 년 전 저는 칼 대신 지혜로 이 땅을 지켰습니다.</span></div>
+        <div id="caps-c7" class="caps-line"><span>이제 제 이름이 바다 깊은 곳에서 나라를 지킵니다.</span></div>
+        <div id="caps-c8" class="caps-line"><span>이천시민들과 함께, 서희함의 안전한 항해를 응원합니다.</span></div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#caps-c0", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, 1.5);
+        tl.to("#caps-c0", { opacity: 0, duration: 0.25, ease: "none" }, 6.95);
+        tl.fromTo("#caps-c1", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, 11.0);
+        tl.to("#caps-c1", { opacity: 0, duration: 0.25, ease: "none" }, 16.55);
+        tl.fromTo("#caps-c2", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, 18.6);
+        tl.to("#caps-c2", { opacity: 0, duration: 0.25, ease: "none" }, 23.51);
+        tl.fromTo("#caps-c3", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, 27.0);
+        tl.to("#caps-c3", { opacity: 0, duration: 0.25, ease: "none" }, 33.35);
+        tl.fromTo("#caps-c4", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, 35.6);
+        tl.to("#caps-c4", { opacity: 0, duration: 0.25, ease: "none" }, 41.81);
+        tl.fromTo("#caps-c5", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, 52.0);
+        tl.to("#caps-c5", { opacity: 0, duration: 0.25, ease: "none" }, 53.48);
+        tl.fromTo("#caps-c6", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, 53.83);
+        tl.to("#caps-c6", { opacity: 0, duration: 0.25, ease: "none" }, 57.84);
+        tl.fromTo("#caps-c7", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, 58.15);
+        tl.to("#caps-c7", { opacity: 0, duration: 0.25, ease: "none" }, 62.15);
+        tl.fromTo("#caps-c8", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, 62.72);
+        tl.to("#caps-c8", { opacity: 0, duration: 0.25, ease: "none" }, 66.95);
+        window.__timelines["caps"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

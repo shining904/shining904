@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF;
+        }
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF, U+4E00-9FFF;
+        }
+        #root {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+        }
+        #camp-fade {
+          position: absolute;
+          inset: 0;
+          background: #000;
+        }
+        #camp-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      </style>
+      <div id="root" data-composition-id="camp" data-width="1920" data-height="1080">
+        <div id="camp-fade">
+          <video id="camp-video" src="assets/clips/camp.mp4" data-start="0" data-duration="8.4" muted playsinline></video>
+        </div>
+      </div>
+      <script>
+        const tl = gsap.timeline({ paused: true });
+        tl.fromTo("#camp-fade", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "none" }, 0);
+        tl.fromTo("#camp-video", { scale: 1.0 }, { scale: 1.05, duration: 8.4, ease: "none" }, 0);
+        window.__timelines["camp"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
