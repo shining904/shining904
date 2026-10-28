@@ -29,7 +29,7 @@ def circle(cx, cy, r):
     return [[round(cx + r * math.cos(math.pi - 2 * math.pi * i / N), 1), round(cy + r * math.sin(math.pi - 2 * math.pi * i / N), 1)] for i in range(N)]
 
 
-WIN = (540, 880, 440)   # the interview window: centre x, centre y, radius
+WIN = (540, 900, 500)   # the interview window: centre x, centre y, radius
 
 
 def wave(y, amp, crests, x0=-40, x1=1120):
@@ -148,6 +148,14 @@ css = f'''        #bg {{
           width: 100%;
           height: 100%;
           object-fit: cover;
+        }}
+        #win-shade {{
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 42%;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
         }}
         #mname {{
           position: absolute;
@@ -268,7 +276,7 @@ body = f'''        <div id="bg"></div>
         <div id="vig"></div>
         <div id="endshade"></div>
         <div id="cam">
-          <div id="win">{"" if GREEN else f'<video id="mayor" src="{MAYOR}" data-start="13.5" data-duration="4.9" muted playsinline></video>'}</div>
+          <div id="win">{"" if GREEN else f'<video id="mayor" src="{MAYOR}" data-start="13.5" data-duration="4.9" muted playsinline></video>'}<div id="win-shade"></div></div>
           <img id="fill-sub" class="fill" src="assets/sub-cut.png" alt="" style="left:60px;top:820px;width:960px;height:400px;filter:brightness(0.92) contrast(1.05)" />
           <canvas id="cv" width="1080" height="1920"></canvas>
         </div>
@@ -280,7 +288,7 @@ body = f'''        <div id="bg"></div>
         <div id="t2" class="t thin" style="top:1240px;font-size:80px">칼 대신, <b style="font-weight:900">지혜로</b></div>
         <div id="t2b" class="t" style="top:1350px;font-size:58px;font-weight:300">나라를 지켜낸 서희의 외교 담판</div>
         <div id="mname"><span>이천시장</span><b>성수석</b></div>
-        <div id="t3" class="t" style="top:1352px;font-size:48px;font-weight:300;text-shadow:0 2px 12px rgba(0,0,0,0.8)">“서희함의 진수를 <b style="font-weight:800">진심으로 축하드립니다”</b></div>
+        <div id="t3" class="t" style="top:1178px;font-size:50px;line-height:1.3;font-weight:300;text-shadow:0 2px 10px rgba(0,0,0,0.95)">“서희함의 진수를<br /><b style="font-weight:800">진심으로 축하드립니다”</b></div>
         <div id="t4" class="t thin" style="top:420px;font-size:80px">서희의 이름, <b style="font-weight:900">바다로</b></div>
         <div id="co1" class="co" style="left:330px;top:1060px"><i></i><u style="height:230px"></u><div style="left:-210px;top:240px"><b>장보고-Ⅲ 배치-Ⅱ</b><span>2번함</span></div></div>
         <div id="co2" class="co" style="left:800px;top:1040px"><i></i><u style="height:250px"></u><div style="left:-200px;top:260px"><b>3,600톤급</b><span>잠수함</span></div></div>

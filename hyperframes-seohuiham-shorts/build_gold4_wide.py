@@ -25,8 +25,9 @@ def restyle(el_id, style):
 
 # frame size
 sub("lib.DUR = DUR", "lib.DUR = DUR\nlib.W, lib.H = 1920, 1080")
-sub("WIN = (540, 880, 440)", "WIN = (1300, 530, 450)")
-sub("“서희함의 진수를 <b", "“서희함의 진수를<br /><b")
+sub("WIN = (540, 900, 500)", "WIN = (1300, 530, 450)")
+sub('<div id="win-shade"></div>', "")   # the 16:9 quote sits beside the circle
+src = re.sub(r"        #win-shade \{\{.*?\n        \}\}\n", "", src, flags=re.S)
 # shapes: re-fit to the wide frame (the interview circle is already built from WIN)
 sub('SHAPES = {"h0"', '''def fit(pts, s, cx, cy, ox, oy):
     return [[round((x - cx) * s + ox, 1), round((y - cy) * s + oy, 1)] for x, y in pts]
