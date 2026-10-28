@@ -132,7 +132,7 @@ css = f'''        #cam {{
           position: absolute;
           left: 0;
           right: 0;
-          top: 1700px;
+          top: 1470px;
           display: flex;
           justify-content: center;
           align-items: center;

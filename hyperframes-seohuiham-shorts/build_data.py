@@ -197,7 +197,7 @@ css = f'''        #bg {{
           position: absolute;
           left: 0;
           right: 0;
-          top: 1650px;
+          top: 1430px;
           display: flex;
           justify-content: center;
           align-items: center;
