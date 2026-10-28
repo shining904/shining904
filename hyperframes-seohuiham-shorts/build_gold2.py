@@ -58,7 +58,7 @@ def resample(poly, n):
 
 
 ICN = [round(v, 1) for v in PX(127.44, 37.27)]
-SHAPES = {"h0": flat(80, 1000, 1000), "korea": resample(COAST, N), "wave": wave(1040, 50, 3), "seohui": C["seohui"],
+SHAPES = {"h0": flat(80, 1000, 1000), "korea": resample(COAST, N), "wave": wave(1040, 50, 3), "seohui": [[x, round(y - 60, 1)] for x, y in C["seohui"]],
           "sub": C["sub"], "under": flat(250, 830, 770), "h1": flat(-40, 1120, 812)}
 MORPHS = [(2.6, 4.3, "h0", "korea"), (7.6, 9.0, "korea", "wave"), (12.2, 13.7, "wave", "seohui"),
           (17.4, 18.9, "seohui", "sub"), (HIT + 0.05, HIT + 0.9, "sub", "under"), (29.4, 30.6, "under", "h1")]
@@ -141,11 +141,12 @@ css = f'''        #bg {{
         }}
         .cap {{
           font-weight: 500;
-          letter-spacing: 12px;
+          letter-spacing: 6px;
           color: #f0cf8a;
         }}
         .gold {{
-          background: linear-gradient(180deg, #fff4d6 0%, {GOLD} 50%, #a3711f 100%);
+          background: linear-gradient(105deg, rgba(255, 255, 255, 0) 40%, rgba(255, 252, 238, 0.95) 50%, rgba(255, 255, 255, 0) 60%) 120% 0 / 300% 100% no-repeat,
+            linear-gradient(180deg, #fff4d6 0%, {GOLD} 50%, #a3711f 100%);
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
@@ -161,12 +162,12 @@ css = f'''        #bg {{
         #icn b {{
           display: block;
           font-weight: 900;
-          font-size: 64px;
+          font-size: 80px;
           color: #ffe6a8;
         }}
         #icn span {{
-          font-weight: 300;
-          font-size: 34px;
+          font-weight: 500;
+          font-size: 40px;
           letter-spacing: 4px;
           color: #f3ead8;
         }}
@@ -174,29 +175,72 @@ css = f'''        #bg {{
           position: absolute;
           left: 0;
           right: 0;
-          top: 250px;
+          top: 160px;
           text-align: center;
           opacity: 0;
         }}
         #amb-pill {{
           display: inline-block;
-          padding: 12px 34px;
+          padding: 14px 44px;
           border: 2px solid {GOLD};
           border-radius: 60px;
           background: rgba(10, 8, 4, 0.55);
           font-family: "Pretendard", sans-serif;
           font-weight: 500;
-          font-size: 38px;
-          letter-spacing: 4px;
+          font-size: 58px;
+          font-weight: 700;
+          letter-spacing: 3px;
           color: #ffe6a8;
         }}
         #amb-name {{
           margin-top: 10px;
           font-family: "Pretendard", sans-serif;
           font-weight: 900;
-          font-size: 150px;
+          font-size: 170px;
           letter-spacing: -2px;
           color: #f3ead8;
+        }}
+        .co {{
+          position: absolute;
+          width: 0;
+          height: 0;
+        }}
+        .co i {{
+          position: absolute;
+          left: -9px;
+          top: -9px;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: #fff6dc;
+          box-shadow: 0 0 16px 4px rgba(255, 200, 110, 0.8);
+        }}
+        .co u {{
+          position: absolute;
+          left: -1px;
+          top: 0;
+          width: 2px;
+          background: linear-gradient(180deg, #ffe6a8, {GOLD});
+          transform-origin: 50% 0;
+        }}
+        .co div {{
+          position: absolute;
+          width: 400px;
+          text-align: center;
+          font-family: "Pretendard", sans-serif;
+          white-space: nowrap;
+        }}
+        .co b {{
+          display: block;
+          font-weight: 800;
+          font-size: 56px;
+          color: #f3ead8;
+        }}
+        .co span {{
+          font-weight: 500;
+          font-size: 34px;
+          letter-spacing: 2px;
+          color: #f0cf8a;
         }}
         #flash {{
           position: absolute;
@@ -208,7 +252,7 @@ css = f'''        #bg {{
           position: absolute;
           left: 0;
           right: 0;
-          top: 1380px;
+          top: 1360px;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -216,18 +260,18 @@ css = f'''        #bg {{
           opacity: 0;
         }}
         #sign img {{
-          height: 100px;
+          height: 124px;
         }}
         #sign div {{
           font-family: "Pretendard", sans-serif;
-          font-weight: 300;
-          font-size: 50px;
+          font-weight: 400;
+          font-size: 60px;
           letter-spacing: 6px;
           color: #ffffff;
         }}
         #sign i {{
           width: 2px;
-          height: 76px;
+          height: 92px;
           background: {GOLD};
         }}
 '''
@@ -238,7 +282,7 @@ body = f'''        <div id="bg"></div>
         <div id="vig"></div>
         <div id="endshade"></div>
         <div id="cam">
-          <img id="fill-seohui" class="fill" src="assets/seohui-cut.png" alt="" style="left:240px;top:560px;width:600px;height:880px" />
+          <img id="fill-seohui" class="fill" src="assets/seohui-cut.png" alt="" style="left:240px;top:500px;width:600px;height:880px" />
           <img id="fill-sub" class="fill" src="assets/sub-cut.png" alt="" style="left:60px;top:820px;width:960px;height:400px" />
           <canvas id="cv" width="1080" height="1920"></canvas>
           <div id="icn"><b>이천</b><span>ICHEON</span></div>
@@ -246,22 +290,23 @@ body = f'''        <div id="bg"></div>
         <div id="leak"></div>
         <canvas id="grain" width="270" height="480"></canvas>
         <div id="t0" class="t thin" style="top:640px;font-size:92px">천 년을 건너온 이름, <b style="font-weight:900">서희</b></div>
-        <div id="t0b" class="t cap" style="top:1180px;font-size:32px">A NAME ACROSS A THOUSAND YEARS</div>
+        <div id="t0b" class="t cap" style="top:1170px;font-size:38px">A NAME ACROSS A THOUSAND YEARS</div>
         <div id="tk" class="t thin" style="top:250px;font-size:84px">그 이름의 고향, <b style="font-weight:900;color:#ffe6a8">이천</b></div>
-        <div id="tk2" class="t cap" style="top:370px;font-size:32px">고려의 외교관 서희 · 이천 서씨</div>
+        <div id="tk2" class="t cap" style="top:370px;font-size:46px">고려의 외교관 서희 · 이천 서씨</div>
         <div id="t1" class="t thin" style="top:520px;font-size:230px;color:{GOLD}">993</div>
-        <div id="t1b" class="t cap" style="top:780px;font-size:34px">GORYEO · THE KHITAN INVASION</div>
+        <div id="t1b" class="t cap" style="top:780px;font-size:42px">GORYEO · THE KHITAN INVASION</div>
         <div id="t2" class="t thin" style="top:1240px;font-size:80px">칼 대신, <b style="font-weight:900">지혜로</b></div>
-        <div id="t2b" class="t thin" style="top:1350px;font-size:44px">나라를 지켜낸 서희의 외교 담판</div>
+        <div id="t2b" class="t" style="top:1350px;font-size:58px;font-weight:300">나라를 지켜낸 서희의 외교 담판</div>
         <div id="amb"><div id="amb-pill">이천시 AI 홍보대사</div><div id="amb-name">서희</div></div>
-        <div id="t3" class="t" style="top:1470px;font-size:56px;font-weight:300">그 이름을 이어 <b style="font-weight:800">함께 축하합니다</b></div>
+        <div id="t3" class="t" style="top:1405px;font-size:62px;font-weight:300">그 이름을 이어 <b style="font-weight:800">함께 축하합니다</b></div>
         <div id="t4" class="t thin" style="top:420px;font-size:92px">그 이름, <b style="font-weight:900">다시 바다로</b></div>
-        <div id="t4b" class="t cap" style="top:1300px;font-size:34px">THE NAME RETURNS TO THE SEA</div>
+        <div id="co1" class="co" style="left:330px;top:1060px"><i></i><u style="height:230px"></u><div style="left:-210px;top:240px"><b>장보고-Ⅲ 배치-Ⅱ</b><span>KSS-III BATCH-II · 2번함</span></div></div>
+        <div id="co2" class="co" style="left:800px;top:1040px"><i></i><u style="height:250px"></u><div style="left:-200px;top:260px"><b>3,600톤급</b><span>잠수함</span></div></div>
         <div id="title" class="t" style="top:470px;font-size:260px;font-weight:900;letter-spacing:-4px"><span class="gold">서</span><span class="gold">희</span><span class="gold">함</span></div>
-        <div id="title-en" class="t cap" style="top:806px;font-size:44px">ROKS SEO HUI</div>
-        <div id="d1" class="t thin" style="top:250px;font-size:64px;letter-spacing:8px">2026. 11. 3.</div>
-        <div id="d2" class="t" style="top:345px;font-size:96px;font-weight:800">진수를 축하합니다</div>
-        <div id="d3" class="t" style="top:1210px;font-size:60px;font-weight:400;text-shadow:0 2px 16px rgba(0,0,0,0.85)"><b style="font-weight:800;color:#ffe6a8">서희함</b>의 안전한 항해를 응원합니다</div>
+        <div id="title-en" class="t cap" style="top:806px;font-size:54px">ROKS SEO HUI</div>
+        <div id="d1" class="t thin" style="top:230px;font-size:84px;letter-spacing:8px">2026. 11. 3.</div>
+        <div id="d2" class="t" style="top:350px;font-size:116px;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)">진수를 축하합니다</div>
+        <div id="d3" class="t" style="top:1120px;font-size:80px;line-height:1.28;font-weight:400;text-shadow:0 2px 18px rgba(0,0,0,0.9)"><b style="font-weight:800;color:#ffe6a8">서희함</b>의 안전한 항해를<br /><b style="font-weight:800">응원합니다</b></div>
         <div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /><i></i><div>경기도 이천시</div></div>
         <div id="flash"></div>
 '''
@@ -385,8 +430,25 @@ js = '''        const cv = document.getElementById("cv"), ctx = cv.getContext("2
           }
           gx.putImageData(gimg, 0, 0);
         }
+        function shock(t) {
+          const age = t - HIT;
+          if (age < 0 || age > 1.4) return;
+          ctx.shadowColor = "rgba(255,210,130,1)";
+          for (const [lag, w] of [[0, 6], [0.12, 2.5]]) {
+            const u = clamp((age - lag) / 1.2);
+            if (u <= 0) continue;
+            ctx.globalAlpha = (1 - u) * 0.9;
+            ctx.strokeStyle = "#ffe6a8";
+            ctx.lineWidth = w * (1 - u) + 1;
+            ctx.shadowBlur = 30;
+            ctx.beginPath();
+            ctx.ellipse(540, 1000, 60 + u * 900, 30 + u * 420, 0, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+        }
         function render(t) {
           ctx.clearRect(0, 0, 1080, 1920);
+          shock(t);
           motes(t);
           line(t);
           icheon(t);
@@ -429,14 +491,23 @@ js += fade("#fill-seohui", 13.4, 0.92, 0.9) + '        tl.fromTo("#fill-seohui",
 js += '        tl.fromTo("#amb", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 13.8);\n'
 js += rise("#t3", 14.6) + fade("#fill-seohui", 16.9, 0, 0.5) + out("#amb, #t3", 16.9, 0.5)
 # 17.4–24.1 the submarine
-js += fade("#deep", 17.2, 1, 2.0) + rise("#t4", 19.4) + fade("#fill-sub", 19.0, 0.9, 1.0) + rise("#t4b", 20.2, 0.8)
+js += fade("#deep", 17.2, 1, 2.0)
+js += rise("#t4", 19.4) + fade("#fill-sub", 19.0, 0.9, 1.0)
+for k, a in ((1, 20.4), (2, 21.2)):
+    js += f'        tl.fromTo("#co{k} i", {{ scale: 0 }}, {{ scale: 1, duration: 0.4, ease: "back.out(3)" }}, {a});\n'
+    js += f'        tl.fromTo("#co{k} u", {{ scaleY: 0 }}, {{ scaleY: 1, duration: 0.5, ease: "power2.out" }}, {a + 0.2});\n'
+    js += f'        tl.fromTo("#co{k} div", {{ opacity: 0, y: 16 }}, {{ opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }}, {a + 0.55});\n'
+js += '        tl.set(".co i", { scale: 0 }, 0);\n        tl.set(".co u", { scaleY: 0 }, 0);\n'
+js += out("#co1, #co2", HIT - 0.4, 0.3)
 js += '        tl.fromTo("#fill-sub", { y: 0 }, { y: -18, duration: 1.4, ease: "sine.inOut", yoyo: true, repeat: 2 }, 19.6);\n'
-js += out("#t4, #t4b", HIT - 0.4, 0.3)
+js += out("#t4", HIT - 0.4, 0.3)
 # the hit
 js += f'        tl.to("#flash", {{ keyframes: [{{ opacity: 1, duration: 0.06 }}, {{ opacity: 0, duration: 1.0 }}] }}, {HIT - 0.06});\n'
 js += f'        tl.fromTo("#title span", {{ opacity: 0, y: 60, scale: 1.3, filter: "blur(16px)" }}, {{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.6, ease: "power4.out", stagger: 0.12 }}, {HIT});\n'
 js += f'        tl.set("#title", {{ opacity: 1 }}, {HIT});\n'
 js += rise("#title-en", HIT + 0.9, 0.8)
+js += f'        tl.fromTo("#title span", {{ backgroundPosition: "120% 0, 0 0" }}, {{ backgroundPosition: "-20% 0, 0 0", duration: 1.4, ease: "power2.inOut", stagger: 0.08, immediateRender: false }}, {HIT + 0.7});\n'
+js += f'        tl.fromTo("#title span", {{ backgroundPosition: "120% 0, 0 0" }}, {{ backgroundPosition: "-20% 0, 0 0", duration: 1.4, ease: "power2.inOut", stagger: 0.08, immediateRender: false }}, {HIT + 2.9});\n'
 js += f'        tl.to("#fill-sub", {{ y: 160, scale: 1.12, filter: "grayscale(0) sepia(0) saturate(1) brightness(1) contrast(1)", duration: 1.2, ease: "power2.inOut" }}, {HIT + 0.1});\n'
 js += fade("#v-side", 25.0, 0.55, 1.2) + fade("#fill-sub", 25.4, 0, 1.0)
 js += '        tl.fromTo("#v-side", { scale: 1.12 }, { scale: 1.0, duration: 5.6, ease: "none" }, 25.0);\n'
@@ -450,6 +521,6 @@ js += out("#d1, #d2, #d3, #sign", 36.6, 0.8) + fade("#v-surf", 36.7, 0.0, 0.8)
 
 d = setup("gold2")
 html = index("서희함 · 금빛 한 줄 확장판", "①+ extended one-take gold line short. Silhouettes traced from Magnific cut-outs; footage Seedance; score Lyria 3 Pro.",
-             [("gold2", 0, DUR)], bg="#050505").replace("assets/music.mp3", "assets/music-gold2.mp3")
+             [("gold2", 0, DUR)], bg="#050505").replace("assets/music.mp3", "assets/music-gold2-mix.mp3")
 write(d, {"gold2": comp("gold2", ["pre"], css, body, js)}, html)
 print("ok", ICN)
