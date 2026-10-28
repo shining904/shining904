@@ -1,11 +1,11 @@
 # 서희함 진수 축하 영상 — 웅장한 버전 「천 년의 지혜, 바다를 지키다」 (1920x1080, 73 s).
 # Focus on the two heroes: Seo Hui and the submarine. Cut to the Lyria trailer score (epic.mp3):
-#   0-7    open      Canvas 2D   darkness, sonar rings, narration 1
+#   0-7    open      Seedance    pre-dawn sea, narration 1 set as kinetic type
 #   7-15   cliff     Seedance    Seo Hui on the dawn cliff, crane shot, name card
 #   15-23  front     Seedance    the submarine emerges head-on from the deep, narration 3
 #   23-31  side      Seedance    the submarine glides under the sunlit surface
-#   31-47  title     Canvas+Blender  deep sea, Meshy/Blender submarine, Seo Hui double exposure,
-#                                   "서희함" title slam on the score's big hit (36 s)
+#   31-47  title     Seedance    slowed approaching hull; 서·희·함 slam in syllable by syllable on
+#                                   the score's big hit (36 s), light sweep, motto
 #   46-62  speech    Seedance+lipsync  Seo Hui's congratulation
 #   61-73  finale    Seedance    the submarine surfaces at sunrise, closing card
 # The earlier, history-led cut lives in build_v1.py. Run: python3 build.py
@@ -124,243 +124,351 @@ def clip(cid, src, dur, extra_css="", extra_body="", extra_js="", fade_in=0.8, p
 
 
 SCENES = [("open", 0, 7.6, 0), ("cliff", 7.0, 8.4, 1), ("front", 15.0, 8.4, 2), ("side", 23.0, 8.4, 3),
-          ("title", 31.0, 15.9, 4), ("speech", 46.4, 15.3, 5), ("finale", 61.4, 11.6, 6)]
+          ("title", 31.0, 15.9, 4), ("speech", 46.4, 14.6, 5), ("finale", 60.6, 12.4, 6)]
 LINES = [("e1.mp3", 1.6, 4.68, "천 년 전, 칼 대신 지혜로 나라를 지킨 사람이 있었습니다."),
          ("e2.mp3", 9.6, 2.1, "고려의 외교관, 서희."),
          ("e3.mp3", 17.2, 2.86, "이제 그 이름이, 바다를 지킵니다."),
-         ("s1.mp3", 46.5, 14.7, None)]
-SPEECH = [(0.0, 1.23, "서희함 장병 여러분."), (1.83, 5.59, "천 년 전 저는 칼 대신 지혜로 이 땅을 지켰습니다."),
-          (6.15, 9.9, "이제 제 이름이 바다 깊은 곳에서 나라를 지킵니다."),
-          (10.72, 14.7, "이천시민들과 함께, 서희함의 안전한 항해를 응원합니다.")]
+         ("s2.mp3", 46.5, 14.6, None)]
+SPEECH = [(0.0, 1.15, "서희함 장병 여러분."), (1.73, 5.55, "천 년 전 저는 칼 대신 지혜로 이 땅을 지켰습니다."),
+          (6.14, 9.74, "이제 제 이름이 바다 깊은 곳에서 나라를 지킵니다."),
+          (10.21, 14.6, "이천시민들과 함께, 서희함의 안전한 항해를 응원합니다.")]
 files = {}
 
-# ---------------------------------------------------------------- open: sonar in the dark (Canvas 2D)
-files["open"] = comp("open", [], '''        #open-cv {
-          position: absolute;
-          inset: 0;
-        }
-''', '        <canvas id="open-cv" width="1920" height="1080"></canvas>\n', '''        const cv = document.getElementById("open-cv"), ctx = cv.getContext("2d");
-        const rnd = (i, k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
-        function render(t) {
-          ctx.fillStyle = "#01060c";
-          ctx.fillRect(0, 0, 1920, 1080);
-          // a faint deep-blue glow breathing in the centre
-          const up = Math.min(1, t / 2.5);
-          const g = ctx.createRadialGradient(960, 560, 0, 960, 560, 900);
-          g.addColorStop(0, `rgba(10,50,90,${0.55 * up})`);
-          g.addColorStop(1, "rgba(1,6,12,0)");
-          ctx.fillStyle = g;
-          ctx.fillRect(0, 0, 1920, 1080);
-          // sonar pings: rings expanding every 2.2 s
-          for (let k = 0; k < 4; k++) {
-            const age = t - 0.4 - k * 2.2;
-            if (age < 0 || age > 3.2) continue;
-            const r = 40 + age * 420, a = Math.max(0, 1 - age / 3.2);
-            ctx.strokeStyle = `rgba(120,210,255,${0.55 * a})`;
-            ctx.lineWidth = 2.5;
-            ctx.beginPath();
-            ctx.arc(960, 560, r, 0, Math.PI * 2);
-            ctx.stroke();
-          }
-          // drifting particles
-          for (let i = 0; i < 160; i++) {
-            const x = (rnd(i, 1) * 1920 + t * (6 + rnd(i, 2) * 12)) % 1920;
-            const y = (rnd(i, 3) * 1080 - t * (4 + rnd(i, 4) * 8) + 1080) % 1080;
-            ctx.fillStyle = `rgba(170,215,255,${(0.1 + rnd(i, 5) * 0.3) * up})`;
-            ctx.beginPath();
-            ctx.arc(x, y, 0.8 + rnd(i, 6) * 1.8, 0, Math.PI * 2);
-            ctx.fill();
-          }
-          // fade to white-gold at the very end (dawn cut)
-          const w = Math.max(0, (t - 6.9) / 0.7);
-          if (w > 0) {
-            ctx.fillStyle = `rgba(255,236,200,${w})`;
-            ctx.fillRect(0, 0, 1920, 1080);
-          }
-        }
-        const state = { t: 0 };
-        tl.to(state, { t: 7.6, duration: 7.6, ease: "none", onUpdate: () => render(state.t) }, 0);
-''')
-
-# ---------------------------------------------------------------- cliff (Seo Hui)
-files["cliff"] = clip("cliff", "assets/clips/cliff.mp4", 8.4, '''        #cliff-name {
-          left: 140px;
-          right: auto;
-          top: 700px;
-          text-align: left;
-          font-size: 120px;
-        }
-        #cliff-sub {
-          left: 146px;
-          right: auto;
-          top: 850px;
-          text-align: left;
-          font-family: "Noto Sans KR", sans-serif;
-          font-weight: 500;
-          font-size: 30px;
-          letter-spacing: 10px;
-        }
-''', '''          <div id="cliff-name" class="ttl gold">서희 徐熙</div>
-          <div id="cliff-sub" class="ttl">고려의 외교관 · 942–998</div>
-''', reveal("#cliff-name", 2.8, 1.6) + pop("#cliff-sub", 3.6, 14) + out("#cliff-name, #cliff-sub", 7.2, 0.8),
-    fade_in=0.9, push=(1.04, 1.0))
-
-# ---------------------------------------------------------------- submarine clips
-files["front"] = clip("front", "assets/clips/sub-front.mp4", 8.4, fade_in=1.0, push=(1.0, 1.08))
-files["side"] = clip("side", "assets/clips/sub-side.mp4", 8.4, fade_in=0.6, push=(1.0, 1.05))
-
-# ---------------------------------------------------------------- title: the name slams in on the big hit
-files["title"] = comp("title", ["myeongjo", "noto"], TITLE_CSS + f'''        #title-cv {{
-          position: absolute;
-          inset: 0;
-        }}
-        #title-ghost {{
-          position: absolute;
-          left: -80px;
-          top: -40px;
-          width: 1100px;
-          height: 1160px;
-          object-fit: cover;
-          object-position: 50% 30%;
-          mix-blend-mode: screen;
-          -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 42%, #000 40%, transparent 85%);
-          mask-image: radial-gradient(ellipse 50% 50% at 50% 42%, #000 40%, transparent 85%);
-          filter: grayscale(0.4) sepia(0.4) hue-rotate(170deg) brightness(0.9);
-        }}
-        #title-sub {{
+# ---------------------------------------------------------------- kinetic helpers
+KIN_CSS = f'''        .kin {{
           position: absolute;
           left: 0;
-          top: 330px;
-          width: 1920px;
-          height: 1080px;
+          right: 0;
+          text-align: center;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          color: #f7efe0;
+          text-shadow: 0 4px 30px rgba(0, 0, 0, 0.75);
+          white-space: nowrap;
         }}
-        #title-subv {{
-          width: 100%;
-          height: 100%;
+        .kin .w {{
+          display: inline-block;
+        }}
+        .rule {{
+          position: absolute;
+          height: 2px;
+          background: linear-gradient(90deg, rgba(227, 178, 90, 0) 0%, {GOLD} 50%, rgba(227, 178, 90, 0) 100%);
+          transform-origin: 50% 50%;
+        }}
+        .hud {{
+          position: absolute;
+          font-family: "Noto Sans KR", sans-serif;
+          color: #e9f4ff;
+          text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+        }}
+'''
+
+
+def words(text, cls="w"):
+    return "".join(f'<span class="{cls}">{w}</span>' + ("&nbsp;" if i < len(text.split()) - 1 else "")
+                   for i, w in enumerate(text.split()))
+
+
+def stagger_in(sel, a, each=0.12, dur=0.9):
+    """words rise out of a soft blur one after another"""
+    return (f'        tl.fromTo("{sel}", {{ opacity: 0, y: 40, filter: "blur(12px)" }}, '
+            f'{{ opacity: 1, y: 0, filter: "blur(0px)", duration: {dur}, ease: "power3.out", stagger: {each} }}, {a});\n')
+
+
+def rule_in(sel, a, dur=1.0):
+    return f'        tl.fromTo("{sel}", {{ scaleX: 0 }}, {{ scaleX: 1, duration: {dur}, ease: "power3.inOut" }}, {a});\n'
+
+
+# ---------------------------------------------------------------- open: pre-dawn sea + kinetic lines
+files["open"] = clip("open", "assets/clips/sea-open.mp4", 7.6, KIN_CSS + '''        #open-l1 {
+          top: 330px;
+          font-size: 64px;
+          color: #d9c9ab;
+          letter-spacing: 18px;
+        }
+        #open-l2 {
+          top: 430px;
+          font-size: 110px;
+        }
+        #open-l3 {
+          top: 590px;
+          font-size: 64px;
+        }
+        #open-r1 {
+          left: 660px;
+          width: 600px;
+          top: 560px;
+        }
+        #open-dark {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.65) 100%);
+        }
+        #open-white {
+          position: absolute;
+          inset: 0;
+          background: #fff3dc;
+          opacity: 0;
+        }
+''', f'''          <div id="open-dark"></div>
+          <div id="open-l1" class="kin">천 년 전</div>
+          <div id="open-l2" class="kin">{words("칼 대신 지혜로", "w o2")}</div>
+          <div id="open-r1" class="rule"></div>
+          <div id="open-l3" class="kin">{words("나라를 지킨 사람이 있었다", "w o3")}</div>
+          <div id="open-white"></div>
+''', '        tl.fromTo("#open-l1", { opacity: 0, letterSpacing: "40px" }, { opacity: 1, letterSpacing: "18px", duration: 1.6, ease: "power2.out" }, 0.8);\n'.replace('letterSpacing: "40px"', 'scale: 1.15').replace('letterSpacing: "18px"', 'scale: 1')
+    + stagger_in(".o2", 2.4, 0.18, 1.0) + rule_in("#open-r1", 3.4, 1.2) + stagger_in(".o3", 4.0, 0.14, 0.9)
+    + '        tl.to("#open-white", { opacity: 1, duration: 0.6, ease: "power2.in" }, 7.0);\n',
+    fade_in=1.6, push=(1.0, 1.08), grade="filter: brightness(0.85) contrast(1.05);")
+
+# ---------------------------------------------------------------- cliff: Seo Hui, kinetic name card
+files["cliff"] = clip("cliff", "assets/clips/cliff.mp4", 8.4, KIN_CSS + f'''        #cliff-han {{
+          position: absolute;
+          left: 60px;
+          top: 520px;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          font-size: 330px;
+          color: rgba(255, 236, 200, 0.1);
+          -webkit-text-stroke: 2px rgba(255, 236, 200, 0.55);
+          white-space: nowrap;
+        }}
+        #cliff-name {{
+          left: 150px;
+          right: auto;
+          top: 650px;
+          text-align: left;
+          font-size: 150px;
+        }}
+        #cliff-r {{
+          left: 150px;
+          width: 520px;
+          top: 840px;
+          transform-origin: 0 50%;
+          background: linear-gradient(90deg, {GOLD} 0%, rgba(227, 178, 90, 0) 100%);
+        }}
+        #cliff-sub {{
+          left: 154px;
+          top: 862px;
+          font-size: 32px;
+          font-weight: 500;
+          letter-spacing: 8px;
+        }}
+''', '''          <div id="cliff-han">徐熙</div>
+          <div id="cliff-name" class="ttl gold">서희</div>
+          <div id="cliff-r" class="rule"></div>
+          <div id="cliff-sub" class="hud">고려의 외교관 · 942–998</div>
+''', '        tl.fromTo("#cliff-han", { opacity: 0, x: -120 }, { opacity: 1, x: 40, duration: 6.0, ease: "power1.out" }, 1.6);\n'
+    + reveal("#cliff-name", 2.4, 1.4) + '        tl.fromTo("#cliff-r", { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: "power3.inOut" }, 3.2);\n'
+    + pop("#cliff-sub", 3.6, 10) + out("#cliff-han, #cliff-name, #cliff-r, #cliff-sub", 7.2, 0.8),
+    fade_in=0.4, push=(1.04, 1.0))
+
+# ---------------------------------------------------------------- front: kinetic line over the approaching hull
+files["front"] = clip("front", "assets/clips/sub-front.mp4", 8.4, KIN_CSS + '''        #front-l1 {
+          top: 360px;
+          font-size: 70px;
+          color: #cfe6ff;
+        }
+        #front-l2 {
+          top: 470px;
+          font-size: 140px;
+        }
+        #front-r {
+          left: 610px;
+          width: 700px;
+          top: 650px;
+        }
+''', f'''          <div id="front-l1" class="kin">{words("이제 그 이름이,", "w f1")}</div>
+          <div id="front-l2" class="kin">{words("바다를 지킵니다", "w f2")}</div>
+          <div id="front-r" class="rule"></div>
+''', stagger_in(".f1", 2.0, 0.12, 0.8) + stagger_in(".f2", 3.0, 0.2, 1.0) + rule_in("#front-r", 3.8, 1.2)
+    + out("#front-l1, #front-l2, #front-r", 7.4, 0.8), fade_in=0.4, push=(1.0, 1.08))
+
+# ---------------------------------------------------------------- side: HUD callouts on the hull
+files["side"] = clip("side", "assets/clips/sub-side.mp4", 8.4, KIN_CSS + f'''        .call {{
+          position: absolute;
+          border-left: 2px solid {GOLD};
+          padding-left: 18px;
+        }}
+        .call b {{
+          display: block;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          font-size: 64px;
+          color: #ffffff;
+        }}
+        .call span {{
+          font-size: 26px;
+          letter-spacing: 6px;
+          color: #bfe0ff;
+        }}
+        .dot {{
+          position: absolute;
+          width: 16px;
+          height: 16px;
+          margin: -8px 0 0 -8px;
+          border-radius: 50%;
+          border: 2px solid {GOLD};
+          box-shadow: 0 0 14px {GOLD};
+        }}
+        #side-c1 {{
+          left: 1180px;
+          top: 150px;
+        }}
+        #side-c2 {{
+          left: 260px;
+          top: 760px;
+        }}
+        #side-c3 {{
+          left: 1250px;
+          top: 760px;
+        }}
+''', '''          <div id="side-d1" class="dot" style="left:1060px;top:300px"></div>
+          <div id="side-c1" class="call hud"><b><span id="side-ton">0</span>톤급</b><span>DISPLACEMENT</span></div>
+          <div id="side-c2" class="call hud"><b>장보고-Ⅲ 배치-Ⅱ</b><span>2번함 · 2026. 11. 3. 진수</span></div>
+          <div id="side-c3" class="call hud"><b>국산화율 약 80%</b><span>K-SUBMARINE</span></div>
+''', '        tl.fromTo("#side-d1", { opacity: 0, scale: 3 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 1.0);\n'
+    + '        tl.fromTo(".call", { opacity: 0, x: -40, clipPath: "inset(0 100% 0 0)" }, { opacity: 1, x: 0, clipPath: "inset(0 0% 0 0)", duration: 0.9, ease: "power3.out", stagger: 1.1 }, 1.3);\n'
+    + '        { const o = { v: 0 }; tl.to(o, { v: 3600, duration: 1.6, ease: "power2.out", onUpdate: () => { document.querySelector("#side-ton").textContent = Math.round(o.v).toLocaleString("en-US"); } }, 1.3); }\n'
+    + out(".call, #side-d1", 7.5, 0.6), fade_in=0.5, push=(1.0, 1.05))
+
+# ---------------------------------------------------------------- title: letters slam over the slowed hull
+files["title"] = clip("title", "assets/clips/title-bg.mp4", 15.9, KIN_CSS + f'''        #title-dim {{
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at 50% 42%, rgba(2, 14, 28, 0.35) 0%, rgba(2, 10, 20, 0.85) 100%);
         }}
         #title-flash {{
           position: absolute;
           inset: 0;
-          background: radial-gradient(ellipse at 50% 45%, rgba(255, 240, 200, 0.95) 0%, rgba(255, 240, 200, 0) 60%);
+          background: radial-gradient(ellipse at 50% 42%, rgba(255, 240, 205, 0.9) 0%, rgba(255, 240, 205, 0) 55%);
           mix-blend-mode: screen;
           opacity: 0;
         }}
         #title-name {{
-          top: 200px;
-          font-size: 230px;
-          letter-spacing: 30px;
+          top: 250px;
+          font-size: 250px;
+          letter-spacing: 40px;
+          padding-left: 40px;
+        }}
+        #title-name .c {{
+          display: inline-block;
+        }}
+        #title-sweep {{
+          position: absolute;
+          left: 0;
+          top: 250px;
+          width: 1920px;
+          height: 300px;
+          background: linear-gradient(100deg, rgba(255, 255, 255, 0) 40%, rgba(255, 248, 225, 0.55) 50%, rgba(255, 255, 255, 0) 60%);
+          mix-blend-mode: overlay;
+        }}
+        #title-r1 {{
+          left: 560px;
+          width: 800px;
+          top: 560px;
         }}
         #title-en {{
-          top: 470px;
-          font-family: "Noto Sans KR", sans-serif;
-          font-weight: 500;
+          top: 585px;
           font-size: 34px;
-          letter-spacing: 26px;
-          color: #bfe3ff;
+          font-weight: 500;
+          letter-spacing: 28px;
+          color: #cfe6ff;
+          left: 0;
+          right: 0;
+          text-align: center;
         }}
-        #title-facts {{
-          top: 540px;
+        #title-motto {{
+          top: 690px;
+          font-size: 66px;
+        }}
+''', '''          <div id="title-dim"></div>
+          <div id="title-name" class="kin gold"><span class="c">서</span><span class="c">희</span><span class="c">함</span></div>
+          <div id="title-sweep"></div>
+          <div id="title-r1" class="rule"></div>
+          <div id="title-en" class="hud">ROKS SEO HUI</div>
+          <div id="title-motto" class="kin">천 년의 지혜, 바다를 지키다</div>
+          <div id="title-flash"></div>
+''', '        tl.set("#title-name .c", { opacity: 0 }, 0);\n'
+    # each syllable slams on a beat leading into the score's big hit at ~5.3 s
+    + "".join(f'        tl.fromTo("#title-name .c:nth-child({k + 1})", {{ opacity: 0, scale: 2.4, filter: "blur(16px)" }}, '
+              f'{{ opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.32, ease: "power4.in" }}, {a});\n'
+              for k, a in enumerate((3.7, 4.4, 5.05)))
+    + '        tl.fromTo("#title-flash", { opacity: 0 }, { opacity: 1, duration: 0.07, ease: "none" }, 5.3);\n'
+    + '        tl.to("#title-flash", { opacity: 0, duration: 1.3, ease: "power2.out" }, 5.37);\n'
+    + '        tl.fromTo("#title-sweep", { x: -1400 }, { x: 1400, duration: 1.6, ease: "power2.inOut" }, 5.6);\n'
+    + '        tl.fromTo("#title-name", { scale: 1 }, { scale: 1.05, duration: 9, ease: "none" }, 5.4);\n'
+    + rule_in("#title-r1", 6.0, 1.2) + pop("#title-en", 6.6, 10) + stagger_in("#title-motto", 8.4, 0, 1.4)
+    + out("#title-name, #title-r1, #title-en, #title-motto, #title-sweep", 14.6, 1.0),
+    fade_in=1.2, push=(1.0, 1.04))
+
+# ---------------------------------------------------------------- speech (lipsynced, new solemn voice)
+files["speech"] = clip("speech", "assets/clips/speech-lip.mp4", 14.6, fade_in=1.0, push=(1.0, 1.04))
+
+# ---------------------------------------------------------------- finale: kinetic close + logo
+files["finale"] = clip("finale", "assets/clips/sub-surface.mp4", 12.4, KIN_CSS + '''        #fin-shade {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          height: 680px;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0) 100%);
+        }
+        #fin-shade2 {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 460px;
+          background: linear-gradient(0deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%);
+        }
+        #fin-1 {
+          top: 170px;
+          font-size: 74px;
+          color: #e9dcc4;
+        }
+        #fin-2 {
+          top: 270px;
+          font-size: 116px;
+        }
+        #fin-r {
+          left: 610px;
+          width: 700px;
+          top: 430px;
+        }
+        #fin-3 {
+          top: 455px;
           font-family: "Noto Sans KR", sans-serif;
           font-weight: 500;
           font-size: 32px;
-          color: #e7f2ff;
-        }}
-        #title-facts b {{
-          color: {GOLD};
-          font-weight: 800;
-        }}
-        #title-motto {{
-          top: 640px;
-          font-size: 60px;
-        }}
-''', '''        <canvas id="title-cv" width="1920" height="1080"></canvas>
-        <img id="title-ghost" src="assets/img/portrait.png" alt="" />
-        <div id="title-sub"><video id="title-subv" src="assets/3d/sub.webm" data-start="0" data-duration="15.9" muted playsinline></video></div>
-        <div id="title-flash"></div>
-        <div id="title-name" class="ttl gold">서희함</div>
-        <div id="title-en" class="ttl">ROKS SEO HUI</div>
-        <div id="title-facts" class="ttl"><b>장보고-Ⅲ 배치-Ⅱ</b> 2번함 · <b>3,600톤급</b> 잠수함 · <b>2026. 11. 3.</b> 진수</div>
-        <div id="title-motto" class="ttl">천 년의 지혜, 바다를 지키다</div>
-''', '''        const cv = document.getElementById("title-cv"), ctx = cv.getContext("2d");
-        const rnd = (i, k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
-        function render(t) {
-          const g = ctx.createLinearGradient(0, 0, 0, 1080);
-          g.addColorStop(0, "#0c3f6e");
-          g.addColorStop(0.55, "#04203d");
-          g.addColorStop(1, "#010a16");
-          ctx.fillStyle = g;
-          ctx.fillRect(0, 0, 1920, 1080);
-          ctx.globalCompositeOperation = "lighter";
-          for (let i = 0; i < 8; i++) {
-            const x = 120 + i * 240 + Math.sin(t * 0.35 + i) * 50, w = 60 + rnd(i, 1) * 110;
-            const s = ctx.createLinearGradient(0, 0, 0, 1080);
-            s.addColorStop(0, "rgba(120,200,255,0.14)");
-            s.addColorStop(1, "rgba(120,200,255,0)");
-            ctx.fillStyle = s;
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x + w, 0);
-            ctx.lineTo(x + w * 2.4 - 260, 1080);
-            ctx.lineTo(x - 260, 1080);
-            ctx.fill();
-          }
-          ctx.globalCompositeOperation = "source-over";
-          for (let i = 0; i < 200; i++) {
-            const x = (rnd(i, 4) * 1920 + t * (10 + rnd(i, 5) * 22)) % 1920;
-            const y = (rnd(i, 6) * 1080 + t * (6 + rnd(i, 7) * 12)) % 1080;
-            ctx.fillStyle = `rgba(200,230,255,${0.12 + rnd(i, 8) * 0.3})`;
-            ctx.beginPath();
-            ctx.arc(x, y, 1 + rnd(i, 9) * 2, 0, Math.PI * 2);
-            ctx.fill();
-          }
+          letter-spacing: 6px;
         }
-        const state = { t: 0 };
-        tl.to(state, { t: 15.9, duration: 15.9, ease: "none", onUpdate: () => render(state.t) }, 0);
-        tl.fromTo("#title-cv", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "none" }, 0);
-        // Seo Hui's face appears over the sea like a memory, the submarine passes beneath
-        tl.fromTo("#title-ghost", { opacity: 0, scale: 1.08 }, { opacity: 0.42, scale: 1.0, duration: 3.0, ease: "power2.out" }, 0.6);
-        tl.to("#title-ghost", { opacity: 0.18, duration: 1.0, ease: "none" }, 5.2);
-        tl.fromTo("#title-sub", { opacity: 0, x: 260 }, { opacity: 1, x: 0, duration: 2.2, ease: "power2.out" }, 0.4);
-        tl.to("#title-sub", { x: -80, duration: 13, ease: "none" }, 2.6);
-        // the hit (score at ~36.3 s = 5.3 s into this scene)
-        tl.fromTo("#title-flash", { opacity: 0 }, { opacity: 1, duration: 0.08, ease: "none" }, 5.25);
-        tl.to("#title-flash", { opacity: 0, duration: 1.2, ease: "power2.out" }, 5.33);
-        tl.fromTo("#title-name", { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power4.out" }, 5.25);
-''' + pop("#title-en", 6.0, 10) + pop("#title-facts", 6.8, 10) + reveal("#title-motto", 8.6, 1.4)
-    + out("#title-name, #title-en, #title-facts, #title-motto, #title-sub, #title-ghost", 14.6, 1.0))
-
-# ---------------------------------------------------------------- speech (lipsynced)
-files["speech"] = clip("speech", "assets/clips/speech-lip.mp4", 15.3, fade_in=1.0, push=(1.0, 1.04))
-
-# ---------------------------------------------------------------- finale
-files["finale"] = clip("finale", "assets/clips/sub-surface.mp4", 11.6, '''        #fin-1 {
-          top: 210px;
-          font-size: 96px;
-        }
-        #fin-2 {
-          top: 340px;
-          font-family: "Noto Sans KR", sans-serif;
-          font-weight: 500;
-          font-size: 36px;
-          letter-spacing: 4px;
-        }
-        #fin-from {
-          top: 780px;
-          font-size: 52px;
+        #fin-sign {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 800px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 34px;
         }
         #fin-logo {
-          position: absolute;
-          left: 50%;
-          top: 870px;
-          margin-left: -110px;
-          width: 220px;
-          padding: 10px 18px;
-          border-radius: 16px;
-          background: #ffffff;
+          height: 130px;
+          filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.6));
         }
-        #fin-logo img {
-          display: block;
-          width: 100%;
+        #fin-from {
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          font-size: 54px;
+          color: #ffffff;
+          text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+          letter-spacing: 6px;
+        }
+        #fin-bar {
+          width: 2px;
+          height: 90px;
+          background: rgba(227, 178, 90, 0.9);
         }
         #fin-ai {
           position: absolute;
@@ -370,42 +478,30 @@ files["finale"] = clip("finale", "assets/clips/sub-surface.mp4", 11.6, '''      
           font-size: 18px;
           color: rgba(255, 255, 255, 0.6);
         }
-        #fin-shade {
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 0;
-          height: 520px;
-          background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.45) 60%, rgba(0, 0, 0, 0) 100%);
-        }
-        #fin-shade2 {
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          height: 420px;
-          background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
-        }
         #fin-black {
           position: absolute;
           inset: 0;
           background: #000;
           opacity: 0;
         }
-''', '''          <div id="fin-shade"></div>
+''', f'''          <div id="fin-shade"></div>
           <div id="fin-shade2"></div>
-          <div id="fin-1" class="ttl"><span class="gold">서희함</span>의 진수를 진심으로 축하합니다</div>
-          <div id="fin-2" class="ttl">천 년의 지혜와 함께, 안전한 항해를 기원합니다</div>
-          <div id="fin-from" class="ttl">이천시민 일동</div>
-          <div id="fin-logo"><img src="assets/img/icheon-logo.png" alt="이천시" /></div>
+          <div id="fin-1" class="kin">{words("서희함의 진수를", "w g1")}</div>
+          <div id="fin-2" class="kin gold">{words("진심으로 축하합니다", "w g2")}</div>
+          <div id="fin-r" class="rule"></div>
+          <div id="fin-3" class="kin">천 년의 지혜와 함께, 안전한 항해를 기원합니다</div>
+          <div id="fin-sign"><img id="fin-logo" src="assets/img/icheon-logo-dark.png" alt="이천시" /><div id="fin-bar"></div><div id="fin-from">경기도 이천시</div></div>
           <div id="fin-ai">본 영상은 AI로 제작되었으며 일부 장면은 연출입니다</div>
           <div id="fin-black"></div>
-''', '        tl.fromTo("#fin-shade, #fin-shade2", { opacity: 0 }, { opacity: 1, duration: 1.2, ease: "none" }, 1.0);\n' + reveal("#fin-1", 1.4, 1.6) + pop("#fin-2", 2.8, 14) + pop("#fin-from", 4.6, 14) + pop("#fin-logo", 5.2, 14)
-    + pop("#fin-ai", 5.2, 0) + '        tl.to("#fin-black", { opacity: 1, duration: 1.4, ease: "none" }, 10.2);\n',
+''', '        tl.fromTo("#fin-shade, #fin-shade2", { opacity: 0 }, { opacity: 1, duration: 1.2, ease: "none" }, 0.8);\n'
+    + stagger_in(".g1", 1.2, 0.15, 0.9) + stagger_in(".g2", 2.0, 0.2, 1.1) + rule_in("#fin-r", 3.0, 1.2)
+    + pop("#fin-3", 3.5, 10) + '        tl.fromTo("#fin-sign", { opacity: 0, y: 24, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.4, ease: "power3.out" }, 5.0);\n'
+    + pop("#fin-ai", 5.4, 0) + '        tl.to("#fin-black", { opacity: 1, duration: 1.4, ease: "none" }, 10.2);\n',
     fade_in=1.0, push=(1.0, 1.06))
 
+
 # ---------------------------------------------------------------- captions
-caps = [(s, s + d, c) for _, s, d, c in LINES if c] + [(46.5 + a, 46.5 + b, c) for a, b, c in SPEECH]
+caps = [(46.5 + a, 46.5 + b, c) for a, b, c in SPEECH]
 files["caps"] = comp("caps", ["noto"], '''        .caps-line {
           position: absolute;
           left: 0;

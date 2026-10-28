@@ -6,62 +6,161 @@
   <body>
     <template>
       <style>
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF;
+        }
+        @font-face {
+          font-family: "Nanum Myeongjo";
+          font-weight: 800;
+          src: url("fonts/nanum-myeongjo-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF, U+4E00-9FFF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-latin-500-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2160-216F;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 500;
+          src: url("fonts/noto-sans-kr-korean-500-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-latin-800-normal.woff2") format("woff2");
+          unicode-range: U+0000-00FF, U+2160-216F;
+        }
+        @font-face {
+          font-family: "Noto Sans KR";
+          font-weight: 800;
+          src: url("fonts/noto-sans-kr-korean-800-normal.woff2") format("woff2");
+          unicode-range: U+1100-11FF, U+3130-318F, U+AC00-D7AF;
+        }
         #root {
           position: absolute;
           inset: 0;
           overflow: hidden;
         }
-        #open-cv {
+        #open-fade {
           position: absolute;
           inset: 0;
+          background: #000;
+        }
+        #open-video {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          filter: brightness(0.85) contrast(1.05);
+        }
+        #open-bars {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 18%, rgba(0, 0, 0, 0) 78%, rgba(0, 0, 0, 0.6) 100%);
+        }
+        .ttl {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          color: #f7efe0;
+          text-shadow: 0 6px 40px rgba(0, 0, 0, 0.7);
+        }
+        .gold {
+          background: linear-gradient(180deg, #fff3cf 0%, #e3b25a 45%, #9a6a1c 100%);
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          text-shadow: none;
+          filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.6));
+        }
+        .kin {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          color: #f7efe0;
+          text-shadow: 0 4px 30px rgba(0, 0, 0, 0.75);
+          white-space: nowrap;
+        }
+        .kin .w {
+          display: inline-block;
+        }
+        .rule {
+          position: absolute;
+          height: 2px;
+          background: linear-gradient(90deg, rgba(227, 178, 90, 0) 0%, #e3b25a 50%, rgba(227, 178, 90, 0) 100%);
+          transform-origin: 50% 50%;
+        }
+        .hud {
+          position: absolute;
+          font-family: "Noto Sans KR", sans-serif;
+          color: #e9f4ff;
+          text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+        }
+        #open-l1 {
+          top: 330px;
+          font-size: 64px;
+          color: #d9c9ab;
+          letter-spacing: 18px;
+        }
+        #open-l2 {
+          top: 430px;
+          font-size: 110px;
+        }
+        #open-l3 {
+          top: 590px;
+          font-size: 64px;
+        }
+        #open-r1 {
+          left: 660px;
+          width: 600px;
+          top: 560px;
+        }
+        #open-dark {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.65) 100%);
+        }
+        #open-white {
+          position: absolute;
+          inset: 0;
+          background: #fff3dc;
+          opacity: 0;
         }
       </style>
       <div id="root" data-composition-id="open" data-width="1920" data-height="1080">
-        <canvas id="open-cv" width="1920" height="1080"></canvas>
+        <div id="open-fade">
+          <video id="open-video" src="assets/clips/sea-open.mp4" data-start="0" data-duration="7.6" muted playsinline></video>
+          <div id="open-bars"></div>
+          <div id="open-dark"></div>
+          <div id="open-l1" class="kin">천 년 전</div>
+          <div id="open-l2" class="kin"><span class="w o2">칼</span>&nbsp;<span class="w o2">대신</span>&nbsp;<span class="w o2">지혜로</span></div>
+          <div id="open-r1" class="rule"></div>
+          <div id="open-l3" class="kin"><span class="w o3">나라를</span>&nbsp;<span class="w o3">지킨</span>&nbsp;<span class="w o3">사람이</span>&nbsp;<span class="w o3">있었다</span></div>
+          <div id="open-white"></div>
+        </div>
       </div>
       <script>
         const tl = gsap.timeline({ paused: true });
-        const cv = document.getElementById("open-cv"), ctx = cv.getContext("2d");
-        const rnd = (i, k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
-        function render(t) {
-          ctx.fillStyle = "#01060c";
-          ctx.fillRect(0, 0, 1920, 1080);
-          // a faint deep-blue glow breathing in the centre
-          const up = Math.min(1, t / 2.5);
-          const g = ctx.createRadialGradient(960, 560, 0, 960, 560, 900);
-          g.addColorStop(0, `rgba(10,50,90,${0.55 * up})`);
-          g.addColorStop(1, "rgba(1,6,12,0)");
-          ctx.fillStyle = g;
-          ctx.fillRect(0, 0, 1920, 1080);
-          // sonar pings: rings expanding every 2.2 s
-          for (let k = 0; k < 4; k++) {
-            const age = t - 0.4 - k * 2.2;
-            if (age < 0 || age > 3.2) continue;
-            const r = 40 + age * 420, a = Math.max(0, 1 - age / 3.2);
-            ctx.strokeStyle = `rgba(120,210,255,${0.55 * a})`;
-            ctx.lineWidth = 2.5;
-            ctx.beginPath();
-            ctx.arc(960, 560, r, 0, Math.PI * 2);
-            ctx.stroke();
-          }
-          // drifting particles
-          for (let i = 0; i < 160; i++) {
-            const x = (rnd(i, 1) * 1920 + t * (6 + rnd(i, 2) * 12)) % 1920;
-            const y = (rnd(i, 3) * 1080 - t * (4 + rnd(i, 4) * 8) + 1080) % 1080;
-            ctx.fillStyle = `rgba(170,215,255,${(0.1 + rnd(i, 5) * 0.3) * up})`;
-            ctx.beginPath();
-            ctx.arc(x, y, 0.8 + rnd(i, 6) * 1.8, 0, Math.PI * 2);
-            ctx.fill();
-          }
-          // fade to white-gold at the very end (dawn cut)
-          const w = Math.max(0, (t - 6.9) / 0.7);
-          if (w > 0) {
-            ctx.fillStyle = `rgba(255,236,200,${w})`;
-            ctx.fillRect(0, 0, 1920, 1080);
-          }
-        }
-        const state = { t: 0 };
-        tl.to(state, { t: 7.6, duration: 7.6, ease: "none", onUpdate: () => render(state.t) }, 0);
+        tl.fromTo("#open-fade", { opacity: 0 }, { opacity: 1, duration: 1.6, ease: "none" }, 0);
+        tl.fromTo("#open-video", { scale: 1.0 }, { scale: 1.08, duration: 7.6, ease: "none" }, 0);
+        tl.fromTo("#open-l1", { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: 1.6, ease: "power2.out" }, 0.8);
+        tl.fromTo(".o2", { opacity: 0, y: 40, filter: "blur(12px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.0, ease: "power3.out", stagger: 0.18 }, 2.4);
+        tl.fromTo("#open-r1", { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power3.inOut" }, 3.4);
+        tl.fromTo(".o3", { opacity: 0, y: 40, filter: "blur(12px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, ease: "power3.out", stagger: 0.14 }, 4.0);
+        tl.to("#open-white", { opacity: 1, duration: 0.6, ease: "power2.in" }, 7.0);
         window.__timelines["open"] = tl;
       </script>
     </template>

@@ -83,17 +83,64 @@
           text-shadow: none;
           filter: drop-shadow(0 4px 24px rgba(0, 0, 0, 0.6));
         }
+        .kin {
+          position: absolute;
+          left: 0;
+          right: 0;
+          text-align: center;
+          font-family: "Nanum Myeongjo", serif;
+          font-weight: 800;
+          color: #f7efe0;
+          text-shadow: 0 4px 30px rgba(0, 0, 0, 0.75);
+          white-space: nowrap;
+        }
+        .kin .w {
+          display: inline-block;
+        }
+        .rule {
+          position: absolute;
+          height: 2px;
+          background: linear-gradient(90deg, rgba(227, 178, 90, 0) 0%, #e3b25a 50%, rgba(227, 178, 90, 0) 100%);
+          transform-origin: 50% 50%;
+        }
+        .hud {
+          position: absolute;
+          font-family: "Noto Sans KR", sans-serif;
+          color: #e9f4ff;
+          text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
+        }
+        #front-l1 {
+          top: 360px;
+          font-size: 70px;
+          color: #cfe6ff;
+        }
+        #front-l2 {
+          top: 470px;
+          font-size: 140px;
+        }
+        #front-r {
+          left: 610px;
+          width: 700px;
+          top: 650px;
+        }
       </style>
       <div id="root" data-composition-id="front" data-width="1920" data-height="1080">
         <div id="front-fade">
           <video id="front-video" src="assets/clips/sub-front.mp4" data-start="0" data-duration="8.4" muted playsinline></video>
           <div id="front-bars"></div>
+          <div id="front-l1" class="kin"><span class="w f1">이제</span>&nbsp;<span class="w f1">그</span>&nbsp;<span class="w f1">이름이,</span></div>
+          <div id="front-l2" class="kin"><span class="w f2">바다를</span>&nbsp;<span class="w f2">지킵니다</span></div>
+          <div id="front-r" class="rule"></div>
         </div>
       </div>
       <script>
         const tl = gsap.timeline({ paused: true });
-        tl.fromTo("#front-fade", { opacity: 0 }, { opacity: 1, duration: 1.0, ease: "none" }, 0);
+        tl.fromTo("#front-fade", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "none" }, 0);
         tl.fromTo("#front-video", { scale: 1.0 }, { scale: 1.08, duration: 8.4, ease: "none" }, 0);
+        tl.fromTo(".f1", { opacity: 0, y: 40, filter: "blur(12px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out", stagger: 0.12 }, 2.0);
+        tl.fromTo(".f2", { opacity: 0, y: 40, filter: "blur(12px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.0, ease: "power3.out", stagger: 0.2 }, 3.0);
+        tl.fromTo("#front-r", { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power3.inOut" }, 3.8);
+        tl.to("#front-l1, #front-l2, #front-r", { opacity: 0, duration: 0.8, ease: "power1.in" }, 7.4);
         window.__timelines["front"] = tl;
       </script>
     </template>
