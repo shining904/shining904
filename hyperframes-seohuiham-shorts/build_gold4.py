@@ -276,7 +276,7 @@ body = f'''        <div id="bg"></div>
         <div id="vig"></div>
         <div id="endshade"></div>
         <div id="cam">
-          <div id="win">{"" if GREEN else f'<video id="mayor" src="{MAYOR}" data-start="13.5" data-duration="4.9" muted playsinline></video>'}<div id="win-shade"></div></div>
+          <div id="win">{"" if GREEN else f'<video id="mayor" src="{MAYOR}" data-start="13.5" data-duration="4.9" muted playsinline></video><div id="win-shade"></div>'}</div>
           <img id="fill-sub" class="fill" src="assets/sub-cut.png" alt="" style="left:60px;top:820px;width:960px;height:400px;filter:brightness(0.92) contrast(1.05)" />
           <canvas id="cv" width="1080" height="1920"></canvas>
         </div>
