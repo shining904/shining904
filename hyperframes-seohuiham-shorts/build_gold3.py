@@ -210,19 +210,7 @@ css = f'''        #bg {{
           opacity: 0;
         }}
         #sign img {{
-          height: 124px;
-        }}
-        #sign div {{
-          font-family: "Pretendard", sans-serif;
-          font-weight: 400;
-          font-size: 60px;
-          letter-spacing: 6px;
-          color: #ffffff;
-        }}
-        #sign i {{
-          width: 2px;
-          height: 92px;
-          background: {GOLD};
+          height: 150px;
         }}
 '''
 body = f'''        <div id="bg"></div>
@@ -248,7 +236,7 @@ body = f'''        <div id="bg"></div>
         <div id="t2b" class="t" style="top:1350px;font-size:58px;font-weight:300">나라를 지켜낸 서희의 외교 담판</div>
         <div id="amb"><div id="amb-pill">이천시 AI 홍보대사</div><div id="amb-name">서희</div></div>
         <div id="t3" class="t" style="top:1305px;font-size:60px;line-height:1.3;font-weight:300">이천시민들과 함께<br /><b style="font-weight:800">서희함의 진수를 축하합니다</b></div>
-        <div id="t4" class="t thin" style="top:420px;font-size:80px">서희의 이름, <b style="font-weight:900">다시 바다로</b></div>
+        <div id="t4" class="t thin" style="top:420px;font-size:80px">서희의 이름, <b style="font-weight:900">바다로</b></div>
         <div id="co1" class="co" style="left:330px;top:1060px"><i></i><u style="height:230px"></u><div style="left:-210px;top:240px"><b>장보고-Ⅲ 배치-Ⅱ</b><span>KSS-III BATCH-II · 2번함</span></div></div>
         <div id="co2" class="co" style="left:800px;top:1040px"><i></i><u style="height:250px"></u><div style="left:-200px;top:260px"><b>3,600톤급</b><span>잠수함</span></div></div>
         <div id="title" class="t" style="top:470px;font-size:260px;font-weight:900;letter-spacing:-4px"><span class="gold">서</span><span class="gold">희</span><span class="gold">함</span></div>
@@ -257,7 +245,7 @@ body = f'''        <div id="bg"></div>
         <div id="d2" class="t" style="top:350px;font-size:116px;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)">진수를 축하합니다</div>
         <div id="d3" class="t" style="top:1050px;font-size:80px;line-height:1.28;font-weight:400;text-shadow:0 2px 18px rgba(0,0,0,0.9)"><b style="font-weight:800;color:#ffe6a8">서희함</b>의 안전한 항해를<br /><b style="font-weight:800">응원합니다</b></div>
         <div id="d4" class="t cap" style="top:1268px;font-size:40px;font-weight:700;letter-spacing:4px;color:#ffe6a8;text-shadow:0 2px 14px rgba(0,0,0,0.95), 0 0 4px rgba(0,0,0,0.8)">— 이천시 AI 홍보대사 서희 —</div>
-        <div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /><i></i><div>경기도 이천시</div></div>
+        <div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /></div>
         <div id="flash"></div>
 '''
 js = '''        const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
