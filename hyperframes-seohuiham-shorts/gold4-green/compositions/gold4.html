@@ -222,11 +222,12 @@
           position: absolute;
           left: 0;
           right: 0;
-          top: 1462px;
+          top: 1428px;
           text-align: center;
           font-family: "Pretendard", sans-serif;
           font-weight: 500;
-          font-size: 28px;
+          font-size: 26px;
+          line-height: 1.35;
           color: rgba(255, 255, 255, 0.82);
           text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
           white-space: nowrap;
@@ -280,7 +281,7 @@
         <div id="title" class="t" style="top:470px;font-size:260px;font-weight:900;letter-spacing:-4px"><span class="gold">서</span><span class="gold">희</span><span class="gold">함</span></div>
         <div id="d2" class="t" style="top:480px;font-size:112px;line-height:1.22;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)"><span style="color:#ffe6a8">서희함</span>의<br />진수를 축하합니다</div>
         <div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /></div>
-        <div id="ai-note">이 영상은 AI로 제작되어 실제와 다를 수 있습니다</div>
+        <div id="ai-note">이 영상은 생성형 AI로 제작되었으며,<br />잠수함 등 일부 장면은 실제 촬영이 아닌 가상 연출입니다.</div>
         <div id="flash"></div>
       </div>
       <script>
@@ -415,7 +416,7 @@
         tl.to("#leak", { keyframes: [{ opacity: 1, x: 300, duration: 4 }, { opacity: 0, x: 700, duration: 4 }], ease: "sine.inOut" }, 1.0);
         tl.to("#leak", { keyframes: [{ opacity: 1, x: 500, y: 600, duration: 2.5 }, { opacity: 0, x: 900, y: 800, duration: 3 }], ease: "sine.inOut" }, 13.4);
         tl.to("#leak", { keyframes: [{ opacity: 1, x: 200, y: 200, duration: 1.0 }, { opacity: 0, x: 600, y: 300, duration: 3 }], ease: "sine.inOut" }, 24.1);
-        tl.fromTo("#ai-note", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "none" }, 0.3);
+        tl.set("#ai-note", { opacity: 0 }, 0);
         tl.fromTo("#t0", { opacity: 0, y: 26, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.2, ease: "power3.out" }, 0.6);
         tl.to("#t0", { opacity: 0, duration: 0.5, ease: "power1.in" }, 4.2);
         tl.fromTo("#t1", { opacity: 0, y: 26, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.1, ease: "power3.out" }, 6.6);
@@ -428,7 +429,6 @@
         tl.fromTo("#mname", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 14.0);
         tl.fromTo("#t3", { opacity: 0, y: 26, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, ease: "power3.out" }, 14.4);
         tl.to("#mname, #t3", { opacity: 0, duration: 0.5, ease: "power1.in" }, 17.5);
-        tl.to("#ai-note", { opacity: 0, duration: 0.4, ease: "power1.inOut" }, 13.2);
         tl.to("#ai-note", { opacity: 1, duration: 0.5, ease: "power1.inOut" }, 18.3);
         tl.to("#deep", { opacity: 1, duration: 2.0, ease: "power1.inOut" }, 17.8);
         tl.fromTo("#t4", { opacity: 0, y: 26, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, ease: "power3.out" }, 19.6);

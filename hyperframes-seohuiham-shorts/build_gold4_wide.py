@@ -62,14 +62,14 @@ for a, b in [("createImageData(270, 480)", "createImageData(480, 270)"), ("i < 2
 # text layout
 LEFT = "left:140px;right:auto;text-align:left;"
 restyle("t0", "top:400px;font-size:84px")
-restyle("t1", "top:130px;font-size:200px;color:{GOLD}")
+restyle("t1", "top:130px;font-size:200px;font-weight:600;color:{GOLD}")
 restyle("t1b", "top:370px;font-size:40px")
 restyle("t2", "top:720px;font-size:76px")
 restyle("t2b", "top:830px;font-size:52px;font-weight:300")
 restyle("t3", LEFT + "top:600px;font-size:56px;line-height:1.35;font-weight:300;text-shadow:0 2px 12px rgba(0,0,0,0.8)")
 restyle("t4", "top:130px;font-size:84px")
 restyle("title", "top:240px;font-size:240px;font-weight:900;letter-spacing:-4px")
-restyle("d2", "top:250px;font-size:104px;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)")
+restyle("d2", "top:300px;font-size:124px;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)")
 sub('</span>의<br />진수를 축하합니다</div>', '</span>의 진수를 축하합니다</div>')
 restyle("fill-sub", "left:480px;top:400px;width:960px;height:400px;filter:brightness(0.92) contrast(1.05)")
 restyle("co1", "left:750px;top:640px")
@@ -101,5 +101,6 @@ css += """        #mname {
 """
 body = f\'\'\'''')
 sub("          top: 1172px;\n          font-size: 43px;\n          line-height: 1.32;",
-    "          left: 140px;\n          right: auto;\n          text-align: left;\n          top: 560px;\n          font-size: 52px;\n          line-height: 1.35;")
+    "          left: 140px;\n          right: auto;\n          text-align: left;\n          top: 560px;\n          font-size: 58px;\n          line-height: 1.35;")
+sub('이 영상은 생성형 AI로 제작되었으며,<br />잠수함', '이 영상은 생성형 AI로 제작되었으며, 잠수함')   # one line fits 16:9
 exec(compile(src, "build_gold4.py (wide)", "exec"))

@@ -249,11 +249,12 @@ css = f'''        #bg {{
           position: absolute;
           left: 0;
           right: 0;
-          top: 1462px;
+          top: 1428px;
           text-align: center;
           font-family: "Pretendard", sans-serif;
           font-weight: 500;
-          font-size: 28px;
+          font-size: 26px;
+          line-height: 1.35;
           color: rgba(255, 255, 255, 0.82);
           text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
           white-space: nowrap;
@@ -334,7 +335,7 @@ body = f'''        <div id="bg"></div>
         <div id="title" class="t" style="top:470px;font-size:260px;font-weight:900;letter-spacing:-4px"><span class="gold">서</span><span class="gold">희</span><span class="gold">함</span></div>
         <div id="d2" class="t" style="top:480px;font-size:112px;line-height:1.22;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)"><span style="color:#ffe6a8">서희함</span>의<br />진수를 축하합니다</div>
         {'<div id="letter"><span id="l-title">이천시장</span><span id="l-name">성수석</span><span id="l-end">올림</span></div>' if LETTER else '<div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /></div>'}
-        <div id="ai-note">이 영상은 AI로 제작되어 실제와 다를 수 있습니다</div>
+        <div id="ai-note">이 영상은 생성형 AI로 제작되었으며,<br />잠수함 등 일부 장면은 실제 촬영이 아닌 가상 연출입니다.</div>
         <div id="flash"></div>
 '''
 js = '''        const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
@@ -483,7 +484,8 @@ js += '        tl.to("#leak", { keyframes: [{ opacity: 1, x: 300, duration: 4 },
 js += '        tl.to("#leak", { keyframes: [{ opacity: 1, x: 500, y: 600, duration: 2.5 }, { opacity: 0, x: 900, y: 800, duration: 3 }], ease: "sine.inOut" }, 13.4);\n'
 js += f'        tl.to("#leak", {{ keyframes: [{{ opacity: 1, x: 200, y: 200, duration: 1.0 }}, {{ opacity: 0, x: 600, y: 300, duration: 3 }}], ease: "sine.inOut" }}, {HIT});\n'
 # 0–4.6 horizon
-js += '        tl.fromTo("#ai-note", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "none" }, 0.3);\n'
+# the AI notice comes in with the submarine (the first AI-staged footage), not before
+js += '        tl.set("#ai-note", { opacity: 0 }, 0);\n'
 js += rise("#t0", 0.6, 1.2) + out("#t0", 4.2, 0.5)
 # 4.6–12.2 the sea of 993
 js += rise("#t1", 6.6, 1.1) + rise("#t1b", 7.2) + rise("#t2", 8.4) + rise("#t2b", 9.0) + out("#t1, #t1b, #t2, #t2b", 11.8, 0.5)
@@ -501,8 +503,6 @@ if not GREEN:
         js += '        tl.fromTo("#mayor", { scale: 1.08 }, { scale: 1.0, duration: 4.9, ease: "none" }, 13.5);\n'
 js += '        tl.fromTo("#mname", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 14.0);\n'
 js += rise("#t3", 14.4) + out("#mname, #t3", 17.5, 0.5)
-# the AI notice steps aside while the real interview footage is on screen
-js += '        tl.to("#ai-note", { opacity: 0, duration: 0.4, ease: "power1.inOut" }, 13.2);\n'
 js += '        tl.to("#ai-note", { opacity: 1, duration: 0.5, ease: "power1.inOut" }, 18.3);\n'
 # 17.4–24.1 the submarine
 js += fade("#deep", 17.8, 1, 2.0)
