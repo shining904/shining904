@@ -4,16 +4,28 @@
 # The finale reads only '서희함의 진수를 축하합니다', signed off by hand '이천시장 성수석 올림'
 # (no logo). Everything else is gold3. MAYOR=<file> picks the interview clip (default: a placeholder);
 # GREEN=1 fills the circle with chroma green instead, for compositing the footage elsewhere.
+# HOLD=<s> keeps the circle open that long for a full-length interview (MAYOR_START = where the
+# talk starts in the clip): the film's own timeline slows almost to a stop while the mayor speaks,
+# then carries on exactly as before, so every later beat (and the score's hit) stays in sync.
 import json
 import math
 import os
+import re
 import lib
 from lib import GOLD, comp, index, setup, write, out
 
 MAYOR = os.environ.get("MAYOR", "assets/mayor/mayor.mp4")
 GREEN = os.environ.get("GREEN") == "1"
+HOLD = float(os.environ.get("HOLD", "0"))
+MAYOR_START = float(os.environ.get("MAYOR_START", "0"))
+T0, T1 = 15.4, 17.4          # film time the hold stretches: circle fully open, captions up
 DUR, HIT = 37.5, 24.1          # score: goldC.mp3 delayed 0.75 s so its hit (23.35 s) lands at 24.1 s
-lib.DUR = DUR
+SHIFT = HOLD - (T1 - T0) if HOLD else 0.0   # how much later everything after the hold lands
+REAL = DUR + SHIFT
+# the interview clip stays on until the circle has closed again
+MAYOR_TIMING = (f' data-media-start="{MAYOR_START}" data-duration="{round(17.6 + SHIFT + 0.6 - 13.5, 2)}"'
+                if HOLD else ' data-duration="4.9"')
+lib.DUR = REAL
 C = json.load(open("shared/assets/contours.json"))
 N = 420
 
@@ -276,7 +288,7 @@ body = f'''        <div id="bg"></div>
         <div id="vig"></div>
         <div id="endshade"></div>
         <div id="cam">
-          <div id="win">{"" if GREEN else f'<video id="mayor" src="{MAYOR}" data-start="13.5" data-duration="4.9" muted playsinline></video><div id="win-shade"></div>'}</div>
+          <div id="win">{"" if GREEN else f'<video id="mayor" src="{MAYOR}" data-start="13.5"{MAYOR_TIMING} muted playsinline></video><div id="win-shade"></div>'}</div>
           <img id="fill-sub" class="fill" src="assets/sub-cut.png" alt="" style="left:60px;top:820px;width:960px;height:400px;filter:brightness(0.92) contrast(1.05)" />
           <canvas id="cv" width="1080" height="1920"></canvas>
         </div>
@@ -452,7 +464,10 @@ js += rise("#t1", 6.6, 1.1) + rise("#t1b", 7.2) + rise("#t2", 8.4) + rise("#t2b"
 js += f'        tl.to("#win", {{ clipPath: "circle({WIN[2]}px at 50% 50%)", duration: 0.9, ease: "power3.out" }}, 13.5);\n'
 js += f'        tl.to("#win", {{ clipPath: "circle(0px at 50% 50%)", duration: 0.6, ease: "power2.in" }}, 17.6);\n'
 if not GREEN:
-    js += '        tl.fromTo("#mayor", { scale: 1.08 }, { scale: 1.0, duration: 4.9, ease: "none" }, 13.5);\n'
+    if HOLD:   # a real interview: a little closer on the face, drifting out over the whole talk
+        js += '        tl.fromTo("#mayor", { scale: 1.2, transformOrigin: "53% 30%" }, { scale: 1.1, duration: 4.9, ease: "none" }, 13.5);\n'
+    else:
+        js += '        tl.fromTo("#mayor", { scale: 1.08 }, { scale: 1.0, duration: 4.9, ease: "none" }, 13.5);\n'
 js += '        tl.fromTo("#mname", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 14.0);\n'
 js += rise("#t3", 14.4) + out("#mname, #t3", 17.5, 0.5)
 # the AI notice steps aside while the real interview footage is on screen
@@ -490,8 +505,22 @@ js += '        tl.to("#l-name", { clipPath: "inset(-20% 0% -20% 0)", duration: 1
 js += fade("#l-end", 34.3, 1, 0.8)
 js += out("#d2, #letter", 36.5, 0.8) + fade("#v-launch-b", 36.6, 0.0, 0.7)
 
-d = setup("gold4-green" if GREEN else "gold4")
+if HOLD:
+    # the fixed quote would not match a full-length talk: keep only the name tag
+    body = re.sub(r'        <div id="t3" [^\n]*\n', "", body)
+    js = js.replace('tl.fromTo("#t3", ', '// (no quote) tl.fromTo("#t3", ').replace('"#mname, #t3"', '"#mname"')
+    # clips that start after the hold are on real time, so they move later by SHIFT
+    body = re.sub(r'data-start="([0-9.]+)"', lambda m: f'data-start="{round(float(m.group(1)) + SHIFT, 2) if float(m.group(1)) > T1 else m.group(1)}"', body)
+    # the film timeline becomes an inner timeline played through a time-warp: 1:1, then T0→T1
+    # stretched over HOLD seconds, then 1:1 again (seek-safe: the inner time is a pure function)
+    js += f"""        const inner = gsap.timeline({{ paused: true }});
+        tl.getChildren(false, true, true).forEach((c) => {{ const at = c.startTime(); tl.remove(c); inner.add(c, at); }});
+        const warp = (t) => (t < {T0} ? t : t < {T0 + HOLD} ? {T0} + (t - {T0}) * {(T1 - T0) / HOLD} : t - {SHIFT});
+        const clock = {{ t: 0 }};
+        tl.to(clock, {{ t: {REAL}, duration: {REAL}, ease: "none", onUpdate: () => inner.time(warp(clock.t)) }}, 0);
+"""
+d = setup(("gold5" if HOLD else "gold4") + ("-green" if GREEN else ""))
 html = index("서희함 · 금빛 한 줄 확장판", "①+ extended one-take gold line short. Silhouettes traced from Magnific cut-outs; footage Seedance; score Lyria 3 Pro.",
-             [("gold4", 0, DUR)], bg="#050505").replace("assets/music.mp3", "assets/music-gold4-mix.mp3")
+             [("gold4", 0, REAL)], bg="#050505").replace("assets/music.mp3", "assets/music-gold5-mix.mp3" if HOLD else "assets/music-gold4-mix.mp3")
 write(d, {"gold4": comp("gold4", ["pre", "brush", "myeongjo"], css, body, js)}, html)
 print("ok")

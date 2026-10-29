@@ -1,2 +1,7 @@
 __pycache__/
 hyperframes-seohuiham-shorts/out/work-*/
+# real interview footage and anything built from it stay out of the repo
+hyperframes-seohuiham-shorts/shared/assets/mayor/src/
+hyperframes-seohuiham-shorts/shared/assets/mayor/greeting.mp4
+hyperframes-seohuiham-shorts/shared/assets/music-gold5-mix.mp3
+hyperframes-seohuiham-shorts/out/gold5*.mp4

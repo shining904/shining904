@@ -24,7 +24,7 @@ def restyle(el_id, style):
 
 
 # frame size
-sub("lib.DUR = DUR", "lib.DUR = DUR\nlib.W, lib.H = 1920, 1080")
+sub("lib.DUR = REAL", "lib.DUR = REAL\nlib.W, lib.H = 1920, 1080")
 sub("WIN = (540, 900, 500)", "WIN = (1300, 530, 450)")
 sub('<div id="win-shade"></div>', "")   # the 16:9 quote sits beside the circle
 src = re.sub(r"        #win-shade \{\{.*?\n        \}\}\n", "", src, flags=re.S)
@@ -48,8 +48,8 @@ src = re.sub(r'        <video id="v-launch-[ab]"[^\n]*\n', "", src)
 src = re.sub(r"js \+= fade\(\"#v-launch-[ab]\"[^\n]*\n", "", src)
 sub('fade("#v-launch-b", 36.6, 0.0, 0.7)', 'fade("#v-surf", 36.6, 0.0, 0.7)')
 sub('.replace("assets/music.mp3"', '.replace("<title>서희함 · 금빛 한 줄 확장판</title>", "<title>서희함 · 금빛 한 줄 16:9</title>").replace("assets/music.mp3"')
-sub('setup("gold4-green" if GREEN else "gold4")', 'setup("gold4-wide-green" if GREEN else "gold4-wide")')
-sub('[("gold4", 0, DUR)]', '[("gold4wide", 0, DUR)]')
+sub('d = setup(("gold5" if HOLD else "gold4") + ("-green" if GREEN else ""))', 'd = setup(("gold5" if HOLD else "gold4") + "-wide" + ("-green" if GREEN else ""))')
+sub('[("gold4", 0, REAL)]', '[("gold4wide", 0, REAL)]')
 sub('{"gold4": comp("gold4"', '{"gold4wide": comp("gold4wide"')
 # canvas maths
 for a, b in [("createImageData(270, 480)", "createImageData(480, 270)"), ("i < 270 * 480", "i < 480 * 270"),
