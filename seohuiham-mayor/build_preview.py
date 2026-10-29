@@ -160,19 +160,29 @@ def build_stage():
         segs.append((start, ["-ss", str(cs), "-t", str(d), "-i", os.path.join(CLIPS, clip)],
                      f"{norm},setpts={speed:.4f}*(PTS-STARTPTS)", fade))
     seohui = os.path.join(WORK, "track-seohui.mp4")
-    chain(segs, seohui, "yuv420p", ["-c:v", "libx264", "-crf", "12", "-preset", "fast"])
+    if not os.path.exists(seohui) or os.environ.get("FRESH"):
+        chain(segs, seohui, "yuv420p", ["-c:v", "libx264", "-crf", "12", "-preset", "fast"])
 
     grade = (f"fps={FPS},scale=-1:{MH},colorbalance=rs=.05:gs=.01:bs=-.06:rm=.03:bm=-.04,"
              "eq=brightness=-0.04:saturation=0.93,format=yuva420p")
-    segs = []
+    # Decode and grade each mayor piece to a small lossless file first: a single graph with ~16
+    # alpha VP9 decoders runs out of memory.
+    segs, pieces = [], os.path.join(WORK, "mayor-pieces")
+    os.makedirs(pieces, exist_ok=True)
+
+    def piece(t, args, fade):
+        f = os.path.join(pieces, f"p{len(segs):02d}.mkv")
+        run(["ffmpeg", "-v", "error", "-y", *args, "-vf", grade, "-c:v", "ffv1", f])
+        segs.append((t, ["-i", f], "null", fade))
+
     for start, src, d, _ in MAYOR:
         if src == "listen":
-            segs.append((start, ["-c:v", "libvpx-vp9", "-t", str(d + 0.5), "-i", listen], grade, 0.2))
+            piece(start, ["-c:v", "libvpx-vp9", "-t", str(d + 0.5), "-i", listen], 0.2)
             continue
         t = start
         for j, (k, off, take) in enumerate(chunk_pieces(src, d)):
-            segs.append((t, ["-c:v", "libvpx-vp9", "-ss", str(off), "-t", str(take + 0.5), "-i",
-                             os.path.join(CUT, f"cut{k + 1}.webm")], grade, 0.2 if j == 0 else 0.04))
+            piece(t, ["-c:v", "libvpx-vp9", "-ss", str(off), "-t", str(take + 0.5), "-i",
+                      os.path.join(CUT, f"cut{k + 1}.webm")], 0.2 if j == 0 else 0.04)
             t += take
     mayor = os.path.join(WORK, "track-mayor.mkv")
     chain(segs, mayor, "yuva420p", ["-c:v", "ffv1"])
