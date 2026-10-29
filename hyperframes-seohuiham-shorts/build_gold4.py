@@ -475,8 +475,12 @@ js += rise("#t1", 6.6, 1.1) + rise("#t1b", 7.2) + rise("#t2", 8.4) + rise("#t2b"
 js += f'        tl.to("#win", {{ clipPath: "circle({WIN[2]}px at 50% 50%)", duration: 0.9, ease: "power3.out" }}, 13.5);\n'
 js += f'        tl.to("#win", {{ clipPath: "circle(0px at 50% 50%)", duration: 0.6, ease: "power2.in" }}, 17.6);\n'
 if not GREEN:
-    if HOLD:   # a real interview: a little closer on the face, drifting out over the whole talk
-        js += '        tl.fromTo("#mayor", { scale: 1.2, transformOrigin: "53% 30%" }, { scale: 1.1, duration: 4.9, ease: "none" }, 13.5);\n'
+    if HOLD:   # a real interview
+        # barely any zoom (the clip is shown at about its native size, so it stays sharp), and the
+        # film grain steps aside over the real footage like the AI notice does
+        js += '        tl.fromTo("#mayor", { scale: 1.06, transformOrigin: "53% 30%" }, { scale: 1.0, duration: 4.9, ease: "none" }, 13.5);\n'
+        js += '        tl.to("#grain", { opacity: 0, duration: 0.4, ease: "power1.inOut" }, 13.2);\n'
+        js += '        tl.to("#grain", { opacity: 0.09, duration: 0.5, ease: "power1.inOut" }, 18.3);\n'
     else:
         js += '        tl.fromTo("#mayor", { scale: 1.08 }, { scale: 1.0, duration: 4.9, ease: "none" }, 13.5);\n'
 js += '        tl.fromTo("#mname", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 14.0);\n'

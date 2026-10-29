@@ -2125,7 +2125,9 @@
         tl.to("#t1, #t1b, #t2, #t2b", { opacity: 0, duration: 0.5, ease: "power1.in" }, 11.8);
         tl.to("#win", { clipPath: "circle(450px at 50% 50%)", duration: 0.9, ease: "power3.out" }, 13.5);
         tl.to("#win", { clipPath: "circle(0px at 50% 50%)", duration: 0.6, ease: "power2.in" }, 17.6);
-        tl.fromTo("#mayor", { scale: 1.2, transformOrigin: "53% 30%" }, { scale: 1.1, duration: 4.9, ease: "none" }, 13.5);
+        tl.fromTo("#mayor", { scale: 1.06, transformOrigin: "53% 30%" }, { scale: 1.0, duration: 4.9, ease: "none" }, 13.5);
+        tl.to("#grain", { opacity: 0, duration: 0.4, ease: "power1.inOut" }, 13.2);
+        tl.to("#grain", { opacity: 0.09, duration: 0.5, ease: "power1.inOut" }, 18.3);
         tl.fromTo("#mname", { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 14.0);
         // (no quote) tl.fromTo("#t3", { opacity: 0, y: 26, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, ease: "power3.out" }, 14.4);
         tl.to("#mname", { opacity: 0, duration: 0.5, ease: "power1.in" }, 17.5);
