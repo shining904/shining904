@@ -18,7 +18,10 @@ from lib import GOLD, comp, index, setup, write, out
 
 MAYOR = os.environ.get("MAYOR", "assets/mayor/mayor.mp4")
 GREEN = os.environ.get("GREEN") == "1"
-LETTER = os.environ.get("LETTER") == "1"   # hand-signed '이천시장 성수석 올림' instead of the city logo
+LETTER = os.environ.get("LETTER") == "1"
+# finale backgrounds: the AI-upscaled versions (Magnific Precision) when they are in place
+HD = lambda name: f"assets/{name}-hd.mp4" if os.path.exists(f"shared/assets/{name}-hd.mp4") else f"assets/{name}.mp4"
+SURF, LAUNCH = HD("sub-surface"), HD("launch")   # hand-signed '이천시장 성수석 올림' instead of the city logo
 HOLD = float(os.environ.get("HOLD", "0"))
 MAYOR_START = float(os.environ.get("MAYOR_START", "0"))
 SUBS = json.load(open(os.environ["SUBS"])) if os.environ.get("SUBS") else []
@@ -310,9 +313,9 @@ if LETTER:
 body = f'''        <div id="bg"></div>
         <div id="deep"></div>
         <video id="v-side" class="foot" src="assets/sub-side.mp4" data-start="25.0" data-duration="5.6" muted playsinline style="object-position:55% 50%"></video>
-        <video id="v-surf" class="foot" src="assets/sub-surface.mp4" data-start="29.4" data-duration="3.2" muted playsinline style="object-position:37% 50%"></video>
-        <video id="v-launch-a" class="foot" src="assets/launch.mp4" data-start="31.6" data-media-start="0" data-duration="2.9" muted playsinline></video>
-        <video id="v-launch-b" class="foot" src="assets/launch.mp4" data-start="34.3" data-media-start="5.0" data-duration="3.04" muted playsinline></video>
+        <video id="v-surf" class="foot" src="{SURF}" data-start="29.4" data-duration="3.2" muted playsinline style="object-position:37% 50%"></video>
+        <video id="v-launch-a" class="foot" src="{LAUNCH}" data-start="31.6" data-media-start="0" data-duration="2.9" muted playsinline></video>
+        <video id="v-launch-b" class="foot" src="{LAUNCH}" data-start="34.3" data-media-start="5.0" data-duration="3.04" muted playsinline></video>
         <div id="vig"></div>
         <div id="endshade"></div>
         <div id="cam">
@@ -526,9 +529,11 @@ js += fade("#v-side", 25.0, 0.55, 1.2) + fade("#fill-sub", 25.4, 0, 1.0)
 js += '        tl.fromTo("#v-side", { scale: 1.12 }, { scale: 1.0, duration: 5.6, ease: "none" }, 25.0);\n'
 js += out("#title", 29.0, 0.6)
 # 29.4– sunrise: the congratulation and the sign-off (city logo, or the signed letter)
-js += fade("#v-surf", 29.4, 1, 1.4) + '        tl.fromTo("#v-surf", { scale: 1.0 }, { scale: 1.08, duration: 8.1, ease: "none" }, 29.4);\n'
-js += fade("#v-launch-a", 31.6, 1, 0.9) + '        tl.fromTo("#v-launch-a", { scale: 1.0 }, { scale: 1.04, duration: 2.9, ease: "none" }, 31.6);\n'
-js += fade("#v-launch-b", 34.3, 1, 0.5) + '        tl.fromTo("#v-launch-b", { scale: 1.02 }, { scale: 1.06, duration: 3.04, ease: "none" }, 34.3);\n'
+js += fade("#v-surf", 29.4, 1, 1.4) + '        tl.fromTo("#v-surf", { scale: 1.0 }, { scale: 1.03, duration: 8.1, ease: "none" }, 29.4);\n'
+js += fade("#v-launch-a", 31.6, 1, 0.9) + '        tl.fromTo("#v-launch-a", { scale: 1.0 }, { scale: 1.02, duration: 2.9, ease: "none" }, 31.6);\n'
+js += fade("#v-launch-b", 34.3, 1, 0.5) + '        tl.fromTo("#v-launch-b", { scale: 1.0 }, { scale: 1.03, duration: 3.04, ease: "none" }, 34.3);\n'
+# the film grain leaves for the finale so the real-looking footage stays clean
+js += '        tl.to("#grain", { opacity: 0, duration: 0.8, ease: "power1.inOut" }, 29.4);\n'
 js += fade("#endshade", 29.8, 1, 1.2) + rise("#d2", 30.6, 1.1)
 if LETTER:
     js += fade("#l-title", 32.3, 1, 0.8)
