@@ -125,49 +125,63 @@ def build_listen():
     k, off, _ = chunk_pieces(LISTEN[0], LISTEN[1])[0]
     run(["ffmpeg", "-v", "error", "-y", "-c:v", "libvpx-vp9", "-ss", str(off), "-t", str(LISTEN[1]),
          "-i", os.path.join(CUT, f"cut{k + 1}.webm"), "-filter_complex",
-         "[0]format=yuva420p,split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1,loop=loop=4:size=70,fps=25",
+         "[0]format=yuva420p,split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1,loop=loop=6:size=300,fps=25",
          "-c:v", "libvpx-vp9", "-pix_fmt", "yuva420p", "-b:v", "8M", "-auto-alt-ref", "0", path])
     return path
 
 
+def chain(segs, out, pix, codec):
+    """join segments in order with short crossfades: segs = [(start, input args, filter, fade in)]
+    Each segment is padded by its successor's fade so the successor starts exactly on time
+    (keeps lip-sync). Sequential xfades keep memory flat, unlike timestamp-offset overlays."""
+    ins, fil = [], []
+    for i, (start, args, filt, _) in enumerate(segs):
+        end = segs[i + 1][0] if i + 1 < len(segs) else DUR
+        pad = segs[i + 1][3] if i + 1 < len(segs) else 0
+        ins += args
+        fil.append(f"[{i}]{filt},trim=duration={end - start:.3f},setpts=PTS-STARTPTS,"
+                   f"tpad=stop_mode=clone:stop_duration={pad + 0.04}[v{i}]")
+    last = "v0"
+    for i in range(1, len(segs)):
+        fil.append(f"[{last}][v{i}]xfade=transition=fade:duration={segs[i][3]}:offset={segs[i][0]:.3f}[x{i}]")
+        last = f"x{i}"
+    fil.append(f"[{last}]trim=0:{DUR},format={pix}[out]")
+    run(["ffmpeg", "-v", "error", "-y", *ins, "-filter_complex", ";".join(fil), "-map", "[out]",
+         "-r", str(FPS), *codec, out])
+
+
 def build_stage():
     listen = build_listen()
-    ins, fil, n = [], [], 0
+    norm = f"fps={FPS},scale={SW}:{SH},format=yuv420p"
     plate = os.path.join(ASSETS, "plate3-hanok.png")
-    ins += ["-loop", "1", "-framerate", str(FPS), "-t", str(DUR), "-i", plate]
-    fil.append(f"[0]scale={SW}:{SH},format=yuva420p[base0]")
-    last, n = "base0", 1
-
-    def layer(src_args, filt, start, pad, x=0, y=0):
-        nonlocal last, n
-        ins.extend(src_args)
-        fil.append(f"[{n}]{filt},tpad=stop_mode=clone:stop_duration={pad},"
-                   f"fade=t=in:st=0:d=0.2:alpha=1,setpts=PTS-STARTPTS+{start}/TB[l{n}]")
-        fil.append(f"[{last}][l{n}]overlay={x}:{y}:eof_action=pass[base{n}]")
-        last, n = f"base{n}", n + 1
-
+    segs = [(0.0, ["-loop", "1", "-framerate", str(FPS), "-t", str(APPEAR + 2), "-i", plate], norm, 0)]
     for start, clip, cs, d, speed in SEOHUI:
-        f = f"fps={FPS},scale={SW}:{SH},setpts={speed}*(PTS-STARTPTS),format=yuva420p"
-        if start == APPEAR:  # first appearance: slow fade in from the plate
-            f = f.replace("format=yuva420p", "format=yuva420p,fade=t=in:st=0:d=1.2:alpha=1")
-        layer(["-ss", str(cs), "-t", str(d), "-i", os.path.join(CLIPS, clip)], f, start, 0.3)
+        fade = 1.2 if start == APPEAR else 0.2  # Seohui's first appearance fades in slowly
+        segs.append((start, ["-ss", str(cs), "-t", str(d), "-i", os.path.join(CLIPS, clip)],
+                     f"{norm},setpts={speed:.4f}*(PTS-STARTPTS)", fade))
+    seohui = os.path.join(WORK, "track-seohui.mp4")
+    chain(segs, seohui, "yuv420p", ["-c:v", "libx264", "-crf", "12", "-preset", "fast"])
 
     grade = (f"fps={FPS},scale=-1:{MH},colorbalance=rs=.05:gs=.01:bs=-.06:rm=.03:bm=-.04,"
              "eq=brightness=-0.04:saturation=0.93,format=yuva420p")
+    segs = []
     for start, src, d, _ in MAYOR:
         if src == "listen":
-            layer(["-c:v", "libvpx-vp9", "-t", str(d), "-i", listen], grade, start, 0.3, MX, MY)
+            segs.append((start, ["-c:v", "libvpx-vp9", "-t", str(d + 0.5), "-i", listen], grade, 0.2))
             continue
         t = start
-        for k, off, take in chunk_pieces(src, d):
-            layer(["-c:v", "libvpx-vp9", "-ss", str(off), "-t", str(take), "-i",
-                   os.path.join(CUT, f"cut{k + 1}.webm")], grade, t, 0.3, MX, MY)
+        for j, (k, off, take) in enumerate(chunk_pieces(src, d)):
+            segs.append((t, ["-c:v", "libvpx-vp9", "-ss", str(off), "-t", str(take + 0.5), "-i",
+                             os.path.join(CUT, f"cut{k + 1}.webm")], grade, 0.2 if j == 0 else 0.04))
             t += take
-    fil.append(f"[{last}]trim=0:{DUR},format=yuv420p[out]")
+    mayor = os.path.join(WORK, "track-mayor.mkv")
+    chain(segs, mayor, "yuva420p", ["-c:v", "ffv1"])
+
     out = os.path.join(WORK, "preview", "assets", "stage.mp4")
     os.makedirs(os.path.dirname(out), exist_ok=True)
-    run(["ffmpeg", "-v", "error", "-y", *ins, "-filter_complex", ";".join(fil), "-map", "[out]",
-         "-r", str(FPS), "-c:v", "libx264", "-crf", "14", "-preset", "medium", out])
+    run(["ffmpeg", "-v", "error", "-y", "-i", seohui, "-i", mayor, "-filter_complex",
+         f"[0][1]overlay={MX}:{MY},format=yuv420p[out]", "-map", "[out]", "-r", str(FPS),
+         "-c:v", "libx264", "-crf", "14", "-preset", "medium", out])
 
 
 def build_audio():
