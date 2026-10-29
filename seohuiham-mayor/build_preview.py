@@ -43,7 +43,7 @@ MAYOR = [
     (51.1, 30.6, 5.3, True),    # 9 서희함을 위해 애써 주신 …
     (56.4, 22.95, 7.4, True),   # 10 (greeting stand-in) 이제 그 이름이 …
     (63.8, 8.76, 2.5, False),   # 11 together (Seohui's voice carries it)
-    (66.3, 42.2, 1.5, False),
+    (66.3, 41.75, 1.5, False),
 ]
 
 # Seohui track: (preview start, clip, clip start, duration, speed)
@@ -111,9 +111,11 @@ def chunk_pieces(src, dur):
     """split a greeting source range into (chunk index, offset, length) pieces"""
     out = []
     while dur > 1e-3:
-        k = max(i for i, (s, _) in enumerate(CHUNKS) if s <= src + 1e-3)
+        k = max(i for i, (s, _) in enumerate(CHUNKS) if s <= src + 0.05)
         s, n = CHUNKS[k]
-        take = min(dur, s + n - src - 0.02)
+        take = min(dur, s + n - src)
+        if take < 0.04:  # ran past the last chunk
+            raise ValueError(f"greeting source {src:.2f}s is outside the cut-out chunks")
         out.append((k, src - s, take))
         src, dur = src + take, dur - take
     return out
