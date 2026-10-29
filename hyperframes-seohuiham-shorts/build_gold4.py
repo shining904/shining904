@@ -7,6 +7,7 @@
 # HOLD=<s> keeps the circle open that long for a full-length interview (MAYOR_START = where the
 # talk starts in the clip): the film's own timeline slows almost to a stop while the mayor speaks,
 # then carries on exactly as before, so every later beat (and the score's hit) stays in sync.
+# MIX names the soundtrack built for that hold by tools/mix_gold5.sh (OUT=).
 import json
 import math
 import os
@@ -20,8 +21,8 @@ HOLD = float(os.environ.get("HOLD", "0"))
 MAYOR_START = float(os.environ.get("MAYOR_START", "0"))
 T0, T1 = 15.4, 17.4          # film time the hold stretches: circle fully open, captions up
 DUR, HIT = 37.5, 24.1          # score: goldC.mp3 delayed 0.75 s so its hit (23.35 s) lands at 24.1 s
-SHIFT = HOLD - (T1 - T0) if HOLD else 0.0   # how much later everything after the hold lands
-REAL = DUR + SHIFT
+SHIFT = round(HOLD - (T1 - T0), 3) if HOLD else 0.0   # how much later everything after the hold lands
+REAL = round(DUR + SHIFT, 3)
 # the interview clip stays on until the circle has closed again
 MAYOR_TIMING = (f' data-media-start="{MAYOR_START}" data-duration="{round(17.6 + SHIFT + 0.6 - 13.5, 2)}"'
                 if HOLD else ' data-duration="4.9"')
@@ -521,6 +522,6 @@ if HOLD:
 """
 d = setup(("gold5" if HOLD else "gold4") + ("-green" if GREEN else ""))
 html = index("서희함 · 금빛 한 줄 확장판", "①+ extended one-take gold line short. Silhouettes traced from Magnific cut-outs; footage Seedance; score Lyria 3 Pro.",
-             [("gold4", 0, REAL)], bg="#050505").replace("assets/music.mp3", "assets/music-gold5-mix.mp3" if HOLD else "assets/music-gold4-mix.mp3")
+             [("gold4", 0, REAL)], bg="#050505").replace("assets/music.mp3", "assets/" + os.environ.get("MIX", "music-gold5-mix.mp3") if HOLD else "assets/music-gold4-mix.mp3")
 write(d, {"gold4": comp("gold4", ["pre", "brush", "myeongjo"], css, body, js)}, html)
 print("ok")

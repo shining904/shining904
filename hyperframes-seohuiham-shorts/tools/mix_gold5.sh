@@ -5,9 +5,10 @@
 # so the hit still lands on 서희함. The sound design is split the same way; the mayor's voice comes
 # from his clip from MAYOR_START.
 #   HOLD=37.4 MAYOR=mayor/greeting.mp4 MAYOR_START=0.8 tools/mix_gold5.sh
+#   OUT=music-gold5v-mix.mp3 HOLD=10.8 MAYOR=mayor/greeting-highlight.mp4 tools/mix_gold5.sh
 set -euo pipefail
 cd "$(dirname "$0")/../shared/assets"
-HOLD=${HOLD:?set HOLD}; MAYOR=${MAYOR:?set MAYOR}; MAYOR_START=${MAYOR_START:-0}
+HOLD=${HOLD:?set HOLD}; MAYOR=${MAYOR:?set MAYOR}; MAYOR_START=${MAYOR_START:-0}; OUT=${OUT:-music-gold5-mix.mp3}
 T0=15.4; T1=17.4
 calc() { python3 -c "print(round($1, 3))"; }
 END=$(calc "$T0 + $HOLD")                 # film resumes 1:1 here (real time)
@@ -23,11 +24,11 @@ ffmpeg -v error -y -i music-gold3.mp3 -i bed-bar2.wav -i sfx-gold2.wav -i "$MAYO
 [2]atrim=0:$T0,volume=0.9[s1];
 [2]atrim=start=$T1,asetpts=PTS-STARTPTS,volume=0.9,adelay=$(ms "$END")|$(ms "$END")[s2];
 [3:a]atrim=$MAYOR_START:$(calc "$MAYOR_START + $TALK"),asetpts=PTS-STARTPTS,afade=t=out:st=$(calc "$TALK - 0.4"):d=0.4,loudnorm=I=-16:TP=-2,adelay=13500|13500,volume=1.5[mv];
-[m][s1][s2][mv]amix=inputs=4:normalize=0" -t "$REAL" -ar 44100 mix-gold5-pre.wav
+[m][s1][s2][mv]amix=inputs=4:normalize=0" -t "$REAL" -ar 44100 "$OUT.pre.wav"
 # two-pass linear loudness normalisation keeps the score's dynamics (the hit) intact
-M=$(ffmpeg -i mix-gold5-pre.wav -af loudnorm=I=-14:TP=-1.5:print_format=json -f null - 2>&1 | sed -n '/^{/,/^}/p')
+M=$(ffmpeg -i "$OUT.pre.wav" -af loudnorm=I=-14:TP=-1.5:print_format=json -f null - 2>&1 | sed -n '/^{/,/^}/p')
 get() { echo "$M" | python3 -c "import json,sys; print(json.load(sys.stdin)['$1'])"; }
-ffmpeg -v error -y -i mix-gold5-pre.wav -af "loudnorm=I=-14:TP=-1.5:linear=true:measured_I=$(get input_i):measured_TP=$(get input_tp):measured_LRA=$(get input_lra):measured_thresh=$(get input_thresh):offset=$(get target_offset)" -ar 44100 -b:a 192k music-gold5-mix.mp3
-rm -f mix-gold5-pre.wav
-echo "length $(ffprobe -v error -show_entries format=duration -of csv=p=0 music-gold5-mix.mp3) (film $REAL)"
-ffmpeg -i music-gold5-mix.mp3 -af ebur128 -f null - 2>&1 | grep "I:" | tail -1
+ffmpeg -v error -y -i "$OUT.pre.wav" -af "loudnorm=I=-14:TP=-1.5:linear=true:measured_I=$(get input_i):measured_TP=$(get input_tp):measured_LRA=$(get input_lra):measured_thresh=$(get input_thresh):offset=$(get target_offset)" -ar 44100 -b:a 192k "$OUT"
+rm -f "$OUT.pre.wav"
+echo "length $(ffprobe -v error -show_entries format=duration -of csv=p=0 "$OUT") (film $REAL)"
+ffmpeg -i "$OUT" -af ebur128 -f null - 2>&1 | grep "I:" | tail -1
