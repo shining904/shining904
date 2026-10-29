@@ -94,4 +94,6 @@ css += """        #mname {
         }
 """
 body = f\'\'\'''')
+sub("          top: 1172px;\n          font-size: 46px;\n          line-height: 1.32;",
+    "          left: 140px;\n          right: auto;\n          text-align: left;\n          top: 560px;\n          font-size: 56px;\n          line-height: 1.35;")
 exec(compile(src, "build_gold4.py (wide)", "exec"))

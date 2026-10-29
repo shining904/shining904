@@ -7,7 +7,8 @@
 # HOLD=<s> keeps the circle open that long for a full-length interview (MAYOR_START = where the
 # talk starts in the clip): the film's own timeline slows almost to a stop while the mayor speaks,
 # then carries on exactly as before, so every later beat (and the score's hit) stays in sync.
-# MIX names the soundtrack built for that hold by tools/mix_gold5.sh (OUT=).
+# MIX names the soundtrack built for that hold by tools/mix_gold5.sh (OUT=). SUBS=<json> adds the
+# mayor's words as subtitles: [[start, end, "line/second line"], ...] in clip time.
 import json
 import math
 import os
@@ -19,6 +20,15 @@ MAYOR = os.environ.get("MAYOR", "assets/mayor/mayor.mp4")
 GREEN = os.environ.get("GREEN") == "1"
 HOLD = float(os.environ.get("HOLD", "0"))
 MAYOR_START = float(os.environ.get("MAYOR_START", "0"))
+SUBS = json.load(open(os.environ["SUBS"])) if os.environ.get("SUBS") else []
+MSUB_CSS = """        .msub {
+          top: 1172px;
+          font-size: 46px;
+          line-height: 1.32;
+          font-weight: 600;
+          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
+        }
+"""
 T0, T1 = 15.4, 17.4          # film time the hold stretches: circle fully open, captions up
 DUR, HIT = 37.5, 24.1          # score: goldC.mp3 delayed 0.75 s so its hit (23.35 s) lands at 24.1 s
 SHIFT = round(HOLD - (T1 - T0), 3) if HOLD else 0.0   # how much later everything after the hold lands
@@ -520,6 +530,17 @@ if HOLD:
         const clock = {{ t: 0 }};
         tl.to(clock, {{ t: {REAL}, duration: {REAL}, ease: "none", onUpdate: () => inner.time(warp(clock.t)) }}, 0);
 """
+    # subtitles run on real time (the clip's own clock), so they go on the outer timeline
+    if SUBS:
+        css += MSUB_CSS
+    for k, (a, b, txt) in enumerate(SUBS):
+        body += f'        <div id="sub{k}" class="t msub">{"<br />".join(txt.split("/"))}</div>\n'
+        r_in = round(13.5 + a - MAYOR_START - 0.15, 2)
+        r_out = round(13.5 + b - MAYOR_START + 0.3, 2)
+        if k + 1 < len(SUBS):
+            r_out = min(r_out, round(13.5 + SUBS[k + 1][0] - MAYOR_START - 0.25, 2))
+        js += f'        tl.fromTo("#sub{k}", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.2, ease: "none" }}, {r_in});\n'
+        js += f'        tl.to("#sub{k}", {{ opacity: 0, duration: 0.2, ease: "none" }}, {r_out});\n'
 d = setup(("gold5" if HOLD else "gold4") + ("-green" if GREEN else ""))
 html = index("서희함 · 금빛 한 줄 확장판", "①+ extended one-take gold line short. Silhouettes traced from Magnific cut-outs; footage Seedance; score Lyria 3 Pro.",
              [("gold4", 0, REAL)], bg="#050505").replace("assets/music.mp3", "assets/" + os.environ.get("MIX", "music-gold5-mix.mp3") if HOLD else "assets/music-gold4-mix.mp3")
