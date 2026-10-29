@@ -23,7 +23,7 @@ MAYOR_START = float(os.environ.get("MAYOR_START", "0"))
 SUBS = json.load(open(os.environ["SUBS"])) if os.environ.get("SUBS") else []
 MSUB_CSS = """        .msub {
           top: 1172px;
-          font-size: 46px;
+          font-size: 43px;
           line-height: 1.32;
           font-weight: 600;
           text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
