@@ -1931,6 +1931,16 @@
           top: 1032px;
           font-size: 24px;
         }
+        .msub {
+          left: 140px;
+          right: auto;
+          text-align: left;
+          top: 560px;
+          font-size: 56px;
+          line-height: 1.35;
+          font-weight: 600;
+          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
+        }
       </style>
       <div id="root" data-composition-id="gold4wide" data-width="1920" data-height="1080">
         <div id="bg"></div>
@@ -1960,6 +1970,18 @@
         <div id="letter"><span id="l-title">이천시장</span><span id="l-name">성수석</span><span id="l-end">올림</span></div>
         <div id="ai-note">이 영상은 AI로 제작되어 실제와 다를 수 있습니다</div>
         <div id="flash"></div>
+        <div id="sub0" class="t msub">안녕하십니까.</div>
+        <div id="sub1" class="t msub">이천시장 성수석입니다.</div>
+        <div id="sub2" class="t msub">대한민국의 바다를 지키는 잠수함,</div>
+        <div id="sub3" class="t msub">서희함의 진수를 이천시민과 함께<br />진심으로 축하드립니다.</div>
+        <div id="sub4" class="t msub">서희 선생님은 나라를 지킨<br />고려의 외교가이자</div>
+        <div id="sub5" class="t msub">우리 이천의 정신과<br />역사의 뿌리입니다.</div>
+        <div id="sub6" class="t msub">이제 그 이름이<br />바닷속에서 조용히,</div>
+        <div id="sub7" class="t msub">그리고 든든하게<br />대한민국을 지키게 되었습니다.</div>
+        <div id="sub8" class="t msub">서희함을 위해<br />애써 주신 모든 분들과</div>
+        <div id="sub9" class="t msub">해군 장병 여러분께<br />감사드리며,</div>
+        <div id="sub10" class="t msub">서희함의 힘찬 항해를<br />응원합니다.</div>
+        <div id="sub11" class="t msub">감사합니다.</div>
       </div>
       <script>
         const tl = gsap.timeline({ paused: true });
@@ -2147,6 +2169,30 @@
         const warp = (t) => (t < 15.4 ? t : t < 52.8 ? 15.4 + (t - 15.4) * 0.05347593582887696 : t - 35.4);
         const clock = { t: 0 };
         tl.to(clock, { t: 72.9, duration: 72.9, ease: "none", onUpdate: () => inner.time(warp(clock.t)) }, 0);
+        tl.fromTo("#sub0", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 13.58);
+        tl.to("#sub0", { opacity: 0, duration: 0.2, ease: "none" }, 15.45);
+        tl.fromTo("#sub1", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 15.55);
+        tl.to("#sub1", { opacity: 0, duration: 0.2, ease: "none" }, 17.13);
+        tl.fromTo("#sub2", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 18.35);
+        tl.to("#sub2", { opacity: 0, duration: 0.2, ease: "none" }, 21.07);
+        tl.fromTo("#sub3", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 21.35);
+        tl.to("#sub3", { opacity: 0, duration: 0.2, ease: "none" }, 25.95);
+        tl.fromTo("#sub4", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 26.5);
+        tl.to("#sub4", { opacity: 0, duration: 0.2, ease: "none" }, 31.18);
+        tl.fromTo("#sub5", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 31.28);
+        tl.to("#sub5", { opacity: 0, duration: 0.2, ease: "none" }, 35.33);
+        tl.fromTo("#sub6", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 35.52);
+        tl.to("#sub6", { opacity: 0, duration: 0.2, ease: "none" }, 39.7);
+        tl.fromTo("#sub7", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 39.8);
+        tl.to("#sub7", { opacity: 0, duration: 0.2, ease: "none" }, 42.94);
+        tl.fromTo("#sub8", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 43.17);
+        tl.to("#sub8", { opacity: 0, duration: 0.2, ease: "none" }, 45.94);
+        tl.fromTo("#sub9", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 46.04);
+        tl.to("#sub9", { opacity: 0, duration: 0.2, ease: "none" }, 48.56);
+        tl.fromTo("#sub10", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 48.66);
+        tl.to("#sub10", { opacity: 0, duration: 0.2, ease: "none" }, 51.63);
+        tl.fromTo("#sub11", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 51.79);
+        tl.to("#sub11", { opacity: 0, duration: 0.2, ease: "none" }, 52.84);
         window.__timelines["gold4wide"] = tl;
       </script>
     </template>
