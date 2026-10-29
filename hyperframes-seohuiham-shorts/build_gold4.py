@@ -1,8 +1,8 @@
 # ①+++ 금빛 한 줄 v4 (37.5 s) — gold3 with the Seo Hui stage replaced by the mayor: the gold line
 # closes into a circle, the circle opens like an iris and the mayor's interview plays inside it
 # (name above, his words as a caption below), then the circle flows on into the submarine.
-# The finale reads only '서희함의 진수를 축하합니다', signed off by hand '이천시장 성수석 올림'
-# (no logo). Everything else is gold3. MAYOR=<file> picks the interview clip (default: a placeholder);
+# The finale reads only '서희함의 진수를 축하합니다' and closes on the Icheon city logo
+# (LETTER=1: signed off by hand '이천시장 성수석 올림' instead). Everything else is gold3. MAYOR=<file> picks the interview clip (default: a placeholder);
 # GREEN=1 fills the circle with chroma green instead, for compositing the footage elsewhere.
 # HOLD=<s> keeps the circle open that long for a full-length interview (MAYOR_START = where the
 # talk starts in the clip): the film's own timeline slows almost to a stop while the mayor speaks,
@@ -18,6 +18,7 @@ from lib import GOLD, comp, index, setup, write, out
 
 MAYOR = os.environ.get("MAYOR", "assets/mayor/mayor.mp4")
 GREEN = os.environ.get("GREEN") == "1"
+LETTER = os.environ.get("LETTER") == "1"   # hand-signed '이천시장 성수석 올림' instead of the city logo
 HOLD = float(os.environ.get("HOLD", "0"))
 MAYOR_START = float(os.environ.get("MAYOR_START", "0"))
 SUBS = json.load(open(os.environ["SUBS"])) if os.environ.get("SUBS") else []
@@ -184,7 +185,7 @@ css = f'''        #bg {{
           position: absolute;
           left: 0;
           right: 0;
-          top: 210px;
+          top: 150px;
           text-align: center;
           font-family: "Pretendard", sans-serif;
           opacity: 0;
@@ -263,7 +264,22 @@ css = f'''        #bg {{
           background: radial-gradient(ellipse at 50% 40%, rgba(255, 238, 200, 1) 0%, rgba(255, 238, 200, 0) 65%);
           opacity: 0;
         }}
-        #letter {{
+        #sign {{
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 1150px;
+          display: flex;
+          justify-content: center;
+          opacity: 0;
+        }}
+        #sign img {{
+          height: 170px;
+          filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.6));
+        }}
+'''
+if LETTER:
+    css += """        #letter {
           position: absolute;
           right: 110px;
           top: 1160px;
@@ -274,22 +290,22 @@ css = f'''        #bg {{
           color: #fdf6e6;
           text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
           white-space: nowrap;
-        }}
-        #l-title, #l-end {{
+        }
+        #l-title, #l-end {
           font-weight: 700;
           font-size: 50px;
           letter-spacing: 4px;
           opacity: 0;
-        }}
-        #l-name {{
+        }
+        #l-name {
           font-family: "Nanum Brush Script", cursive;
           font-size: 190px;
           line-height: 1;
           color: #ffffff;
           transform: rotate(-4deg);
           clip-path: inset(-20% 100% -20% 0);
-        }}
-'''
+        }
+"""
 body = f'''        <div id="bg"></div>
         <div id="deep"></div>
         <video id="v-side" class="foot" src="assets/sub-side.mp4" data-start="25.0" data-duration="5.6" muted playsinline style="object-position:55% 50%"></video>
@@ -317,7 +333,7 @@ body = f'''        <div id="bg"></div>
         <div id="co2" class="co" style="left:800px;top:1040px"><i></i><u style="height:250px"></u><div style="left:-200px;top:260px"><b>3,600톤급</b><span>잠수함</span></div></div>
         <div id="title" class="t" style="top:470px;font-size:260px;font-weight:900;letter-spacing:-4px"><span class="gold">서</span><span class="gold">희</span><span class="gold">함</span></div>
         <div id="d2" class="t" style="top:480px;font-size:112px;line-height:1.22;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)"><span style="color:#ffe6a8">서희함</span>의<br />진수를 축하합니다</div>
-        <div id="letter"><span id="l-title">이천시장</span><span id="l-name">성수석</span><span id="l-end">올림</span></div>
+        {'<div id="letter"><span id="l-title">이천시장</span><span id="l-name">성수석</span><span id="l-end">올림</span></div>' if LETTER else '<div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /></div>'}
         <div id="ai-note">이 영상은 AI로 제작되어 실제와 다를 수 있습니다</div>
         <div id="flash"></div>
 '''
@@ -509,16 +525,19 @@ js += f'        tl.to("#fill-sub", {{ y: 160, scale: 1.12, filter: "brightness(1
 js += fade("#v-side", 25.0, 0.55, 1.2) + fade("#fill-sub", 25.4, 0, 1.0)
 js += '        tl.fromTo("#v-side", { scale: 1.12 }, { scale: 1.0, duration: 5.6, ease: "none" }, 25.0);\n'
 js += out("#title", 29.0, 0.6)
-# 29.4– sunrise: the congratulation and the signed sign-off
+# 29.4– sunrise: the congratulation and the sign-off (city logo, or the signed letter)
 js += fade("#v-surf", 29.4, 1, 1.4) + '        tl.fromTo("#v-surf", { scale: 1.0 }, { scale: 1.08, duration: 8.1, ease: "none" }, 29.4);\n'
 js += fade("#v-launch-a", 31.6, 1, 0.9) + '        tl.fromTo("#v-launch-a", { scale: 1.0 }, { scale: 1.04, duration: 2.9, ease: "none" }, 31.6);\n'
 js += fade("#v-launch-b", 34.3, 1, 0.5) + '        tl.fromTo("#v-launch-b", { scale: 1.02 }, { scale: 1.06, duration: 3.04, ease: "none" }, 34.3);\n'
 js += fade("#endshade", 29.8, 1, 1.2) + rise("#d2", 30.6, 1.1)
-js += fade("#l-title", 32.3, 1, 0.8)
-# the name is written on with the brush, left to right, then the sign-off
-js += '        tl.to("#l-name", { clipPath: "inset(-20% 0% -20% 0)", duration: 1.5, ease: "power1.inOut" }, 32.8);\n'
-js += fade("#l-end", 34.3, 1, 0.8)
-js += out("#d2, #letter", 36.5, 0.8) + fade("#v-launch-b", 36.6, 0.0, 0.7)
+if LETTER:
+    js += fade("#l-title", 32.3, 1, 0.8)
+    # the name is written on with the brush, left to right, then the sign-off
+    js += '        tl.to("#l-name", { clipPath: "inset(-20% 0% -20% 0)", duration: 1.5, ease: "power1.inOut" }, 32.8);\n'
+    js += fade("#l-end", 34.3, 1, 0.8)
+else:
+    js += '        tl.fromTo("#sign", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }, 32.6);\n'
+js += out("#d2, #letter" if LETTER else "#d2, #sign", 36.5, 0.8) + fade("#v-launch-b", 36.6, 0.0, 0.7)
 
 if HOLD:
     # the fixed quote would not match a full-length talk: keep only the name tag
@@ -548,5 +567,5 @@ if HOLD:
 d = setup(("gold5" if HOLD else "gold4") + ("-green" if GREEN else ""))
 html = index("서희함 · 금빛 한 줄 확장판", "①+ extended one-take gold line short. Silhouettes traced from Magnific cut-outs; footage Seedance; score Lyria 3 Pro.",
              [("gold4", 0, REAL)], bg="#050505").replace("assets/music.mp3", "assets/" + os.environ.get("MIX", "music-gold5-mix.mp3") if HOLD else "assets/music-gold4-mix.mp3")
-write(d, {"gold4": comp("gold4", ["pre", "brush", "myeongjo"], css, body, js)}, html)
+write(d, {"gold4": comp("gold4", ["pre", "brush", "myeongjo"] if LETTER else ["pre"], css, body, js)}, html)
 print("ok")

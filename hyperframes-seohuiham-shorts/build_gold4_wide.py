@@ -1,5 +1,5 @@
-# 16:9 (1920x1080) edition of the v4 gold short (mayor interview in the gold circle, hand-signed
-# letter finale). It reuses build_gold4.py and re-lays it out: shapes re-fitted to the wide frame,
+# 16:9 (1920x1080) edition of the v4 gold short (mayor interview in the gold circle, city-logo
+# finale). It reuses build_gold4.py and re-lays it out: shapes re-fitted to the wide frame,
 # the interview circle on the right with the mayor's name and words in a left column, everything
 # else centred, and the 16:9 sunrise footage instead of the vertical launch clip in the finale.
 # Same switches as build_gold4.py: MAYOR=<file>, GREEN=1.
@@ -87,6 +87,12 @@ css += """        #mname {
         #letter {
           right: 240px;
           top: 730px;
+        }
+        #sign {
+          top: 680px;
+        }
+        #sign img {
+          height: 160px;
         }
         #ai-note {
           top: 1032px;
