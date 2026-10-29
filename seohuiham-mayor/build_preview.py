@@ -242,6 +242,13 @@ def cam_js():
     return js
 
 
+def first_cam():
+    """the opening window as a CSS transform, so frame 0 is framed before the timeline's first set"""
+    x, y, w = CAMERA[0][1]
+    s = 1920 / w
+    return f"translate({-x * s:.1f}px, {-y * s:.1f}px) scale({s:.4f})"
+
+
 def write_project():
     d = os.path.join(WORK, "preview")
     os.makedirs(os.path.join(d, "fonts"), exist_ok=True)
@@ -278,7 +285,8 @@ def write_project():
     css = f'''        @font-face {{ font-family: "Pretendard"; font-weight: 700; src: url("fonts/Pretendard-Bold.woff2") format("woff2"); }}
         @font-face {{ font-family: "Pretendard"; font-weight: 500; src: url("fonts/Pretendard-Medium.woff2") format("woff2"); }}
         #root {{ position: absolute; inset: 0; overflow: hidden; background: #000; font-family: "Pretendard"; }}
-        #stage {{ position: absolute; left: 0; top: 0; width: {SW}px; height: {SH}px; transform-origin: 0 0; }}
+        #stage {{ position: absolute; left: 0; top: 0; width: {SW}px; height: {SH}px; transform-origin: 0 0;
+          transform: {first_cam()}; }}
         #stage video {{ position: absolute; inset: 0; width: 100%; height: 100%; }}
         #glow {{ position: absolute; left: 1110px; top: 160px; width: 600px; height: 900px; border-radius: 50%;
           background: radial-gradient(closest-side, rgba(255,226,150,0.95), rgba(227,178,90,0.55) 45%, rgba(227,178,90,0) 100%);
