@@ -1,8 +1,8 @@
 # ①+++ 금빛 한 줄 v4 (37.5 s) — gold3 with the Seo Hui stage replaced by the mayor: the gold line
 # closes into a circle, the circle opens like an iris and the mayor's interview plays inside it
 # (name above, his words as a caption below), then the circle flows on into the submarine.
-# The finale reads only '서희함의 진수를 축하합니다' and closes on the Icheon city logo
-# (LETTER=1: signed off by hand '이천시장 성수석 올림' instead). Everything else is gold3. MAYOR=<file> picks the interview clip (default: a placeholder);
+# The finale reads only '서희함의 진수를 축하합니다' (LOGO=1 adds the Icheon city logo under it;
+# LETTER=1 signs it off by hand '이천시장 성수석 올림' instead). Everything else is gold3. MAYOR=<file> picks the interview clip (default: a placeholder);
 # GREEN=1 fills the circle with chroma green instead, for compositing the footage elsewhere.
 # HOLD=<s> keeps the circle open that long for a full-length interview (MAYOR_START = where the
 # talk starts in the clip): the film's own timeline slows almost to a stop while the mayor speaks,
@@ -18,7 +18,8 @@ from lib import GOLD, comp, index, setup, write, out
 
 MAYOR = os.environ.get("MAYOR", "assets/mayor/mayor.mp4")
 GREEN = os.environ.get("GREEN") == "1"
-LETTER = os.environ.get("LETTER") == "1"
+LETTER = os.environ.get("LETTER") == "1"   # hand-signed '이천시장 성수석 올림' under the closing line
+LOGO = os.environ.get("LOGO") == "1"       # the Icheon city logo under the closing line
 # finale backgrounds: the AI-upscaled versions (Magnific Precision) when they are in place
 HD = lambda name: f"assets/{name}-hd.mp4" if os.path.exists(f"shared/assets/{name}-hd.mp4") else f"assets/{name}.mp4"
 SURF, LAUNCH = HD("sub-surface"), HD("launch")   # hand-signed '이천시장 성수석 올림' instead of the city logo
@@ -337,7 +338,7 @@ body = f'''        <div id="bg"></div>
         <div id="co2" class="co" style="left:800px;top:1040px"><i></i><u style="height:250px"></u><div style="left:-200px;top:260px"><b>3,600톤급</b><span>잠수함</span></div></div>
         <div id="title" class="t" style="top:470px;font-size:260px;font-weight:900;letter-spacing:-4px"><span class="gold">서</span><span class="gold">희</span><span class="gold">함</span></div>
         <div id="d2" class="t" style="top:480px;font-size:112px;line-height:1.22;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)"><span style="color:#ffe6a8">서희함</span>의<br />진수를 축하합니다</div>
-        {'<div id="letter"><span id="l-title">이천시장</span><span id="l-name">성수석</span><span id="l-end">올림</span></div>' if LETTER else '<div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /></div>'}
+        {'<div id="letter"><span id="l-title">이천시장</span><span id="l-name">성수석</span><span id="l-end">올림</span></div>' if LETTER else ('<div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /></div>' if LOGO else '')}
         <div id="ai-note">이 영상은 생성형 AI로 제작되었으며,<br />잠수함 등 일부 장면은 실제 촬영이 아닌 가상 연출입니다.</div>
         <div id="flash"></div>
 '''
@@ -528,7 +529,7 @@ js += f'        tl.to("#fill-sub", {{ y: 160, scale: 1.12, filter: "brightness(1
 js += fade("#v-side", 25.0, 0.55, 1.2) + fade("#fill-sub", 25.4, 0, 1.0)
 js += '        tl.fromTo("#v-side", { scale: 1.12 }, { scale: 1.0, duration: 5.6, ease: "none" }, 25.0);\n'
 js += out("#title", 29.0, 0.6)
-# 29.4– sunrise: the congratulation and the sign-off (city logo, or the signed letter)
+# 29.4– sunrise: the congratulation (optionally with the city logo or the signed letter)
 js += fade("#v-surf", 29.4, 1, 1.4) + '        tl.fromTo("#v-surf", { scale: 1.0 }, { scale: 1.03, duration: 8.1, ease: "none" }, 29.4);\n'
 js += fade("#v-launch-a", 31.6, 1, 0.9) + '        tl.fromTo("#v-launch-a", { scale: 1.0 }, { scale: 1.02, duration: 2.9, ease: "none" }, 31.6);\n'
 js += fade("#v-launch-b", 34.3, 1, 0.5) + '        tl.fromTo("#v-launch-b", { scale: 1.0 }, { scale: 1.03, duration: 3.04, ease: "none" }, 34.3);\n'
@@ -540,9 +541,9 @@ if LETTER:
     # the name is written on with the brush, left to right, then the sign-off
     js += '        tl.to("#l-name", { clipPath: "inset(-20% 0% -20% 0)", duration: 1.5, ease: "power1.inOut" }, 32.8);\n'
     js += fade("#l-end", 34.3, 1, 0.8)
-else:
+elif LOGO:
     js += '        tl.fromTo("#sign", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }, 32.6);\n'
-js += out("#d2, #letter" if LETTER else "#d2, #sign", 36.5, 0.8) + fade("#v-launch-b", 36.6, 0.0, 0.7)
+js += out("#d2, #letter" if LETTER else "#d2, #sign" if LOGO else "#d2", 36.5, 0.8) + fade("#v-launch-b", 36.6, 0.0, 0.7)
 
 if HOLD:
     # the fixed quote would not match a full-length talk: keep only the name tag

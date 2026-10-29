@@ -286,7 +286,7 @@
         <div id="co2" class="co" style="left:800px;top:1040px"><i></i><u style="height:250px"></u><div style="left:-200px;top:260px"><b>3,600톤급</b><span>잠수함</span></div></div>
         <div id="title" class="t" style="top:470px;font-size:260px;font-weight:900;letter-spacing:-4px"><span class="gold">서</span><span class="gold">희</span><span class="gold">함</span></div>
         <div id="d2" class="t" style="top:480px;font-size:112px;line-height:1.22;font-weight:800;text-shadow:0 3px 18px rgba(0,0,0,0.6)"><span style="color:#ffe6a8">서희함</span>의<br />진수를 축하합니다</div>
-        <div id="sign"><img src="assets/icheon-logo-dark.png" alt="이천시" /></div>
+        
         <div id="ai-note">이 영상은 생성형 AI로 제작되었으며,<br />잠수함 등 일부 장면은 실제 촬영이 아닌 가상 연출입니다.</div>
         <div id="flash"></div>
         <div id="sub0" class="t msub">안녕하십니까.</div>
@@ -477,8 +477,7 @@
         tl.to("#grain", { opacity: 0, duration: 0.8, ease: "power1.inOut" }, 29.4);
         tl.to("#endshade", { opacity: 1, duration: 1.2, ease: "power1.inOut" }, 29.8);
         tl.fromTo("#d2", { opacity: 0, y: 26, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.1, ease: "power3.out" }, 30.6);
-        tl.fromTo("#sign", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }, 32.6);
-        tl.to("#d2, #sign", { opacity: 0, duration: 0.8, ease: "power1.in" }, 36.5);
+        tl.to("#d2", { opacity: 0, duration: 0.8, ease: "power1.in" }, 36.5);
         tl.to("#v-launch-b", { opacity: 0.0, duration: 0.7, ease: "power1.inOut" }, 36.6);
         const inner = gsap.timeline({ paused: true });
         tl.getChildren(false, true, true).forEach((c) => { const at = c.startTime(); tl.remove(c); inner.add(c, at); });
