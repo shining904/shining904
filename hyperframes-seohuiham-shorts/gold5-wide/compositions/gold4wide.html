@@ -278,7 +278,7 @@
         <div id="bg"></div>
         <div id="deep"></div>
         <video id="v-side" class="foot" src="assets/sub-side.mp4" data-start="60.4" data-duration="5.6" muted playsinline style="object-position:55% 50%"></video>
-        <video id="v-surf" class="foot" src="assets/sub-surface.mp4" data-start="64.8" data-duration="8.1" muted playsinline style="object-position:37% 50%"></video>
+        <video id="v-surf" class="foot" src="assets/sub-surface-hd.mp4" data-start="64.8" data-duration="8.1" muted playsinline style="object-position:37% 50%"></video>
         <div id="vig"></div>
         <div id="endshade"></div>
         <div id="cam">
@@ -489,7 +489,8 @@
         tl.fromTo("#v-side", { scale: 1.12 }, { scale: 1.0, duration: 5.6, ease: "none" }, 25.0);
         tl.to("#title", { opacity: 0, duration: 0.6, ease: "power1.in" }, 29.0);
         tl.to("#v-surf", { opacity: 1, duration: 1.4, ease: "power1.inOut" }, 29.4);
-        tl.fromTo("#v-surf", { scale: 1.0 }, { scale: 1.08, duration: 8.1, ease: "none" }, 29.4);
+        tl.fromTo("#v-surf", { scale: 1.0 }, { scale: 1.03, duration: 8.1, ease: "none" }, 29.4);
+        tl.to("#grain", { opacity: 0, duration: 0.8, ease: "power1.inOut" }, 29.4);
         tl.to("#endshade", { opacity: 1, duration: 1.2, ease: "power1.inOut" }, 29.8);
         tl.fromTo("#d2", { opacity: 0, y: 26, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.1, ease: "power3.out" }, 30.6);
         tl.fromTo("#sign", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }, 32.6);
