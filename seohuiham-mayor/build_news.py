@@ -28,8 +28,11 @@ SEOHUI = [
 ]
 # the exact (padded) audio each lip-sync was made from, so voice and mouth line up
 SEOHUI_VOICE = [(26.6, "v6pad.mp3"), (44.6, "v8pad.mp3"), (72.8, "v11pad.mp3")]
-TALK = [(26.4, 36.2), (44.4, 56.3), (72.6, 75.8)]  # window grows while Seohui speaks
-CROP = (770, 222, 840)  # Seohui's head and shoulders in the 1920x1080 Seohui clips
+# while Seohui speaks his window fills the screen, like a correspondent taking over the
+# broadcast (there is no real footage of the mayor listening); the last line splits the screen
+FULL = [(26.3, 36.15), (44.3, 56.25)]
+SPLIT = 72.5
+CROP = (560, 160, 1260)  # Seohui from the waist up in the 1920x1080 Seohui clips
 
 
 # The mayor is his cut-out (background removed) over a clean plate of his own office, widened
@@ -45,9 +48,9 @@ NEWS_MAYOR = [
     (3.9, "real", 8.6, None),               # 2
     (8.4, "synced", "ls-L03.mp4", 31.0),    # 3
     (13.9, "real", 13.8, None),             # 4
-    (22.8, "synced", "ls-L05.mp4", 36.3),   # 5
+    (22.8, "synced", "ls-L05b.mp4", 22.6),  # 5 (calm footage straight on from line 4)
     (25.76, "listen", 0.0, None),           # 6 (Seohui)
-    (36.3, "synced", "ls-L07.mp4", 22.9),   # 7
+    (36.3, "synced", "ls-L07b.mp4", 25.7),  # 7
     (44.3, "listen", 11.0, None),           # 8 (Seohui)
     (56.4, "synced", "ls-L09.mp4", -8.4),   # 9 (footage from 14.0 s, played backwards)
     (64.9, "synced", "ls-L10.mp4", -7.5),   # 10 (footage from 0.9 s, played backwards)
@@ -167,7 +170,7 @@ def build_seohui():
     chain(segs, full, "yuv420p", ["-c:v", "libx264", "-crf", "12", "-preset", "fast"], DUR)
     out = os.path.join(WORK, "news", "assets", "seohui.mp4")
     run(["ffmpeg", "-v", "error", "-y", "-i", full, "-vf",
-         f"crop={w}:{round(w * 9 / 16)}:{x}:{y},scale=1280:720:flags=lanczos", "-c:v", "libx264",
+         f"crop={w}:{round(w * 9 / 16)}:{x}:{y},scale=1920:1080:flags=lanczos", "-c:v", "libx264",
          "-crf", "14", out])
 
 
@@ -234,9 +237,12 @@ def write_project():
     # the window opens with a gold flash, then grows while Seohui speaks
     js += f'        tl.fromTo("#pip", {{ opacity: 0, scale: 0.55 }}, {{ opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.4)" }}, {PIP_OPEN});\n'
     js += f'        tl.fromTo("#pip-flash", {{ opacity: 0.9 }}, {{ opacity: 0, duration: 0.9, ease: "power2.out" }}, {PIP_OPEN + 0.3});\n'
-    for a, b in TALK:
-        js += f'        tl.to("#pip", {{ scale: 1.2, duration: 0.6, ease: "power2.inOut" }}, {a});\n'
-        js += f'        tl.to("#pip", {{ scale: 1, duration: 0.6, ease: "power2.inOut" }}, {b - 0.4:.1f});\n'
+    small = "left: 1070, top: 50, width: 800, height: 450, borderWidth: 3, borderRadius: 6"
+    for a, b in FULL:
+        js += f'        tl.to("#pip", {{ left: 0, top: 0, width: 1920, height: 1080, borderWidth: 0, borderRadius: 0, duration: 0.7, ease: "power2.inOut" }}, {a});\n'
+        js += f'        tl.to("#pip", {{ {small}, duration: 0.7, ease: "power2.inOut" }}, {b - 0.5:.2f});\n'
+    js += f'        tl.to("#pip", {{ left: 960, top: 0, width: 960, height: 1080, borderWidth: 0, borderRadius: 0, duration: 0.7, ease: "power2.inOut" }}, {SPLIT});\n'
+    js += f'        tl.fromTo("#split-line", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.5 }}, {SPLIT + 0.4});\n'
     js += '        tl.fromTo("#tag-m", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.5);\n'
     js += '        tl.to("#tag-m", { opacity: 0, duration: 0.4 }, 5.0);\n'
     js += f'        tl.to("#fade", {{ opacity: 1, duration: 0.8 }}, {DUR - 0.8});\n'
@@ -246,10 +252,11 @@ def write_project():
         #root { position: absolute; inset: 0; overflow: hidden; background: #000; font-family: "Pretendard"; }
         #mayor { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
         #mayor video { position: absolute; inset: 0; width: 100%; height: 100%; }
-        #pip { position: absolute; right: 50px; top: 50px; width: 800px; height: 450px; transform-origin: 100% 0;
+        #pip { position: absolute; left: 1070px; top: 50px; width: 800px; height: 450px; transform-origin: 100% 0;
           border: 3px solid #e3b25a; border-radius: 6px; overflow: hidden; background: #000; opacity: 0;
           box-shadow: 0 12px 40px rgba(0,0,0,0.55); }
-        #pip video { position: absolute; inset: 0; width: 100%; height: 100%; }
+        #pip video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        #split-line { position: absolute; left: 957px; top: 0; width: 6px; height: 1080px; background: #e3b25a; opacity: 0; }
         #pip-flash { position: absolute; inset: 0; background: radial-gradient(closest-side, rgba(255,230,160,0.95), rgba(227,178,90,0.4) 60%, rgba(227,178,90,0)); opacity: 0; }
         #pip-live { position: absolute; left: 12px; top: 10px; padding: 3px 10px; font-size: 16px; font-weight: 700;
           color: #1a1a1a; background: #e3b25a; border-radius: 4px; letter-spacing: 0.04em; }
@@ -276,6 +283,7 @@ def write_project():
           <div id="pip-name"><small>이천시 AI 홍보대사</small>서희</div>
           <div id="pip-flash"></div>
         </div>
+        <div id="split-line"></div>
         <div id="tag-m"><small>이천시장</small>성수석</div>
 {subs}        <div id="badge">시장님 검토용 시안</div>
         <div id="ai-note">이 영상은 생성형 AI를 활용해 제작되었으며, 일부 장면과 음성은 AI로 연출되었습니다.</div>
