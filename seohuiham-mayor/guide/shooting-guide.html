@@ -77,6 +77,11 @@
   th { font-size: 13px; color: var(--muted); font-weight: 600; letter-spacing: 0.04em; }
   tr:last-child td { border-bottom: 0; }
   td.n { font-variant-numeric: tabular-nums; color: var(--muted); width: 2.5em; }
+  table.script { min-width: 720px; }
+  table.script td.line { font-family: var(--display); font-size: 17px; line-height: 1.6; min-width: 16em; }
+  table.script tr.seo-row td { background: color-mix(in srgb, var(--tag-seo) 35%, transparent); }
+  .who { font-weight: 600; white-space: nowrap; }
+  .who.seo { color: var(--tag-seo-ink); }
   .pill { display: inline-block; padding: 1px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; white-space: nowrap; }
   .pill.cam { background: var(--tag-cam); color: var(--tag-cam-ink); }
   .pill.seo { background: var(--tag-seo); color: var(--tag-seo-ink); }
@@ -127,6 +132,30 @@
       <figcaption>점선 상자는 편집에서 카메라가 비추는 범위입니다. 시장님은 화면 왼쪽, 서희는 오른쪽에 섭니다. 노란 화살표는 시장님이 서희를 볼 때의 시선입니다.</figcaption>
     </figure>
     <p>가장 넓은 화면도 두 분의 허리 아래가 살짝 잘리는 정도입니다. 그래도 허벅지까지 찍어 두면 카메라를 더 넓게 쓸 수 있고, 합성할 때 다리를 AI로 만들어 넣지 않아도 됩니다.</p>
+  </section>
+
+  <section>
+    <h2>대화 대본</h2>
+    <p class="lede">약 1분 분량입니다. 서희 대사(6·8·11번)는 미리 만든 음성이 있어 촬영 때 스피커로 틀어 드립니다. 시장님은 그동안 서희 쪽을 보며 들으시면 됩니다.</p>
+    <div class="table-wrap">
+      <table class="script">
+        <thead><tr><th>#</th><th>화자</th><th>대사</th><th>시장님 시선</th><th>연기 메모</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td><span class="who">시장님</span></td><td class="line">안녕하십니까. 이천시장 성수석입니다.</td><td><span class="pill cam">카메라</span></td><td>평소 인사말처럼</td></tr>
+          <tr><td class="n">2</td><td><span class="who">시장님</span></td><td class="line">서희함의 진수를 이천시민과 함께 진심으로 축하드립니다.</td><td><span class="pill cam">카메라</span></td><td></td></tr>
+          <tr><td class="n">3</td><td><span class="who">시장님</span></td><td class="line">부득이한 일정으로 진수식에 함께하지 못하게 되어, 영상으로 인사드립니다.</td><td><span class="pill cam">카메라</span></td><td></td></tr>
+          <tr><td class="n">4</td><td><span class="who">시장님</span></td><td class="line">서희 선생님은 칼 대신 말 한마디로 나라를 지킨 고려의 외교가이자, 우리 이천의 정신과 역사의 뿌리입니다.</td><td><span class="pill cam">카메라</span></td><td>쉼표에서 한 번 쉬기</td></tr>
+          <tr><td class="n">5</td><td><span class="who">시장님</span></td><td class="line">그래서 특별한 분을 한 분 모셨습니다.</td><td><span class="pill cam">카메라</span> → <span class="pill seo">서희 쪽</span></td><td>말끝에 손으로 서희 쪽을 가리키며 고개를 돌림</td></tr>
+          <tr class="seo-row"><td class="n">6</td><td><span class="who seo">AI 서희</span></td><td class="line">안녕하세요, 이천시 AI 홍보대사 서희입니다! 제 이름을 단 함정이 바다로 나간다니, 천 년 만에 이렇게 설레기는 처음이에요.</td><td><span class="pill seo">서희 쪽</span></td><td>약 10초 듣기. 미소, 가볍게 끄덕임</td></tr>
+          <tr><td class="n">7</td><td><span class="who">시장님</span></td><td class="line">그런데 서희 대사님, 말씀으로 나라를 지키신 분인데, 서희함은 잠수함이라 아주 조용히 다니겠네요.</td><td><span class="pill seo">서희 쪽</span></td><td>대화하듯 편하게, 살짝 농담처럼</td></tr>
+          <tr class="seo-row"><td class="n">8</td><td><span class="who seo">AI 서희</span></td><td class="line">괜찮습니다. 진짜 강한 사람은 말을 아낄 줄 알거든요. 조용히, 그러나 든든하게! 대한민국 바다를 잘 지켜 줄 거예요.</td><td><span class="pill seo">서희 쪽</span></td><td>약 10초 듣기. "말을 아낄 줄 알거든요"에서 웃음</td></tr>
+          <tr><td class="n">9</td><td><span class="who">시장님</span></td><td class="line">서희함을 위해 애써 주신 모든 분들과, 앞으로 서희함과 함께할 해군 장병 여러분께 깊이 감사드립니다.</td><td><span class="pill cam">카메라</span></td><td>다시 정면으로</td></tr>
+          <tr><td class="n">10</td><td><span class="who">시장님</span></td><td class="line">서희 선생님의 지혜와 용기처럼, 서희함이 대한민국의 바다를 든든하게 지켜 주기를 바랍니다.</td><td><span class="pill cam">카메라</span></td><td></td></tr>
+          <tr><td class="n">11</td><td><span class="who">함께</span></td><td class="line">서희함, 진수를 축하합니다!</td><td><span class="pill seo">서희 쪽</span> → <span class="pill cam">카메라</span></td><td>몸을 살짝 서희 쪽으로 돌렸다가 정면. 스피커의 서희 음성과 함께 말함</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted">영상 하단에는 “이 영상은 생성형 AI로 제작되었으며, AI 서희 등 일부 장면은 실제 촬영이 아닌 가상 연출입니다.”가 작게 들어갑니다.</p>
   </section>
 
   <section>
@@ -194,20 +223,7 @@
       </div>
     </div>
 
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>#</th><th>장면</th><th>시장님 시선</th><th>메모</th></tr></thead>
-        <tbody>
-          <tr><td class="n">1–4</td><td>인사, 축하, 서희 선생님 소개</td><td><span class="pill cam">카메라</span></td><td>평소 인사말처럼</td></tr>
-          <tr><td class="n">5</td><td>"그래서 특별한 분을 한 분 모셨습니다."</td><td><span class="pill cam">카메라</span> → <span class="pill seo">서희 쪽</span></td><td>말끝에 손으로 서희 쪽을 가리키며 고개를 돌림</td></tr>
-          <tr><td class="n">6</td><td>서희 인사 (약 10초)</td><td><span class="pill seo">서희 쪽</span></td><td>듣기만 함. 미소, 가볍게 끄덕임</td></tr>
-          <tr><td class="n">7</td><td>"그런데 서희 대사님 …"</td><td><span class="pill seo">서희 쪽</span></td><td>대화하듯 편하게</td></tr>
-          <tr><td class="n">8</td><td>서희 답변 (약 10초)</td><td><span class="pill seo">서희 쪽</span></td><td>"말을 아낄 줄 알거든요"에서 웃음</td></tr>
-          <tr><td class="n">9–10</td><td>감사 인사, 당부</td><td><span class="pill cam">카메라</span></td><td>다시 정면으로</td></tr>
-          <tr><td class="n">11</td><td>함께 "서희함, 진수를 축하합니다!"</td><td><span class="pill seo">서희 쪽</span> → <span class="pill cam">카메라</span></td><td>몸을 살짝 서희 쪽으로 돌렸다가 정면. 스피커 음성에 맞춰 함께 말함</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <p>대사마다 어디를 보는지는 위의 대화 대본 표 ‘시장님 시선’ 칸을 따르면 됩니다.</p>
   </section>
 
   <section>
@@ -257,6 +273,6 @@
   </section>
 
   <footer>
-    촬영본은 원본 파일 그대로 공유 드라이브에 올려 주세요. 메신저로 보내면 압축돼 화질이 떨어집니다. 대본은 별도 파일(대화 대본)을 참고해 주세요.
+    촬영본은 원본 파일 그대로 공유 드라이브에 올려 주세요. 메신저로 보내면 압축돼 화질이 떨어집니다.
   </footer>
 </main>
