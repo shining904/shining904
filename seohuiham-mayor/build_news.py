@@ -32,27 +32,123 @@ TALK = [(26.4, 36.2), (44.4, 56.3), (72.6, 75.8)]  # window grows while Seohui s
 CROP = (770, 222, 840)  # Seohui's head and shoulders in the 1920x1080 Seohui clips
 
 
+# The mayor is his cut-out (background removed) over a clean plate of his own office, widened
+# to the right, so the camera can pan and leave him on the left when Seohui's window opens.
+# The plate is softly blurred: the strip behind his head is AI-filled and must not read as the
+# city's real sign lettering.
+PLATE = os.path.join(WORK, "office-plate.png")   # 2340x1080: clean office + right extension
+PAN, PAN_T0, PAN_D = 380, PIP_OPEN - 1.0, 1.6
+# Mayor track, cut line by line: (start, kind, a, b) — real: source start a; synced: lip-synced
+# file a, source start b (b < 0: footage was reversed, window -b); listen: listening bank offset a
+NEWS_MAYOR = [
+    (0.0, "real", 0.8, None),               # 1
+    (3.9, "real", 8.6, None),               # 2
+    (8.4, "synced", "ls-L03.mp4", 31.0),    # 3
+    (13.9, "real", 13.8, None),             # 4
+    (22.8, "synced", "ls-L05.mp4", 36.3),   # 5
+    (25.76, "listen", 0.0, None),           # 6 (Seohui)
+    (36.3, "synced", "ls-L07.mp4", 22.9),   # 7
+    (44.3, "listen", 11.0, None),           # 8 (Seohui)
+    (56.4, "synced", "ls-L09.mp4", -8.4),   # 9 (footage from 14.0 s, played backwards)
+    (64.9, "synced", "ls-L10.mp4", -7.5),   # 10 (footage from 0.9 s, played backwards)
+    (72.8, "synced", "ls-L11.mp4", 5.5),    # 11
+    (75.6, "listen", 5.0, None),
+]
+REVERSED_FROM = {"ls-L09.mp4": 14.0, "ls-L10.mp4": 0.9}
+# every moment of the greeting where he is quiet: the listening shots are woven from these
+PAUSES = [(4.15, 1.5), (12.93, 0.95), (19.43, 0.6), (29.92, 0.62), (8.12, 0.6), (35.55, 0.45),
+          (38.65, 0.5), (15.1, 0.45)]
+# framing per line (scale about the mayor's face); a change of size at each cut turns a pose jump
+# into an ordinary edit, and the close-ups hide the hands in the reversed lines
+FRAMING = [(0.0, 1.0), (3.9, 1.3), (8.4, 1.05), (13.9, 1.28), (22.8, 1.0), (36.3, 1.3),
+           (44.3, 1.0), (56.4, 1.32), (64.9, 1.15), (72.8, 1.0)]
+
+
+def cutout_piece(name, src, dur, video=None, reverse_window=None):
+    """the mayor's cut-out as a lossless yuva file: his greeting chunks (src..src+dur), or a
+    lip-synced file with the matte of the footage it was made from"""
+    from build_dialogue import chunk_inputs
+    out = os.path.join(WORK, "news-pieces", name + ".mkv")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    frames = round(dur * FPS)
+    args, n = chunk_inputs(src, reverse_window or dur + 0.2)
+    body = "".join(f"[{j}]format=yuva420p,fps={FPS},setpts=PTS-STARTPTS[c{j}];" for j in range(n))
+    joined = "".join(f"[c{j}]" for j in range(n)) + f"concat=n={n}:v=1"
+    if video is None:
+        fil = body + joined + f",trim=end_frame={frames},setpts=PTS-STARTPTS[out]"
+    else:
+        args += ["-i", video]
+        alpha = joined + ",alphaextract"
+        if reverse_window:
+            alpha += f",trim=end_frame={round(reverse_window * FPS)},reverse"
+        fil = (body + alpha + f",trim=end_frame={frames},setpts=PTS-STARTPTS[al];"
+               f"[{n}:v]fps={FPS},scale=1920:1080,trim=end_frame={frames},setpts=PTS-STARTPTS,format=rgb24[lv];"
+               f"[lv][al]alphamerge,format=yuva420p[out]")
+    run(["ffmpeg", "-v", "error", "-y", *args, "-filter_complex", fil, "-map", "[out]",
+         "-frames:v", str(frames), "-c:v", "ffv1", out])
+    return out
+
+
+def build_listen_bank():
+    """his quiet moments, each played forward then back, then the set again in another order"""
+    parts = []
+    for i, (s, d) in enumerate(PAUSES):
+        f = cutout_piece(f"pause{i}", s, d)
+        r = os.path.join(WORK, "news-pieces", f"pause{i}r.mkv")
+        run(["ffmpeg", "-v", "error", "-y", "-i", f, "-vf", "reverse", "-c:v", "ffv1", r])
+        parts += [f, r]
+    order = parts + parts[::-1][2:] + parts
+    out = os.path.join(WORK, "news-pieces", "listen-bank.mkv")
+    ins, fil, t, last = [], [], 0.0, "b0"
+    for i, p in enumerate(order):
+        ins += ["-i", p]
+        fil.append(f"[{i}]fps={FPS},settb=1/{FPS},setpts=PTS-STARTPTS[b{i}]")
+    for i in range(1, len(order)):
+        t += float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of",
+                                   "csv=p=0", order[i - 1]], capture_output=True, text=True).stdout) - 0.16
+        fil.append(f"[{last}][b{i}]xfade=transition=fade:duration=0.16:offset={t:.3f}[k{i}]")
+        last = f"k{i}"
+    run(["ffmpeg", "-v", "error", "-y", *ins, "-filter_complex", ";".join(fil), "-map", f"[{last}]",
+         "-c:v", "ffv1", out])
+    return out
+
+
 def build_mayor():
+    bank = build_listen_bank()
     segs = []
-    for i, (start, kind, a, b, c) in enumerate(MAYOR):
-        end = MAYOR[i + 1][0] if i + 1 < len(MAYOR) else DUR
+    for i, (start, kind, a, b) in enumerate(NEWS_MAYOR):
+        end = NEWS_MAYOR[i + 1][0] if i + 1 < len(NEWS_MAYOR) else DUR
         d = end - start + 0.3
         if kind == "real":
-            segs.append((start, ["-ss", str(a), "-t", f"{d:.2f}", "-i", GREETING], f"fps={FPS},settb=1/{FPS}", 0.12))
+            f = cutout_piece(f"line{i}", a, d)
+        elif kind == "synced" and b < 0:
+            f = cutout_piece(f"line{i}", REVERSED_FROM[a], d, os.path.join(MAI, a), -b)
         elif kind == "synced":
-            segs.append((start, ["-i", os.path.join(MAI, a)], f"fps={FPS},scale=1920:1080,settb=1/{FPS}", 0.12))
-        else:  # listening: ping-pong his still pause after "성수석입니다"
-            segs.append((start, ["-ss", str(LISTEN[0]), "-t", str(LISTEN[1]), "-i", GREETING],
-                         f"fps={FPS},split[f][r0];[r0]reverse[r];[f][r]concat=n=2:v=1,loop=loop=-1:size=300,"
-                         f"trim=duration={d:.2f},fps={FPS},settb=1/{FPS}", 0.2))
-    # chain() writes "[i]{filter}" per input; a listening piece's own split/concat labels are local
+            f = cutout_piece(f"line{i}", b, d, os.path.join(MAI, a))
+        else:
+            f = None
+        if f:
+            segs.append((start, ["-i", f], f"fps={FPS},settb=1/{FPS},tpad=stop_mode=clone:stop_duration=1", 0.04))
+        else:
+            segs.append((start, ["-ss", str(a), "-i", bank], f"fps={FPS},settb=1/{FPS}",
+                         0.25 if NEWS_MAYOR[i - 1][0] >= 22.8 and FRAMING_AT(start) == FRAMING_AT(NEWS_MAYOR[i - 1][0]) else 0.04))
+    track = os.path.join(WORK, "news-mayor.mkv")
+    chain(segs, track, "yuva420p", ["-c:v", "ffv1"], DUR)
+
+    # composite on the widened, softened office and pan the camera right as the window opens
+    s = f"((t-{PAN_T0})/{PAN_D})"
+    px = f"if(lt(t\\,{PAN_T0})\\,0\\,if(gt(t\\,{PAN_T0 + PAN_D})\\,{PAN}\\,{PAN}*(3*pow({s}\\,2)-2*pow({s}\\,3))))"
     out = os.path.join(WORK, "news", "assets", "mayor.mp4")
     os.makedirs(os.path.dirname(out), exist_ok=True)
-    fixed = []
-    for j, (start, args, filt, fade) in enumerate(segs):
-        fixed.append((start, args, filt.replace("[f]", f"[f{j}]").replace("[r0]", f"[r0{j}]")
-                      .replace("[r]", f"[r{j}]"), fade))
-    chain(fixed, out, "yuv420p", ["-c:v", "libx264", "-crf", "14", "-preset", "medium"], DUR)
+    run(["ffmpeg", "-v", "error", "-y", "-loop", "1", "-framerate", str(FPS), "-t", str(DUR), "-i", PLATE,
+         "-i", track, "-filter_complex",
+         f"[0]gblur=sigma=2.5,eq=brightness=-0.02[bg];[bg][1]overlay=0:0:eof_action=endall,"
+         f"crop=1920:1080:x='{px}':y=0,format=yuv420p[out]", "-map", "[out]", "-t", str(DUR),
+         "-r", str(FPS), "-c:v", "libx264", "-crf", "14", "-preset", "medium", out])
+
+
+def FRAMING_AT(t):
+    return [s for (u, s) in FRAMING if u <= t + 1e-6][-1]
 
 
 def build_seohui():
@@ -128,16 +224,18 @@ def write_project():
         subs += f'        <div id="s{i}" class="sub">{text.replace("/", "<br />")}</div>\n'
         js += f'        tl.fromTo("#s{i}", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.2 }}, {a});\n'
         js += f'        tl.to("#s{i}", {{ opacity: 0, duration: 0.2 }}, {b - 0.2:.2f});\n'
-    # mayor: a slow push-in, then he steps left and up a little to make room for the window;
-    # x stays >= 1920 - 1920 * scale so his frame always covers the right edge
-    js += '        tl.fromTo("#mayor", { scale: 1.0, x: 0, y: 0 }, { scale: 1.04, x: -20, y: -10, duration: 22.6, ease: "none" }, 0);\n'
-    js += f'        tl.to("#mayor", {{ scale: 1.12, x: -230, y: -60, duration: 1.4, ease: "power2.inOut" }}, {PIP_OPEN - 1.2});\n'
-    js += f'        tl.to("#mayor", {{ scale: 1.15, x: -280, y: -70, duration: {DUR - PIP_OPEN - 0.2:.1f}, ease: "none" }}, {PIP_OPEN + 0.2});\n'
+    # mayor: one framing per line, scaled about his face (which sits left after the pan);
+    # each line holds a slow push-in so the frame is never dead still
+    cuts = FRAMING + [(DUR, None)]
+    for (t, sc), (t2, _) in zip(FRAMING, cuts[1:]):
+        fx = 1020 if t < PAN_T0 else 1020 - PAN
+        js += f'        tl.set("#mayor", {{ scale: {sc}, transformOrigin: "{fx}px 330px" }}, {t});\n'
+        js += f'        tl.to("#mayor", {{ scale: {sc + 0.025:.3f}, duration: {t2 - t:.2f}, ease: "none" }}, {t});\n'
     # the window opens with a gold flash, then grows while Seohui speaks
     js += f'        tl.fromTo("#pip", {{ opacity: 0, scale: 0.55 }}, {{ opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.4)" }}, {PIP_OPEN});\n'
     js += f'        tl.fromTo("#pip-flash", {{ opacity: 0.9 }}, {{ opacity: 0, duration: 0.9, ease: "power2.out" }}, {PIP_OPEN + 0.3});\n'
     for a, b in TALK:
-        js += f'        tl.to("#pip", {{ scale: 1.28, duration: 0.6, ease: "power2.inOut" }}, {a});\n'
+        js += f'        tl.to("#pip", {{ scale: 1.2, duration: 0.6, ease: "power2.inOut" }}, {a});\n'
         js += f'        tl.to("#pip", {{ scale: 1, duration: 0.6, ease: "power2.inOut" }}, {b - 0.4:.1f});\n'
     js += '        tl.fromTo("#tag-m", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.5);\n'
     js += '        tl.to("#tag-m", { opacity: 0, duration: 0.4 }, 5.0);\n'
@@ -148,14 +246,14 @@ def write_project():
         #root { position: absolute; inset: 0; overflow: hidden; background: #000; font-family: "Pretendard"; }
         #mayor { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
         #mayor video { position: absolute; inset: 0; width: 100%; height: 100%; }
-        #pip { position: absolute; right: 60px; top: 60px; width: 640px; height: 360px; transform-origin: 100% 0;
+        #pip { position: absolute; right: 50px; top: 50px; width: 800px; height: 450px; transform-origin: 100% 0;
           border: 3px solid #e3b25a; border-radius: 6px; overflow: hidden; background: #000; opacity: 0;
           box-shadow: 0 12px 40px rgba(0,0,0,0.55); }
         #pip video { position: absolute; inset: 0; width: 100%; height: 100%; }
         #pip-flash { position: absolute; inset: 0; background: radial-gradient(closest-side, rgba(255,230,160,0.95), rgba(227,178,90,0.4) 60%, rgba(227,178,90,0)); opacity: 0; }
         #pip-live { position: absolute; left: 12px; top: 10px; padding: 3px 10px; font-size: 16px; font-weight: 700;
           color: #1a1a1a; background: #e3b25a; border-radius: 4px; letter-spacing: 0.04em; }
-        #pip-name { position: absolute; left: 0; right: 0; bottom: 0; padding: 8px 14px; font-size: 22px; font-weight: 700;
+        #pip-name { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 16px; font-size: 26px; font-weight: 700;
           color: #fff; background: linear-gradient(transparent, rgba(0,0,0,0.75)); }
         #pip-name small { font-size: 16px; font-weight: 500; color: #e3b25a; margin-right: 8px; }
         .sub { position: absolute; left: 0; right: 0; bottom: 92px; text-align: center; color: #fff; font-weight: 700;
