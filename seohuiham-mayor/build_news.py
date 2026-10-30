@@ -128,10 +128,11 @@ def write_project():
         subs += f'        <div id="s{i}" class="sub">{text.replace("/", "<br />")}</div>\n'
         js += f'        tl.fromTo("#s{i}", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.2 }}, {a});\n'
         js += f'        tl.to("#s{i}", {{ opacity: 0, duration: 0.2 }}, {b - 0.2:.2f});\n'
-    # mayor: a slow push-in, then he steps left and up a little to make room for the window
+    # mayor: a slow push-in, then he steps left and up a little to make room for the window;
+    # x stays >= 1920 - 1920 * scale so his frame always covers the right edge
     js += '        tl.fromTo("#mayor", { scale: 1.0, x: 0, y: 0 }, { scale: 1.04, x: -20, y: -10, duration: 22.6, ease: "none" }, 0);\n'
-    js += f'        tl.to("#mayor", {{ scale: 1.12, x: -288, y: -60, duration: 1.4, ease: "power2.inOut" }}, {PIP_OPEN - 1.2});\n'
-    js += f'        tl.to("#mayor", {{ scale: 1.15, x: -300, y: -70, duration: {DUR - PIP_OPEN - 0.2:.1f}, ease: "none" }}, {PIP_OPEN + 0.2});\n'
+    js += f'        tl.to("#mayor", {{ scale: 1.12, x: -230, y: -60, duration: 1.4, ease: "power2.inOut" }}, {PIP_OPEN - 1.2});\n'
+    js += f'        tl.to("#mayor", {{ scale: 1.15, x: -280, y: -70, duration: {DUR - PIP_OPEN - 0.2:.1f}, ease: "none" }}, {PIP_OPEN + 0.2});\n'
     # the window opens with a gold flash, then grows while Seohui speaks
     js += f'        tl.fromTo("#pip", {{ opacity: 0, scale: 0.55 }}, {{ opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.4)" }}, {PIP_OPEN});\n'
     js += f'        tl.fromTo("#pip-flash", {{ opacity: 0.9 }}, {{ opacity: 0, duration: 0.9, ease: "power2.out" }}, {PIP_OPEN + 0.3});\n'
