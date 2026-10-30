@@ -188,13 +188,14 @@ def chain(segs, out, pix, codec, total):
 
 
 def build_stage():
-    segs = []
-    for i, (start, kind, a, b, c) in enumerate(MAYOR):
-        end = MAYOR[i + 1][0] if i + 1 < len(MAYOR) else DUR
-        f = mayor_piece(i, kind, a, b, c, end - start + 0.4)
-        segs.append((start, ["-i", f], "null", 0.12 if kind != "listen" else 0.2))
     mayor = os.path.join(WORK, "dialogue-mayor.mkv")
-    chain(segs, mayor, "yuva420p", ["-c:v", "ffv1"], DUR)
+    if not os.path.exists(mayor) or os.environ.get("FRESH"):
+        segs = []
+        for i, (start, kind, a, b, c) in enumerate(MAYOR):
+            end = MAYOR[i + 1][0] if i + 1 < len(MAYOR) else DUR
+            f = mayor_piece(i, kind, a, b, c, end - start + 0.4)
+            segs.append((start, ["-i", f], "null", 0.12 if kind != "listen" else 0.2))
+        chain(segs, mayor, "yuva420p", ["-c:v", "ffv1"], DUR)
 
     norm = f"fps={FPS},scale={SW}:{SH},format=yuv420p"
     plate = os.path.join(ASSETS, "plate4-hanok.png")
