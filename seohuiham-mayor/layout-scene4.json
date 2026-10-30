@@ -1,10 +1,21 @@
 {
-  "_note": "Agreed two-shot layout on scene4-hanok.png (scaled to 1920x1080). Mayor cut-out from a 1920x1080 frame where his face is ~222 px wide: scale to height 550 px and place at x=226, y=290, so his eyes (~x 730, y 440) match Seohui's eye line and he reads about Seohui's size. Re-measure on the real footage and keep the same face size and eye line.",
-  "frame": [1920, 1080],
+  "_note": "Agreed two-shot layout on scene4-hanok.png (scaled to 1920x1080). Mayor cut-out from a 1920x1080 frame where his face is ~222 px wide: scale to height 585 px and place at x=194, y=280, so his eyes (~x 730, y 440) match Seohui's eye line and he reads slightly larger than Seohui's face. Re-measure on the real footage and keep the same face size and eye line.",
+  "frame": [
+    1920,
+    1080
+  ],
   "seohui_center_x": 1190,
   "mayor_center_x": 730,
   "eye_line_y": 440,
-  "mayor_face_width_px": 141,
-  "greeting_cutout": {"height": 550, "x": 226, "y": 290},
-  "two_shot_window": {"x": 427, "y": 222, "w": 1067}
+  "mayor_face_width_px": 150,
+  "greeting_cutout": {
+    "height": 585,
+    "x": 194,
+    "y": 280
+  },
+  "two_shot_window": {
+    "x": 427,
+    "y": 222,
+    "w": 1067
+  }
 }
