@@ -163,8 +163,9 @@ def mayor_piece(i, kind, a, b, c, dur):
             fil = (body + alpha + f",trim=end_frame={frames},setpts=PTS-STARTPTS[al];"
                    f"[{n}:v]fps=25,trim=end_frame={frames},setpts=PTS-STARTPTS,format=rgb24[lv];"
                    f"[lv][al]alphamerge,{GRADE}[out]")
+    # -frames:v bounds the output: the rim light's colour source never ends on its own
     run(["ffmpeg", "-v", "error", "-y", *args, "-filter_complex", fil, "-map", "[out]",
-         "-c:v", "ffv1", out])
+         "-frames:v", str(frames), "-c:v", "ffv1", out])
     return out
 
 
