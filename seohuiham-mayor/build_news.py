@@ -48,16 +48,16 @@ NEWS_MAYOR = [
     (3.9, "real", 8.6, None),               # 2
     (8.4, "synced", "ls-L03.mp4", 31.0),    # 3
     (13.9, "real", 13.8, None),             # 4
-    (22.8, "synced", "ls-L05b.mp4", 22.6),  # 5 (calm footage straight on from line 4)
+    (22.8, "synced", "ls-L05c.mp4", -3.1),  # 5 (hands clasped, smiling: opening footage reversed)
     (25.76, "listen", 0.0, None),           # 6 (Seohui)
-    (36.3, "synced", "ls-L07b.mp4", 25.7),  # 7
+    (36.3, "synced", "ls-L07c.mp4", 27.8),  # 7 (hands clasped; no fist pump)
     (44.3, "listen", 11.0, None),           # 8 (Seohui)
     (56.4, "synced", "ls-L09.mp4", -8.4),   # 9 (footage from 14.0 s, played backwards)
     (64.9, "synced", "ls-L10.mp4", -7.5),   # 10 (footage from 0.9 s, played backwards)
     (72.8, "synced", "ls-L11.mp4", 5.5),    # 11
     (75.6, "listen", 5.0, None),
 ]
-REVERSED_FROM = {"ls-L09.mp4": 14.0, "ls-L10.mp4": 0.9}
+REVERSED_FROM = {"ls-L05c.mp4": 0.85, "ls-L09.mp4": 14.0, "ls-L10.mp4": 0.9}
 # every moment of the greeting where he is quiet: the listening shots are woven from these
 PAUSES = [(4.15, 1.5), (12.93, 0.95), (19.43, 0.6), (29.92, 0.62), (8.12, 0.6), (35.55, 0.45),
           (38.65, 0.5), (15.1, 0.45)]
@@ -131,7 +131,7 @@ def build_mayor():
         else:
             f = None
         if f:
-            segs.append((start, ["-i", f], f"fps={FPS},settb=1/{FPS},tpad=stop_mode=clone:stop_duration=1", 0.04))
+            segs.append((start, ["-i", f], f"fps={FPS},settb=1/{FPS},tpad=stop_mode=clone:stop_duration=1", 0.35))
         else:
             segs.append((start, ["-ss", str(a), "-i", bank], f"fps={FPS},settb=1/{FPS}",
                          0.25 if NEWS_MAYOR[i - 1][0] >= 22.8 and FRAMING_AT(start) == FRAMING_AT(NEWS_MAYOR[i - 1][0]) else 0.04))
@@ -229,11 +229,19 @@ def write_project():
         js += f'        tl.to("#s{i}", {{ opacity: 0, duration: 0.2 }}, {b - 0.2:.2f});\n'
     # mayor: one framing per line, scaled about his face (which sits left after the pan);
     # each line holds a slow push-in so the frame is never dead still
+    # every change of size is an eased 1.2 s zoom over the 0.35 s dissolve between lines, then a
+    # slow drift. The pivot (his face) only moves while the frame is at its natural size, so the
+    # picture never jumps: before the pan it is 1020 px, after it 640 px.
     cuts = FRAMING + [(DUR, None)]
+    js += f'        tl.set("#mayor", {{ scale: 1.0, transformOrigin: "1020px 330px" }}, 0);\n'
     for (t, sc), (t2, _) in zip(FRAMING, cuts[1:]):
-        fx = 1020 if t < PAN_T0 else 1020 - PAN
-        js += f'        tl.set("#mayor", {{ scale: {sc}, transformOrigin: "{fx}px 330px" }}, {t});\n'
-        js += f'        tl.to("#mayor", {{ scale: {sc + 0.025:.3f}, duration: {t2 - t:.2f}, ease: "none" }}, {t});\n'
+        z = min(1.2, t2 - t)
+        if t > 0:
+            js += f'        tl.to("#mayor", {{ scale: {sc}, duration: {z}, ease: "sine.inOut" }}, {t - 0.15:.2f});\n'
+        if sc == 1.0 and t <= PAN_T0 < t2:  # the window's line: settle at full size, then re-pivot
+            js += f'        tl.set("#mayor", {{ transformOrigin: "{1020 - PAN}px 330px" }}, {PAN_T0 + PAN_D + 0.1:.2f});\n'
+            continue
+        js += f'        tl.to("#mayor", {{ scale: {sc + 0.025:.3f}, duration: {t2 - t - z:.2f}, ease: "none" }}, {t - 0.15 + z:.2f});\n'
     # the window opens with a gold flash, then grows while Seohui speaks
     js += f'        tl.fromTo("#pip", {{ opacity: 0, scale: 0.55 }}, {{ opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.4)" }}, {PIP_OPEN});\n'
     js += f'        tl.fromTo("#pip-flash", {{ opacity: 0.9 }}, {{ opacity: 0, duration: 0.9, ease: "power2.out" }}, {PIP_OPEN + 0.3});\n'
