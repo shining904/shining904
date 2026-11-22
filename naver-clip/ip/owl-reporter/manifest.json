@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "owl-reporter",
+  "displayName": "이슈 부엉이",
+  "style": "flat-vector-sticker",
+  "assets": {
+    "turnaround": "assets/turnaround.png",
+    "expressions": {
+      "surprised": "assets/owl_surprised.png",
+      "thinking": "assets/owl_thinking.png",
+      "happy": "assets/owl_happy.png",
+      "worried": "assets/owl_worried.png",
+      "explaining": "assets/owl_explaining.png"
+    }
+  },
+  "characterSpec": "references/character-spec.md",
+  "referenceJob": "a1336bba-727a-441f-a1f4-699cbca27f17",
+  "license": "private"
+}

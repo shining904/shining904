@@ -25,7 +25,7 @@
   window.wipe = (sel, t0, d = 0.4) => tw(sel, t0, d, { o: [1, 1], clip: [0, 100] }, 'outExpo');
   window.shake = (sel, t0, d = 0.3, amp = 14) => tw(sel, t0, d, { sh: [amp, 0] }, 'linear');
 
-  window.frame = t => {
+  window.frame = (t, tr = t) => {
     const state = new Map();
     const els = new Set(tweens.map(w => w.sel));
     els.forEach(sel => state.set(sel, { ...DEF }));
@@ -46,6 +46,6 @@
       const p = t < c.t0 ? 0 : ease[c.e](Math.min(1, (t - c.t0) / c.dur));
       document.querySelectorAll(c.sel).forEach(el => (el.textContent = c.fmt(c.from + (c.to - c.from) * p)));
     });
-    loops.forEach(fn => fn(t));
+    loops.forEach(fn => fn(t, tr));
   };
 })();

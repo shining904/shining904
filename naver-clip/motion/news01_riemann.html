@@ -59,13 +59,23 @@ body{width:1080px;height:1920px;overflow:hidden;background:#0B0B0F;font-family:P
 .opt b{width:86px;height:86px;border-radius:22px;background:#C6FF00;display:flex;align-items:center;justify-content:center;font-size:50px}
 #o1{top:740px}#o2{top:900px}#o3{top:1060px}
 #s6b{top:1250px}
-#src{top:1420px;font-size:32px;font-weight:600;color:#8A8A96}
+/* 부엉이 */
+.owl{position:absolute;right:30px;top:1380px;width:400px;opacity:0}
+.owl img{width:100%;filter:drop-shadow(0 10px 30px rgba(0,0,0,.5))}
+#owl6{top:1520px;width:320px}
+#src{top:1440px;left:70px;right:400px;text-align:left;font-size:32px;font-weight:600;color:#8A8A96;line-height:1.5}
 </style></head>
 <body>
 <div id="grid"></div><div class="blob" id="b1"></div><div class="blob" id="b2"></div>
 <div id="code"></div>
 <div id="primes"></div>
 <div id="vignette"></div>
+<div class="owl" id="owl1"><img src="file:../ip/owl-reporter/assets/owl_surprised.png"></div>
+<div class="owl" id="owl2"><img src="file:../ip/owl-reporter/assets/owl_explaining.png"></div>
+<div class="owl" id="owl3"><img src="file:../ip/owl-reporter/assets/owl_happy.png"></div>
+<div class="owl" id="owl4"><img src="file:../ip/owl-reporter/assets/owl_surprised.png"></div>
+<div class="owl" id="owl5"><img src="file:../ip/owl-reporter/assets/owl_thinking.png"></div>
+<div class="owl" id="owl6"><img src="file:../ip/owl-reporter/assets/owl_explaining.png"></div>
 <div id="prog"><b></b></div>
 <div id="tag"><i></i>3분 이슈 정리</div>
 
@@ -165,12 +175,18 @@ slideX('#o1', 19.25); slideX('#o2', 19.45); slideX('#o3', 19.65);
 pop('#s6b', 20.2, 0.35, 0.6);
 tw('#src', 19.8, 0.4, { o: [0, 0.9] });
 
+// 장면마다 부엉이 (등장 → 퇴장)
+[[1, 0.3, 3.0], [2, 3.5, 6.9], [3, 7.6, 10.3], [4, 11.0, 14.1], [5, 15.6, 18.3], [6, 19.0, 99]].forEach(([n, a, b]) => {
+  tw('#owl' + n, a, 0.4, { o: [0, 1], y: [260, 0], r: [8, 0] }, 'outBack');
+  if (b < 90) tw('#owl' + n, b, 0.3, { o: [1, 0], y: [0, 260] }, 'inCubic');
+});
+
 // 계속 움직이는 요소
-loop(t => {
-  document.querySelector('#prog b').style.width = (t / T * 100) + '%';
-  document.getElementById('grid').style.transform = `translate(${(t * 30) % 90}px, ${(t * 45) % 90}px)`;
-  document.getElementById('b1').style.transform = `translate(${Math.sin(t * 0.6) * 160}px, ${Math.cos(t * 0.5) * 220}px)`;
-  document.getElementById('b2').style.transform = `translate(${Math.cos(t * 0.4) * 200}px, ${Math.sin(t * 0.7) * 160}px)`;
+loop((t, tr) => {
+  document.querySelector('#prog b').style.width = (tr / (window.TR || T) * 100) + '%';
+  document.getElementById('grid').style.transform = `translate(${(tr * 30) % 90}px, ${(tr * 45) % 90}px)`;
+  document.getElementById('b1').style.transform = `translate(${Math.sin(tr * 0.6) * 160}px, ${Math.cos(tr * 0.5) * 220}px)`;
+  document.getElementById('b2').style.transform = `translate(${Math.cos(tr * 0.4) * 200}px, ${Math.sin(tr * 0.7) * 160}px)`;
   // 소수: 2장면에서만 떠다님
   const pv = t < 3.2 ? 0 : t < 3.7 ? (t - 3.2) / 0.5 : t < 6.9 ? 1 : t < 7.2 ? 1 - (t - 6.9) / 0.3 : 0;
   document.querySelectorAll('.prime').forEach(e => { e.style.opacity = 0.14 * pv; e.style.transform = `translateY(${-(t - 3.2) * e.dataset.k}px)`; });
@@ -178,7 +194,9 @@ loop(t => {
   const cv = t < 10.6 ? 0 : t < 11.0 ? (t - 10.6) / 0.4 : t < 14.1 ? 1 : t < 14.4 ? 1 - (t - 14.1) / 0.3 : 0;
   const code = document.getElementById('code'); code.style.opacity = 0.16 * cv; code.style.transform = `translateY(${-(t - 10.6) * 260}px)`;
   // 마지막 댓글 유도 버튼 맥박
-  if (t > 20.6) document.getElementById('s6b').style.transform = `scale(${1 + Math.sin((t - 20.6) * 7) * 0.045})`;
+  if (t > 20.6) document.getElementById('s6b').style.transform = `scale(${1 + Math.sin(tr * 7) * 0.045})`;
+  // 부엉이는 제자리에서 살짝 둥실둥실
+  document.querySelectorAll('.owl img').forEach((e, k) => (e.style.transform = `translateY(${Math.sin(tr * 3 + k) * 10}px) rotate(${Math.sin(tr * 2 + k) * 2}deg)`));
 });
 </script>
 </body></html>
