@@ -7,7 +7,9 @@
       "type": "cover",
       "badge": "경제 이슈",
       "title": "코스피\n[5% 급락]\n무슨 일?",
-      "sub": "하루 만에 4,900선 붕괴\n핵심만 정리했어요"
+      "sub": "하루 만에 4,900선 붕괴\n핵심만 정리했어요",
+      "mascot": "ip/owl-reporter-v2/assets/owl_worried.png",
+      "bubble": "내 주식 어떡해…"
     },
     {
       "type": "fact",

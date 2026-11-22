@@ -7,7 +7,9 @@
       "type": "cover",
       "badge": "과학 이슈",
       "title": "167년 난제\n[AI가 풀었다?]",
-      "sub": "앤트로픽 수학자의 '증명' 주장,\n지금까지 확인된 것만 정리"
+      "sub": "앤트로픽 수학자의 '증명' 주장,\n지금까지 확인된 것만 정리",
+      "mascot": "ip/owl-reporter-v2/assets/owl_surprised.png",
+      "bgimg": "assets/news01_bg.jpg"
     },
     {
       "type": "fact",

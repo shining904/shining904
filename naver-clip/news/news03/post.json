@@ -7,7 +7,9 @@
       "type": "cover",
       "badge": "직장인 필독",
       "title": "직장인\n[달라지는 것 2]",
-      "sub": "11월 27일 · 12월 10일부터\n이렇게 바뀌어요"
+      "sub": "11월 27일 · 12월 10일부터\n이렇게 바뀌어요",
+      "mascot": "ip/owl-reporter-v2/assets/owl_happy.png",
+      "bubble": "직장인 희소식!"
     },
     {
       "type": "fact",
