@@ -163,7 +163,7 @@ for p in POSTS:
     cards += p["items"]
     cards.append({"type": "list", "title": "한 장 요약 ✍️", "rows": p["summary"]})
     cards.append({"type": "quiz", "badge": "오늘의 퀴즈", "title": "맞는 문장은?", "options": p["quiz"], "tip": QUIZ_TIP})
-    lines = [f"{i+1}. {it['title']} → {it['tip'].replace('**','').splitlines()[0]}" for i, it in enumerate(p["items"])]
+    lines = [f"{i+1}. {it['title']} → {' '.join(it['tip'].replace('**','').splitlines())}" for i, it in enumerate(p["items"])]
     caption = (f"[제목]\n{p['title']}\n\n[본문]\n{p['sub'].replace(chr(10),' ')}\n\n" + "\n".join(lines) +
                "\n\n마지막 장 퀴즈 정답은 댓글로 남겨 주세요!\n매일 1분, 헷갈리는 맞춤법을 카드 한 장으로 정리해요.\n\n"
                f"[태그]\n{p['tags']}\n\n[고정 댓글용 정답 · 하루 뒤 올리기]\n정답은 {p['answer']}! {p['quiz']['ABC'.index(p['answer'])]}\n")
