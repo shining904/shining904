@@ -1,0 +1,184 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+/*FONTS*/
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1080px;height:1920px;overflow:hidden;background:#0B0B0F;font-family:P;color:#fff}
+.abs{position:absolute}
+.c{position:absolute;left:60px;right:60px;text-align:center;opacity:0}
+.neon{color:#C6FF00}
+/* 배경 */
+#grid{position:absolute;inset:-200px;background-image:linear-gradient(rgba(255,255,255,.05) 2px,transparent 2px),linear-gradient(90deg,rgba(255,255,255,.05) 2px,transparent 2px);background-size:90px 90px}
+.blob{position:absolute;width:900px;height:900px;border-radius:50%;filter:blur(140px);opacity:.35}
+#b1{background:#5B3BFF;left:-300px;top:200px}
+#b2{background:#C6FF00;right:-400px;top:1100px;opacity:.16}
+#vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.6))}
+/* 상단 고정 */
+#tag{position:absolute;top:110px;left:70px;font-size:36px;font-weight:800;display:flex;gap:14px;align-items:center;opacity:1}
+#tag i{width:18px;height:18px;border-radius:50%;background:#FF3B3B;display:inline-block}
+#prog{position:absolute;top:70px;left:70px;right:70px;height:10px;border-radius:8px;background:rgba(255,255,255,.15);overflow:hidden}
+#prog b{display:block;height:100%;width:0;background:#C6FF00}
+/* 공통 */
+.pill{display:inline-block;font-size:44px;font-weight:900;padding:14px 34px;border-radius:999px;background:#C6FF00;color:#0B0B0F}
+.hl{position:relative;display:inline-block;padding:0 22px}
+.hlbg{position:absolute;left:0;right:0;top:12%;bottom:8%;background:#C6FF00;border-radius:12px;z-index:0}
+.hl span{position:relative;z-index:1;color:#0B0B0F}
+.mask{overflow:hidden;padding:10px 0}
+/* 장면 1 */
+#s1a{top:420px;font-size:300px;font-weight:900;letter-spacing:-12px;line-height:1}
+#s1a small{font-size:140px;letter-spacing:-4px}
+#s1b{top:760px;font-size:68px;font-weight:800;color:#D8D8E0}
+#s1c{top:900px;font-size:150px;font-weight:900;letter-spacing:-6px}
+/* 장면 2 */
+#s2k{top:430px}
+#s2am{top:560px}
+#s2a{font-size:190px;font-weight:900;letter-spacing:-8px}
+#s2b{top:820px;font-size:58px;font-weight:700;color:#D8D8E0}
+#s2c{top:960px}
+.box{display:inline-block;font-size:52px;font-weight:900;border:5px solid #C6FF00;color:#C6FF00;padding:18px 40px;border-radius:20px}
+.prime{position:absolute;font-weight:900;color:#fff;opacity:0}
+/* 장면 3 */
+#s3k{top:520px}
+#s3a{top:660px;font-size:170px;font-weight:900;letter-spacing:-6px}
+#s3b{top:900px;font-size:96px;font-weight:900}
+/* 장면 4 */
+#code{position:absolute;left:40px;right:40px;top:0;font-family:'DejaVu Sans Mono',monospace;font-size:30px;line-height:46px;color:#C6FF00;opacity:0;white-space:pre}
+#s4k{top:520px}
+#s4a{top:650px;font-size:180px;font-weight:900;letter-spacing:-6px}
+#s4u{top:860px;font-size:80px;font-weight:900}
+#s4b{top:1000px;font-size:54px;font-weight:700;color:#D8D8E0}
+/* 장면 5 */
+#s5a{top:700px;font-size:150px;font-weight:900}
+#stamp{position:absolute;left:0;right:0;top:470px;text-align:center;opacity:0}
+#stamp span{display:inline-block;font-size:150px;font-weight:900;color:#FF3B3B;border:16px solid #FF3B3B;border-radius:28px;padding:10px 50px;transform:rotate(-10deg)}
+.bul{position:absolute;left:110px;right:110px;font-size:56px;font-weight:800;background:rgba(255,255,255,.08);border-left:12px solid #C6FF00;border-radius:20px;padding:30px 40px;opacity:0}
+#s5b{top:860px}#s5c{top:1020px}
+/* 장면 6 */
+#s6a{top:400px;font-size:116px;font-weight:900;letter-spacing:-4px;line-height:1.15}
+.opt{position:absolute;left:110px;right:110px;display:flex;gap:30px;align-items:center;font-size:60px;font-weight:800;background:#fff;color:#0B0B0F;border-radius:28px;padding:30px 40px;opacity:0}
+.opt b{width:86px;height:86px;border-radius:22px;background:#C6FF00;display:flex;align-items:center;justify-content:center;font-size:50px}
+#o1{top:740px}#o2{top:900px}#o3{top:1060px}
+#s6b{top:1250px}
+#src{top:1420px;font-size:32px;font-weight:600;color:#8A8A96}
+</style></head>
+<body>
+<div id="grid"></div><div class="blob" id="b1"></div><div class="blob" id="b2"></div>
+<div id="code"></div>
+<div id="primes"></div>
+<div id="vignette"></div>
+<div id="prog"><b></b></div>
+<div id="tag"><i></i>3분 이슈 정리</div>
+
+<div id="stage" style="position:absolute;inset:0;transform:translateY(150px)">
+<!-- 1. 훅 -->
+<div class="c neon" id="s1a"><span id="n167">0</span><small>년</small></div>
+<div class="c" id="s1b">아무도 못 푼 수학 난제</div>
+<div class="c" id="s1c"><span class="hl"><i class="hlbg" id="s1hl"></i><span>AI가 풀었다?</span></span></div>
+
+<!-- 2. 리만 가설 -->
+<div class="c" id="s2k"><span class="pill">리만 가설이 뭐냐면</span></div>
+<div class="c mask" id="s2am"><div id="s2a">리만 가설</div></div>
+<div class="c" id="s2b">1859년 · 소수(素數)에 관한 가설</div>
+<div class="c" id="s2c"><span class="box">7대 밀레니엄 난제</span></div>
+
+<!-- 3. 상금 -->
+<div class="c" id="s3k"><span class="pill">풀면 상금이</span></div>
+<div class="c neon" id="s3a">$<span id="nprize">0</span></div>
+<div class="c" id="s3b">약 14억 원 💰</div>
+
+<!-- 4. 코드 -->
+<div class="c" id="s4k"><span class="pill">공개된 증명 코드</span></div>
+<div class="c neon" id="s4a"><span id="ncode">0</span></div>
+<div class="c" id="s4u">줄</div>
+<div class="c" id="s4b">설명이 25만 쪽을 넘어 컴퓨터 언어로 공개</div>
+
+<!-- 5. 반전 -->
+<div class="c" id="s5a">그런데…</div>
+<div id="stamp"><span>검증 중</span></div>
+<div class="bul" id="s5b">수학계 검토 <span class="neon">진행 중</span></div>
+<div class="bul" id="s5c">공식 인정까지 <span class="neon">2년 검증</span> 필요</div>
+
+<!-- 6. 참여 -->
+<div class="c" id="s6a">AI가 진짜<br><span class="neon">풀었을까?</span></div>
+<div class="opt" id="o1"><b>A</b>진짜 풀었다</div>
+<div class="opt" id="o2"><b>B</b>검증 끝까지 봐야 한다</div>
+<div class="opt" id="o3"><b>C</b>아직 못 믿겠다</div>
+<div class="c" id="s6b"><span class="pill">댓글로 의견 남겨 주세요 👇</span></div>
+<div class="c" id="src">출처: YTN · 헤럴드경제 · 인사이트 보도 종합 (11월 22일 기준)</div>
+
+</div>
+<script src="engine.js"></script>
+<script>
+window.T = 23.5;
+// 배경 장식: 소수 숫자, 코드 줄 (장식용 가짜 텍스트)
+const P = [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61];
+const pr = document.getElementById('primes');
+P.forEach((n, i) => {
+  const s = document.createElement('div'); s.className = 'prime'; s.textContent = n;
+  const x = (i * 197) % 960, y = 300 + (i * 331) % 1300, size = 60 + (i * 37) % 120;
+  Object.assign(s.style, { left: x + 'px', top: y + 'px', fontSize: size + 'px' }); s.dataset.y = y; s.dataset.k = 20 + (i % 5) * 12;
+  pr.appendChild(s);
+});
+const tok = ['theorem','lemma','zeta','∀ s : ℂ','Re s = 1/2',':= by','simp','exact','have','intro','apply','rw','⟨','⟩','∑','ℕ','norm_num'];
+let lines = ''; for (let i = 0; i < 120; i++) { let l = ''; for (let j = 0; j < 5 + (i * 7) % 5; j++) l += tok[(i * 13 + j * 7) % tok.length] + ' '; lines += l + '\n'; }
+document.getElementById('code').textContent = lines;
+
+// 1. 훅 (0 ~ 3.2)
+pop('#s1a', 0.0, 0.4, 0.5); count('#n167', 0.0, 0.8, 0, 167);
+up('#s1b', 0.55);
+wipe('#s1hl', 1.1, 0.3);
+pop('#s1c', 1.15, 0.35, 1.5);
+shake('#s1c', 1.8, 0.3, 12);
+['#s1a', '#s1b', '#s1c'].forEach(s => out(s, 3.0));
+
+// 2. 리만 가설 (3.2 ~ 7.2)
+pop('#s2k', 3.25);
+tw('#s2am', 3.3, 0.01, { o: [1, 1] });
+tw('#s2a', 3.35, 0.55, { o: [0, 1], y: [220, 0] }, 'outExpo');
+up('#s2b', 3.95);
+pop('#s2c', 4.6, 0.4, 0.4);
+['#s2k', '#s2am', '#s2b', '#s2c'].forEach(s => out(s, 6.9));
+
+// 3. 상금 (7.2 ~ 10.6)
+pop('#s3k', 7.25);
+pop('#s3a', 7.45, 0.3, 0.8); count('#nprize', 7.45, 1.1, 0, 1000000);
+pop('#s3b', 8.75, 0.35, 0.3); shake('#s3b', 9.1, 0.25, 10);
+['#s3k', '#s3a', '#s3b'].forEach(s => out(s, 10.3));
+
+// 4. 코드 분량 (10.6 ~ 14.4)
+pop('#s4k', 10.65);
+pop('#s4a', 10.85, 0.3, 0.8); count('#ncode', 10.85, 1.3, 0, 17400000);
+up('#s4u', 11.3);
+up('#s4b', 12.4);
+['#s4k', '#s4a', '#s4u', '#s4b'].forEach(s => out(s, 14.1));
+
+// 5. 반전 (14.4 ~ 18.6)
+pop('#s5a', 14.45, 0.3, 0.8);
+tw('#s5a', 15.2, 0.25, { o: [1, 0], s: [1, 0.9] }, 'inCubic');
+tw('#stamp', 15.45, 0.28, { o: [0, 1], s: [3, 1] }, 'outBack'); shake('#stamp', 15.73, 0.3, 16);
+slideX('#s5b', 16.2, 0.45, -140); slideX('#s5c', 16.6, 0.45, -140);
+['#stamp', '#s5b', '#s5c'].forEach(s => out(s, 18.3));
+
+// 6. 참여 (18.6 ~ 23.5)
+pop('#s6a', 18.65, 0.4, 0.7);
+slideX('#o1', 19.25); slideX('#o2', 19.45); slideX('#o3', 19.65);
+pop('#s6b', 20.2, 0.35, 0.6);
+tw('#src', 19.8, 0.4, { o: [0, 0.9] });
+
+// 계속 움직이는 요소
+loop(t => {
+  document.querySelector('#prog b').style.width = (t / T * 100) + '%';
+  document.getElementById('grid').style.transform = `translate(${(t * 30) % 90}px, ${(t * 45) % 90}px)`;
+  document.getElementById('b1').style.transform = `translate(${Math.sin(t * 0.6) * 160}px, ${Math.cos(t * 0.5) * 220}px)`;
+  document.getElementById('b2').style.transform = `translate(${Math.cos(t * 0.4) * 200}px, ${Math.sin(t * 0.7) * 160}px)`;
+  // 소수: 2장면에서만 떠다님
+  const pv = t < 3.2 ? 0 : t < 3.7 ? (t - 3.2) / 0.5 : t < 6.9 ? 1 : t < 7.2 ? 1 - (t - 6.9) / 0.3 : 0;
+  document.querySelectorAll('.prime').forEach(e => { e.style.opacity = 0.14 * pv; e.style.transform = `translateY(${-(t - 3.2) * e.dataset.k}px)`; });
+  // 코드: 4장면에서만 흘러감
+  const cv = t < 10.6 ? 0 : t < 11.0 ? (t - 10.6) / 0.4 : t < 14.1 ? 1 : t < 14.4 ? 1 - (t - 14.1) / 0.3 : 0;
+  const code = document.getElementById('code'); code.style.opacity = 0.16 * cv; code.style.transform = `translateY(${-(t - 10.6) * 260}px)`;
+  // 마지막 댓글 유도 버튼 맥박
+  if (t > 20.6) document.getElementById('s6b').style.transform = `scale(${1 + Math.sin((t - 20.6) * 7) * 0.045})`;
+});
+</script>
+</body></html>
