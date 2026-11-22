@@ -34,7 +34,16 @@ body{width:1080px;height:1920px;overflow:hidden;background:#0B0B0F;font-family:P
 #s2am{top:560px}
 #s2a{font-size:190px;font-weight:900;letter-spacing:-8px}
 #s2b{top:820px;font-size:58px;font-weight:700;color:#D8D8E0}
-#s2c{top:960px}
+#s2c{top:950px;font-size:76px;font-weight:900;letter-spacing:-2px}
+#s2c span{display:inline-block;opacity:0;margin:0 20px}
+#s2d{top:1080px;font-size:52px;font-weight:800;color:#D8D8E0}
+/* 장면 Z: 리만의 예측 (영점이 한 직선 위에) */
+#zk{top:360px}
+#zt{top:450px;font-size:70px;font-weight:900;line-height:1.25;letter-spacing:-2px}
+#zline{position:absolute;left:536px;top:690px;width:8px;height:430px;border-radius:4px;background:#C6FF00;box-shadow:0 0 30px #C6FF00;opacity:0}
+#zlab{position:absolute;left:570px;top:680px;font-size:40px;font-weight:800;color:#C6FF00;opacity:0}
+.zd{position:absolute;left:526px;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 0 18px #fff;opacity:0}
+#zcap{top:1160px;font-size:42px;font-weight:700;color:#B8B8C0;line-height:1.4}
 .box{display:inline-block;font-size:52px;font-weight:900;border:5px solid #C6FF00;color:#C6FF00;padding:18px 40px;border-radius:20px}
 .prime{position:absolute;font-weight:900;color:#fff;opacity:0}
 /* 장면 W: 누가·언제·어떻게 */
@@ -59,7 +68,8 @@ body{width:1080px;height:1920px;overflow:hidden;background:#0B0B0F;font-family:P
 #stamp{position:absolute;left:0;right:0;top:470px;text-align:center;opacity:0}
 #stamp span{display:inline-block;font-size:150px;font-weight:900;color:#FF3B3B;border:16px solid #FF3B3B;border-radius:28px;padding:10px 50px;transform:rotate(-10deg)}
 .bul{position:absolute;left:110px;right:110px;font-size:56px;font-weight:800;background:rgba(255,255,255,.08);border-left:12px solid #C6FF00;border-radius:20px;padding:30px 40px;opacity:0}
-#s5b{top:860px}#s5c{top:1020px}
+#s5b{top:800px}#s5c{top:930px}#s5d{top:1060px}
+#s5b,#s5c,#s5d{font-size:50px;padding:24px 36px}
 /* 장면 6 */
 #s6a{top:400px;font-size:116px;font-weight:900;letter-spacing:-4px;line-height:1.15}
 .opt{position:absolute;left:110px;right:110px;display:flex;gap:30px;align-items:center;font-size:60px;font-weight:800;background:#fff;color:#0B0B0F;border-radius:28px;padding:30px 40px;opacity:0}
@@ -83,6 +93,7 @@ body{width:1080px;height:1920px;overflow:hidden;background:#0B0B0F;font-family:P
 <div class="owl" id="owl3"><img src="file:../ip/owl-reporter/assets/owl_happy.png"></div>
 <div class="owl" id="owl4"><img src="file:../ip/owl-reporter/assets/owl_surprised.png"></div>
 <div class="owl" id="owl5"><img src="file:../ip/owl-reporter/assets/owl_worried.png"></div>
+<div class="owl" id="owl8"><img src="file:../ip/owl-reporter/assets/owl_thinking.png"></div>
 <div class="owl" id="owl6"><img src="file:../ip/owl-reporter/assets/owl_explaining.png"></div>
 <div id="prog"><b></b></div>
 <div id="tag"><i></i>3분 이슈 정리</div>
@@ -105,10 +116,18 @@ body{width:1080px;height:1920px;overflow:hidden;background:#0B0B0F;font-family:P
 <div class="c" id="s2k"><span class="pill">리만 가설이 뭐냐면</span></div>
 <div class="c mask" id="s2am"><div id="s2a">리만 가설</div></div>
 <div class="c" id="s2b">1859년 · 소수(素數)에 관한 가설</div>
-<div class="c" id="s2c"><span class="box">7대 밀레니엄 난제</span></div>
+<div class="c neon" id="s2c"><span>2</span><span>3</span><span>5</span><span>7</span><span>11</span><span>13</span><span>…</span></div>
+<div class="c" id="s2d">들쭉날쭉한 소수에도 <span class="neon">숨은 규칙</span>이 있다?</div>
 
 <!-- 3. 상금 -->
-<div class="c" id="s3k"><span class="pill">풀면 상금이</span></div>
+<!-- Z. 리만의 예측 -->
+<div class="c" id="zk"><span class="pill">리만의 예측</span></div>
+<div class="c" id="zt">중요한 '영점'이 전부<br><span class="neon">한 직선 위</span>에 있다</div>
+<div id="zline"></div><div id="zlab">실수부 = 1/2</div>
+<div id="zdots"></div>
+<div class="c" id="zcap">영점 = 소수의 비밀을 담은<br>'제타 함수'의 값이 0이 되는 점</div>
+
+<div class="c" id="s3k"><span class="pill">7대 밀레니엄 난제 · 상금</span></div>
 <div class="c neon" id="s3a">$<span id="nprize">0</span></div>
 <div class="c" id="s3b">약 14억 원 💰</div>
 
@@ -121,8 +140,9 @@ body{width:1080px;height:1920px;overflow:hidden;background:#0B0B0F;font-family:P
 <!-- 5. 반전 -->
 <div class="c" id="s5a">그런데…</div>
 <div id="stamp"><span>검증 중</span></div>
-<div class="bul" id="s5b">수학계 검토 <span class="neon">진행 중</span></div>
-<div class="bul" id="s5c">공식 인정까지 <span class="neon">2년 검증</span> 필요</div>
+<div class="bul" id="s5b">① 권위 있는 <span class="neon">학술지에 게재</span></div>
+<div class="bul" id="s5c">② 게재 후 <span class="neon">2년</span>이 지나고</div>
+<div class="bul" id="s5d">③ <span class="neon">수학계가 인정</span>하면 해결</div>
 
 <!-- 6. 참여 -->
 <div class="c" id="s6a">AI가 진짜<br><span class="neon">풀었을까?</span></div>
@@ -135,7 +155,7 @@ body{width:1080px;height:1920px;overflow:hidden;background:#0B0B0F;font-family:P
 </div>
 <script src="engine.js"></script>
 <script>
-window.T = 27.9;
+window.T = 31.9;
 // 장면 2~6은 새 장면(4.4초) 뒤로 밀기 위해 OFF만큼 시간을 더한다
 let OFF = 0;
 const _tw = window.tw, _count = window.count;
@@ -176,8 +196,10 @@ pop('#s2k', 3.25);
 tw('#s2am', 3.3, 0.01, { o: [1, 1] });
 tw('#s2a', 3.35, 0.55, { o: [0, 1], y: [220, 0] }, 'outExpo');
 up('#s2b', 3.95);
-pop('#s2c', 4.6, 0.4, 0.4);
-['#s2k', '#s2am', '#s2b', '#s2c'].forEach(s => out(s, 6.9));
+tw('#s2c', 4.35, 0.01, { o: [1, 1] });
+[0,1,2,3,4,5,6].forEach(i => tw(`#s2c span:nth-child(${i + 1})`, 4.4 + i * 0.13 + (i % 2) * 0.06, 0.3, { o: [0, 1], s: [0.3, 1], y: [(i % 3 - 1) * 40, 0] }, 'outBack'));
+up('#s2d', 5.5);
+['#s2k', '#s2am', '#s2b', '#s2c', '#s2d'].concat([0,1,2,3,4,5,6].map(i => `#s2c span:nth-child(${i + 1})`)).forEach(s => out(s, 6.9));
 
 // 3. 상금 (7.2 ~ 10.6)
 pop('#s3k', 7.25);
@@ -196,18 +218,28 @@ up('#s4b', 12.4);
 pop('#s5a', 14.45, 0.3, 0.8);
 tw('#s5a', 15.2, 0.25, { o: [1, 0], s: [1, 0.9] }, 'inCubic');
 tw('#stamp', 15.45, 0.28, { o: [0, 1], s: [3, 1] }, 'outBack'); shake('#stamp', 15.73, 0.3, 16);
-slideX('#s5b', 16.2, 0.45, -140); slideX('#s5c', 16.6, 0.45, -140);
-['#stamp', '#s5b', '#s5c'].forEach(s => out(s, 18.3));
+slideX('#s5b', 16.0, 0.45, -140); slideX('#s5c', 16.45, 0.45, -140); slideX('#s5d', 16.9, 0.45, -140);
+['#stamp', '#s5b', '#s5c', '#s5d'].forEach(s => out(s, 18.3));
 
 // 6. 참여 (18.6 ~ 23.5)
 pop('#s6a', 18.65, 0.4, 0.7);
 slideX('#o1', 19.25); slideX('#o2', 19.45); slideX('#o3', 19.65);
 pop('#s6b', 20.2, 0.35, 0.6);
 tw('#src', 19.8, 0.4, { o: [0, 0.9] });
+['#s6a', '#o1', '#o2', '#o3', '#s6b', '#src'].forEach(s => tw(s, 23.48, 0.02, { o: [1, 0] }, 'linear'));
 
 OFF = 0;
+// Z. 리만의 예측 (디자인 27.9 ~ 31.9, 재생은 2장면 바로 뒤)
+const ZD = document.getElementById('zdots');
+const zy = [715, 770, 830, 900, 950, 1010, 1060, 1095];
+zy.forEach((y, i) => { const d = document.createElement('div'); d.className = 'zd'; d.id = 'zd' + i; d.style.top = y + 'px'; ZD.appendChild(d); });
+pop('#zk', 27.95); up('#zt', 28.1, 0.45, 70);
+tw('#zline', 28.5, 0.5, { o: [0, 1], s: [0.2, 1] }, 'outExpo'); tw('#zlab', 28.8, 0.4, { o: [0, 1], x: [-30, 0] }, 'outExpo');
+zy.forEach((y, i) => pop('#zd' + i, 29.0 + i * 0.16, 0.3, 0.1));
+up('#zcap', 30.3);
+['#zk', '#zt', '#zline', '#zlab', '#zcap'].concat(zy.map((y, i) => '#zd' + i)).forEach(s => out(s, 31.6));
 // 장면마다 부엉이 (등장 → 퇴장)
-[[1, 0.3, 3.0], [7, 3.5, 7.3], [2, 7.9, 11.3], [3, 12.0, 14.7], [4, 15.4, 18.5], [5, 20.0, 22.7], [6, 23.4, 99]].forEach(([n, a, b]) => {
+[[1, 0.3, 3.0], [7, 3.5, 7.3], [2, 7.9, 11.3], [8, 28.2, 31.6], [3, 12.0, 14.7], [4, 15.4, 18.5], [5, 20.0, 22.7], [6, 23.4, 27.85]].forEach(([n, a, b]) => {
   tw('#owl' + n, a, 0.4, { o: [0, 1], y: [260, 0], r: [8, 0] }, 'outBack');
   if (b < 90) tw('#owl' + n, b, 0.3, { o: [1, 0], y: [0, 260] }, 'inCubic');
 });

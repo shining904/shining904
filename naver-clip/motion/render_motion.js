@@ -29,12 +29,15 @@ const path = require('path');
   const TR = warp ? warp.real[warp.real.length - 1] : T;
   const toDesign = tr => {
     if (!warp) return tr;
-    const { design: D, real: R } = warp;
-    for (let k = 0; k < R.length - 1; k++) {
-      if (tr < R[k + 1] || k === R.length - 2) {
-        const u = tr - R[k], dD = D[k + 1] - D[k], dR = R[k + 1] - R[k], ex = Math.min(0.3, dD);
-        if (u < dR - ex) return D[k] + Math.min(u, dD - ex);
-        return D[k] + (dD - ex) + Math.min(ex, u - (dR - ex));
+    // segments: 재생 순서대로 [디자인 시작, 디자인 끝] (없으면 design 배열을 순서대로 사용)
+    const R = warp.real;
+    const SEG = warp.segments || warp.design.slice(0, -1).map((d, k) => [d, warp.design[k + 1]]);
+    for (let k = 0; k < SEG.length; k++) {
+      if (tr < R[k + 1] || k === SEG.length - 1) {
+        const [d0, d1] = SEG[k];
+        const u = tr - R[k], dD = d1 - d0, dR = R[k + 1] - R[k], ex = Math.min(0.3, dD);
+        if (u < dR - ex) return d0 + Math.min(u, dD - ex);
+        return d0 + (dD - ex) + Math.min(ex, u - (dR - ex));
       }
     }
     return tr;
