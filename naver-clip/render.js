@@ -70,6 +70,12 @@ mark{background:linear-gradient(transparent 52%, ${YELLOW} 52%);color:inherit;pa
 .quiz .tip{background:${YELLOW};color:#111}
 .quiz .tip b{color:var(--a)}
 .quiz .foot{color:#777}
+/* 뉴스: 사실 정리 */
+.stat{font-size:96px;font-weight:900;color:var(--a);letter-spacing:-3px;margin-bottom:30px;line-height:1.15}
+.pt{display:flex;gap:24px;align-items:flex-start;background:#F5F5F7;border-radius:24px;padding:28px 34px;margin-bottom:18px;font-size:46px;font-weight:700;line-height:1.4}
+.pt .dot2{flex:none;width:20px;height:20px;border-radius:50%;background:var(--a);margin-top:22px}
+.src{font-size:38px;font-weight:700;color:#555;line-height:1.6;background:#F5F5F7;border-radius:24px;padding:36px 40px}
+.fact .top,.sources .top{color:#fff}.fact .top .dot,.sources .top .dot{background:${YELLOW}}.fact .top .pg,.sources .top .pg{background:rgba(0,0,0,.25)}
 `;
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
@@ -91,6 +97,13 @@ function body(post, c, i, total) {
   } else if (c.type === 'list') {
     inner = `<div class="band"><div class="title">${esc(c.title)}</div></div><div class="body">
       ${c.rows.map(r => `<div class="row"><div class="mark">O</div><div class="t">${esc(r[0])}</div><div class="s">${esc(r[1])}</div></div>`).join('')}</div>`;
+  } else if (c.type === 'fact') {
+    inner = `<div class="band"><div class="num">${esc(c.num)}</div><div class="title">${esc(c.title)}</div></div><div class="body">
+      ${c.stat ? `<div class="stat">${esc(c.stat)}</div>` : ''}
+      ${c.lines.map(t => `<div class="pt"><span class="dot2"></span><span>${rich(t)}</span></div>`).join('')}
+      ${c.tip ? `<div class="tip">${rich(c.tip)}</div>` : ''}</div>`;
+  } else if (c.type === 'sources') {
+    inner = `<div class="band"><div class="title">${esc(c.title)}</div></div><div class="body"><div class="src">${rich(c.text)}</div></div>`;
   } else if (c.type === 'quiz') {
     inner = `<div class="wrap"><span class="qbadge">${esc(c.badge)}</span><div class="qtitle">${esc(c.title)}</div>
       ${c.options.map((t, k) => `<div class="row"><div class="abc">${'ABCD'[k]}</div><div class="t">${esc(t)}</div></div>`).join('')}
@@ -114,7 +127,7 @@ function body(post, c, i, total) {
     const over = await page.evaluate(() => {
       const foot = document.querySelector('.foot');
       const lim = foot ? foot.getBoundingClientRect().top - 10 : 1440;
-      return Math.max(...[...document.querySelectorAll('.row,.tip,.sub')].map(e => e.getBoundingClientRect().bottom)) > lim;
+      return Math.max(...[...document.querySelectorAll('.row,.tip,.sub,.pt,.src,.stat')].map(e => e.getBoundingClientRect().bottom)) > lim;
     });
     if (over) console.error(`OVERFLOW ${postFile} card ${i + 1}`);
     const f = path.join(outDir, `${String(i + 1).padStart(2, '0')}.png`);

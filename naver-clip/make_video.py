@@ -14,7 +14,7 @@ cards = sorted(glob.glob(f'{post_dir}/cards/*.png'))
 F = lambda w, s: ImageFont.truetype(f'{font_dir}/Pretendard-{w}.otf', s)
 
 # 카드 종류별 노출 시간(초)
-DUR = {'cover': 2.2, 'item': 3.2, 'list': 3.0, 'quiz': 4.0}
+DUR = {'cover': 2.2, 'item': 3.2, 'list': 3.0, 'quiz': 4.0, 'fact': 4.5, 'sources': 2.0}
 durs = [DUR[c['type']] for c in post['cards']]
 
 frames_dir = f'{post_dir}/video_frames'
@@ -42,7 +42,7 @@ for i, path in enumerate(cards):
     for k in range(total):
         x = 80 + k * (seg + 12)
         d.rounded_rectangle([x, 1700, x + seg, 1716], 8, fill='#FFFFFF' if k <= i else mix)
-    d.text((W / 2, 1790), '끝까지 보고 퀴즈 맞혀 보세요!', font=F('Bold', 44), fill='white', anchor='mm')
+    d.text((W / 2, 1790), post.get('video_cta', '끝까지 보고 퀴즈 맞혀 보세요!'), font=F('Bold', 44), fill='white', anchor='mm')
     f = f'{frames_dir}/{i + 1:02d}.png'
     bg.save(f)
     frames.append(f)
