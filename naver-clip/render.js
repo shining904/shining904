@@ -2,7 +2,10 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
-const mascot = require('./mascot');
+const mascotSvg = require('./mascot');
+const dataUri = f => `data:${f.endsWith('.png') ? 'image/png' : 'image/jpeg'};base64,${fs.readFileSync(path.resolve(__dirname, f)).toString('base64')}`;
+// mascot 값이 이미지 경로(.png)면 그 이미지를, 아니면 SVG 표정을 쓴다
+const mascot = m => /\.(png|jpg)$/.test(m) ? `<img src="${dataUri(m)}" style="width:100%;filter:drop-shadow(7px 0 0 #fff) drop-shadow(-7px 0 0 #fff) drop-shadow(0 7px 0 #fff) drop-shadow(0 -7px 0 #fff)">` : mascotSvg(m);
 
 const FONT_DIR = process.env.FONT_DIR;
 const font = (w, f) => `@font-face{font-family:P;font-weight:${w};src:url(data:font/otf;base64,${fs.readFileSync(`${FONT_DIR}/Pretendard-${f}.otf`).toString('base64')}) format("opentype")}`;
@@ -85,6 +88,11 @@ mark{background:linear-gradient(transparent 52%, ${YELLOW} 52%);color:inherit;pa
 .has-mascot .wrap{top:200px}.has-mascot h1{font-size:118px}
 .mini{position:absolute;right:50px;top:96px;width:190px;z-index:3}
 .has-mini .band{padding-right:260px}
+/* 배경 일러스트 */
+.cover.has-bg{background-size:cover;background-position:center bottom}
+.cover.has-bg:before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,8,30,.92) 0%,rgba(10,8,30,.75) 40%,rgba(10,8,30,0) 62%)}
+.cover.has-bg .wrap,.cover.has-bg .top{z-index:2}
+.cover.has-bg .swipe{z-index:4}
 `;
 
 
@@ -167,12 +175,13 @@ const rich = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '
 function body(post, c, i, total) {
   const top = `<div class="top"><span class="brand"><span class="dot"></span>${esc(post.series)}</span><span class="pg">${i + 1} / ${total}</span></div>`;
   const foot = post.handle ? `<div class="foot">${esc(post.handle)}</div>` : '';
-  let cls = c.type, inner = '';
+  let cls = c.type, inner = '', bgStyle = '';
   if (c.type === 'cover') {
     inner = `<div class="wrap"><span class="sticker">${esc(c.badge)}</span>
       <h1>${esc(c.title).replace(/\[(.+?)\]/g, '<em>$1</em>').replace(/\n/g, '<br>')}</h1>
       <p class="sub">${rich(c.sub)}</p></div><div class="swipe">넘겨 보기 →</div>${c.mascot ? `<div class="mascot">${mascot(c.mascot)}</div>` + (c.bubble ? `<div class="bubble">${esc(c.bubble)}</div>` : '') : ''}`;
     if (c.mascot) cls += ' has-mascot';
+    if (c.bgimg) { cls += ' has-bg'; bgStyle = ` style="background-image:url(${dataUri(c.bgimg)})"`; }
   } else if (c.type === 'item') {
     inner = `<div class="band"><div class="num">${esc(c.num)}</div><div class="title">${esc(c.title)}</div></div><div class="body">
       ${c.o.map(t => `<div class="row o"><div class="mark">O</div><div class="t">${esc(t)}</div></div>`).join('')}
@@ -195,7 +204,7 @@ function body(post, c, i, total) {
       <div class="tip">${rich(c.tip)}</div></div>`;
   }
   return `<!doctype html><html><head><meta charset="utf-8"><style>${CSS}${THEMES[post.theme] || ''}</style></head>
-    <body class="t-${post.theme || 'bold'}" style="--a:${post.accent}"><div class="card ${cls}">${top}${inner}${foot}</div></body></html>`;
+    <body class="t-${post.theme || 'bold'}" style="--a:${post.accent}"><div class="card ${cls}"${bgStyle}>${top}${inner}${foot}</div></body></html>`;
 }
 
 (async () => {
