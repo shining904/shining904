@@ -78,6 +78,80 @@ mark{background:linear-gradient(transparent 52%, ${YELLOW} 52%);color:inherit;pa
 .fact .top,.sources .top{color:#fff}.fact .top .dot,.sources .top .dot{background:${YELLOW}}.fact .top .pg,.sources .top .pg{background:rgba(0,0,0,.25)}
 `;
 
+
+// 디자인 테마: post.json의 "theme" 또는 THEME 환경변수 (bold 기본)
+const THEMES = {
+  dark: `
+body.t-dark{background:#0E0E10;color:#fff}
+.t-dark .cover{background:#0E0E10}
+.t-dark .cover h1{color:#fff}.t-dark .cover h1 em{background:#C6FF00;color:#0E0E10;border-radius:6px}
+.t-dark .cover .sub{color:#B8B8C0}
+.t-dark .sticker{background:transparent;color:#C6FF00;border:4px solid #C6FF00;box-shadow:none;transform:none;border-radius:8px}
+.t-dark .swipe{background:#C6FF00;color:#0E0E10}
+.t-dark .top,.t-dark .item .top,.t-dark .list .top,.t-dark .fact .top,.t-dark .sources .top{color:#fff}
+.t-dark .top .dot{background:#C6FF00!important}.t-dark .top .pg{background:#26262B!important}
+.t-dark .band{background:#0E0E10;border-bottom:6px solid #C6FF00}
+.t-dark .band .num{background:#C6FF00}
+.t-dark .pt,.t-dark .list .row,.t-dark .src{background:#1C1C21;border-color:#1C1C21;color:#EDEDF2}
+.t-dark .pt .dot2{background:#C6FF00}.t-dark .stat{color:#C6FF00}
+.t-dark .o{background:#10241A;border-color:#2ECC71;color:#fff}.t-dark .x{background:#2A1414;border-color:#FF5A5A}
+.t-dark .x .t{color:#FF8A8A}
+.t-dark .tip{background:#1C1C21;border-left:10px solid #C6FF00}.t-dark .tip b{color:#C6FF00}
+.t-dark .list .row .s{background:#C6FF00;color:#0E0E10}
+.t-dark .quiz{background:#0E0E10}.t-dark .quiz .qtitle{color:#C6FF00}.t-dark .quiz .qbadge{background:#26262B}
+.t-dark .quiz .row{background:#1C1C21;border-color:#33333A;color:#fff}.t-dark .abc{background:#C6FF00}
+.t-dark .quiz .tip{background:#C6FF00;color:#0E0E10;border:none}.t-dark .quiz .tip b{color:#0E0E10;text-decoration:underline}
+.t-dark .foot{color:#55555E}.t-dark .cover .foot{color:#55555E}`,
+  breaking: `
+body.t-breaking{background:#fff;color:#111}
+.t-breaking .cover{background:#fff;color:#111;border-top:40px solid #E60012}
+.t-breaking .cover h1 em{background:#E60012;color:#fff;border-radius:0}
+.t-breaking .cover .sub{color:#333}
+.t-breaking .sticker{background:#E60012;color:#fff;box-shadow:none;transform:none;border-radius:0;letter-spacing:4px}
+.t-breaking .swipe{background:#111;border-radius:0}
+.t-breaking .top,.t-breaking .item .top,.t-breaking .list .top,.t-breaking .fact .top,.t-breaking .sources .top{color:#111}
+.t-breaking .cover .top{top:80px}
+.t-breaking .band .title{color:#fff}
+.t-breaking .item .top,.t-breaking .list .top,.t-breaking .fact .top,.t-breaking .sources .top{color:#fff}
+.t-breaking .top .dot{background:#E60012!important}.t-breaking .top .pg{background:#E60012!important;color:#fff}
+.t-breaking .band{background:#111;border-bottom:16px solid #E60012}
+.t-breaking .band .num{background:#E60012;color:#fff;border-radius:0}
+.t-breaking .pt,.t-breaking .src{background:#fff;border:4px solid #111;border-radius:0}
+.t-breaking .pt .dot2{background:#E60012;border-radius:0}.t-breaking .stat{color:#E60012}
+.t-breaking .row{border-radius:0}.t-breaking .list .row{background:#fff;border:4px solid #111}
+.t-breaking .mark{border-radius:0}
+.t-breaking .tip{background:#111;border-radius:0}.t-breaking .tip b{color:#FFD400}
+.t-breaking .list .row .s{background:#E60012;border-radius:0}
+.t-breaking .quiz{background:#fff;color:#111}.t-breaking .quiz .top{color:#111}
+.t-breaking .quiz .qtitle{color:#111;text-decoration:underline;text-decoration-color:#E60012;text-decoration-thickness:12px;text-underline-offset:14px}
+.t-breaking .quiz .qbadge{background:#E60012;border-radius:0}
+.t-breaking .quiz .row{background:#fff;border:4px solid #111}.t-breaking .abc{background:#E60012;color:#fff;border-radius:0}
+.t-breaking .quiz .tip{background:#111;color:#fff}.t-breaking .quiz .tip b{color:#FFD400}
+.t-breaking .foot,.t-breaking .cover .foot,.t-breaking .quiz .foot{color:#999}`,
+  pastel: `
+body.t-pastel{background:#FFF7EE;color:#3A2E39}
+.t-pastel .cover{background:#FFE1EA;color:#3A2E39}
+.t-pastel .cover h1 em{background:#fff;color:#FF5C8A;border-radius:28px;box-shadow:0 8px 0 #F6B8CB}
+.t-pastel .cover .sub{color:#6E5A68}
+.t-pastel .sticker{background:#fff;color:#FF5C8A;box-shadow:0 6px 0 #F6B8CB;transform:rotate(-2deg);border-radius:999px}
+.t-pastel .swipe{background:#FF5C8A}
+.t-pastel .top,.t-pastel .item .top,.t-pastel .list .top,.t-pastel .fact .top,.t-pastel .sources .top{color:#3A2E39}
+.t-pastel .top .dot{background:#FF5C8A!important}.t-pastel .top .pg{background:#fff!important;color:#3A2E39}
+.t-pastel .band{background:#FFE1EA;color:#3A2E39;border-radius:0 0 60px 60px}
+.t-pastel .band .num{background:#fff;color:#FF5C8A;border-radius:999px}
+.t-pastel .pt,.t-pastel .src,.t-pastel .list .row{background:#fff;border-color:#fff;border-radius:40px;box-shadow:0 6px 0 #F3DCCB}
+.t-pastel .pt .dot2{background:#FF5C8A}.t-pastel .stat{color:#FF5C8A}
+.t-pastel .row{border-radius:40px}.t-pastel .o{background:#E9F8EF;border-color:#A6DDBA}.t-pastel .x{background:#FFECEC;border-color:#F5B0B0}
+.t-pastel .tip{background:#fff;color:#3A2E39;border:5px dashed #FF9DB8;border-radius:40px}.t-pastel .tip b{color:#FF5C8A}
+.t-pastel .list .row .s{background:#FF5C8A;border-radius:999px}
+.t-pastel .quiz{background:#E9EDFF;color:#3A2E39}.t-pastel .quiz .top{color:#3A2E39}
+.t-pastel .quiz .qtitle{color:#5B6CFF}.t-pastel .quiz .qbadge{background:#5B6CFF;border-radius:999px}
+.t-pastel .quiz .row{background:#fff;border-color:#fff;color:#3A2E39;box-shadow:0 6px 0 #CDD4FF}
+.t-pastel .abc{background:#5B6CFF;color:#fff;border-radius:50%}
+.t-pastel .quiz .tip{background:#fff;border-color:#9DA8FF}.t-pastel .quiz .tip b{color:#5B6CFF}
+.t-pastel .foot,.t-pastel .cover .foot,.t-pastel .quiz .foot{color:#B39FAE}`,
+};
+
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 const rich = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
 
@@ -109,14 +183,15 @@ function body(post, c, i, total) {
       ${c.options.map((t, k) => `<div class="row"><div class="abc">${'ABCD'[k]}</div><div class="t">${esc(t)}</div></div>`).join('')}
       <div class="tip">${rich(c.tip)}</div></div>`;
   }
-  return `<!doctype html><html><head><meta charset="utf-8"><style>${CSS}</style></head>
-    <body style="--a:${post.accent}"><div class="card ${cls}">${top}${inner}${foot}</div></body></html>`;
+  return `<!doctype html><html><head><meta charset="utf-8"><style>${CSS}${THEMES[post.theme] || ''}</style></head>
+    <body class="t-${post.theme || 'bold'}" style="--a:${post.accent}"><div class="card ${cls}">${top}${inner}${foot}</div></body></html>`;
 }
 
 (async () => {
   const [postFile, outDir] = process.argv.slice(2);
   const post = JSON.parse(fs.readFileSync(postFile, 'utf8'));
   const n = parseInt((path.basename(path.dirname(path.resolve(postFile))).match(/\d+/) || ['1'])[0], 10);
+  post.theme = process.env.THEME || post.theme;
   post.accent = post.accent || ACCENTS[(n - 1) % ACCENTS.length];
   fs.mkdirSync(outDir, { recursive: true });
   const browser = await chromium.launch();
