@@ -2,6 +2,7 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
+const mascot = require('./mascot');
 
 const FONT_DIR = process.env.FONT_DIR;
 const font = (w, f) => `@font-face{font-family:P;font-weight:${w};src:url(data:font/otf;base64,${fs.readFileSync(`${FONT_DIR}/Pretendard-${f}.otf`).toString('base64')}) format("opentype")}`;
@@ -76,6 +77,14 @@ mark{background:linear-gradient(transparent 52%, ${YELLOW} 52%);color:inherit;pa
 .pt .dot2{flex:none;width:20px;height:20px;border-radius:50%;background:var(--a);margin-top:22px}
 .src{font-size:38px;font-weight:700;color:#555;line-height:1.6;background:#F5F5F7;border-radius:24px;padding:36px 40px}
 .fact .top,.sources .top{color:#fff}.fact .top .dot,.sources .top .dot{background:${YELLOW}}.fact .top .pg,.sources .top .pg{background:rgba(0,0,0,.25)}
+/* 마스코트 */
+.mascot{position:absolute;right:40px;bottom:120px;width:500px;z-index:3;filter:drop-shadow(0 14px 0 rgba(0,0,0,.18))}
+.bubble{position:absolute;right:500px;bottom:250px;z-index:4;background:#fff;color:#111;font-size:50px;font-weight:900;padding:26px 38px;border-radius:40px;border:6px solid #111;white-space:nowrap}
+.bubble:after{content:'';position:absolute;right:-30px;bottom:30px;border:22px solid transparent;border-left:34px solid #111}
+.has-mascot .swipe{right:auto;left:80px;bottom:120px}
+.has-mascot .wrap{top:200px}.has-mascot h1{font-size:118px}
+.mini{position:absolute;right:50px;top:96px;width:190px;z-index:3}
+.has-mini .band{padding-right:260px}
 `;
 
 
@@ -162,7 +171,8 @@ function body(post, c, i, total) {
   if (c.type === 'cover') {
     inner = `<div class="wrap"><span class="sticker">${esc(c.badge)}</span>
       <h1>${esc(c.title).replace(/\[(.+?)\]/g, '<em>$1</em>').replace(/\n/g, '<br>')}</h1>
-      <p class="sub">${rich(c.sub)}</p></div><div class="swipe">넘겨 보기 →</div>`;
+      <p class="sub">${rich(c.sub)}</p></div><div class="swipe">넘겨 보기 →</div>${c.mascot ? `<div class="mascot">${mascot(c.mascot)}</div>` + (c.bubble ? `<div class="bubble">${esc(c.bubble)}</div>` : '') : ''}`;
+    if (c.mascot) cls += ' has-mascot';
   } else if (c.type === 'item') {
     inner = `<div class="band"><div class="num">${esc(c.num)}</div><div class="title">${esc(c.title)}</div></div><div class="body">
       ${c.o.map(t => `<div class="row o"><div class="mark">O</div><div class="t">${esc(t)}</div></div>`).join('')}
@@ -172,7 +182,8 @@ function body(post, c, i, total) {
     inner = `<div class="band"><div class="title">${esc(c.title)}</div></div><div class="body">
       ${c.rows.map(r => `<div class="row"><div class="mark">O</div><div class="t">${esc(r[0])}</div><div class="s">${esc(r[1])}</div></div>`).join('')}</div>`;
   } else if (c.type === 'fact') {
-    inner = `<div class="band"><div class="num">${esc(c.num)}</div><div class="title">${esc(c.title)}</div></div><div class="body">
+    if (c.mascot) cls += ' has-mini';
+    inner = `${c.mascot ? `<div class="mini">${mascot(c.mascot)}</div>` : ''}<div class="band"><div class="num">${esc(c.num)}</div><div class="title">${esc(c.title)}</div></div><div class="body">
       ${c.stat ? `<div class="stat">${esc(c.stat)}</div>` : ''}
       ${c.lines.map(t => `<div class="pt"><span class="dot2"></span><span>${rich(t)}</span></div>`).join('')}
       ${c.tip ? `<div class="tip">${rich(c.tip)}</div>` : ''}</div>`;
